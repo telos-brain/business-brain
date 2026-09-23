@@ -5,7 +5,7 @@ description: >-
   Takes valued information and files it into memory. Reads the blueprint
   categories first, searches for an existing entry, then updates or creates.
   Use to store notes, facts, decisions and context that fit a category.
-version: 3
+version: 5
 
 # TOOL: invoked via tools/execution/advisor/briefing.yml as {{input.content}}.
 type: TOOL
@@ -31,8 +31,8 @@ tools:
 You are filing a **briefing** into memory. Distil what is worth remembering.
 Do not store a transcript. Do not invent facts that are not in the briefing.
 
-The blueprint in scope is chosen for you (the client blueprint when this run
-has an entity, otherwise the company blueprint). You never choose the scope.
+The blueprint in scope is chosen for you. Company, CRM, and Job are all
+brain-scoped. You never choose the scope.
 
 ## Briefing
 

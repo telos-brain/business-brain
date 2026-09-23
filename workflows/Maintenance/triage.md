@@ -12,7 +12,7 @@ description: >-
   matching workflows, and creates review_blueprint tasks for clear category
   matches — without repeating the entry body into maintenance task
   instructions.
-version: 17
+version: 20
 
 type: TRIGGERED
 trigger: inbox:*
@@ -24,7 +24,7 @@ output-tokens: 2048, 4096, 8192
 caching: automatic
 max-turns: 20
 thinking: effort
-max-runs-per-hour: 50
+max-runs-per-hour: 200
 
 tools:
   - add_inbox_task
@@ -102,17 +102,17 @@ destinations into a single task.
 
 ## Blueprint categories
 
-Categories in the current scope only. The platform injects **one** blueprint:
-the client blueprint when this run has an entity, otherwise the company
-blueprint. Unit of work is not injected here. Use **only** the categories
-listed. A fact that belongs on a blueprint you cannot see is **not** filed
-under a category you can see — leave it out.
+Categories in the current scope only. Company, CRM, and Job are all
+brain-scoped. The platform injects **one** blueprint for this run. Use
+**only** the categories listed. A fact that belongs on a blueprint you
+cannot see is **not** filed under a category you can see — leave it out.
 
-- No entity on the run: company facts only (team, strategy, systems, the
-  customer base, products). A specific client's people, deal, or live work
-  does not go in Team or Customers.
-- Entity present: that client's facts only. Do not write company-wide team,
-  systems, or strategy into the client file.
+- Company categories (team, strategy, systems, products): facts about this
+  business. A company or person we deal with does not go here.
+- CRM categories (companies, people): clients, partners, industry contacts,
+  and prospects. Do not write our team, systems, or strategy here.
+- Job categories (brief, decisions, state): one piece of work. Do not copy
+  a CRM standing or a company-wide fact here.
 
 <blueprint_categories>
 {{#blueprint.categories}}
@@ -198,11 +198,11 @@ destination unless the body clearly contains two.
   and one-off implementation details are removed
 - You did not have to stretch to find it
 
-If the learning only makes sense for this client, this project, or this
-week's plan, do not route it. Do not route a skill because a category
-exists and the meeting was long. One strong practice, or zero, is success.
-The task instruction stays the short routing line; do not smuggle the
-client into it.
+If the learning only makes sense for this company, this person, this
+project, or this week's plan, do not route it. Do not route a skill because
+a category exists and the meeting was long. One strong practice, or zero,
+is success. The task instruction stays the short routing line; do not
+smuggle the company or person into it.
 
 ### Route to `WF-UPDATE-WORKFLOW` when
 
@@ -244,8 +244,9 @@ contains both a research ask and a separate maintenance signal.
 
 - Small talk, personal life, leave, sick days, weekends, banter
 - Weekly task lists and scheduling that will be stale next week
-- Customer names, account details, and one-off implementation details — these
-  are not skills. A durable client fact may still be memory (blueprint pass).
+- Names of companies and people we deal with, account details, and one-off
+  implementation details — these are not skills. A durable fact about that
+  company or person may still be memory (blueprint pass).
 - Generic truisms with no real insight
 - Empty, boilerplate, navigation-only or 404-like content
 - Pure chat noise
@@ -345,9 +346,10 @@ find is a process, create no blueprint task.
 - **Systems:** one task per product the business actually uses. Skip tools
   mentioned in passing.
 - **Products and services:** one task per offering. Not the delivery process.
-- **Clients and jobs:** only when that blueprint's categories are in the list
-  above. Do not copy a client's file into company Customers or Team. If this
-  run cannot see the client blueprint, leave the client fact out.
+- **CRM and jobs:** only when that blueprint's categories are in the list
+  above. Do not copy a company or person into company Team or Products and
+  services. If this run cannot see the CRM categories, leave that company or
+  person out. If this run cannot see the Job categories, leave the job fact out.
 - Skip a blueprint task if an existing non-`CANCELLED` / non-`FAILED` task on
   this entry already has the same `instructions` text.
 - Several `WF-REVIEW-BLUEPRINT` tasks are allowed when several facts each

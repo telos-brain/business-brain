@@ -6,7 +6,7 @@ description: >-
   categories and creates a PROCESSED inbox entry with one review_blueprint
   task per fact. Skips noise and processes. Does not grade agent quality
   (see WF-EVAL-RUN).
-version: 2
+version: 4
 type: TRIGGERED
 trigger: unitofwork:complete:low
 system-prompt-code: WF-SYSTEM-PROMPT
@@ -35,8 +35,8 @@ reply with a single line: `No blueprint learnings.`
 
 ## Blueprint categories
 
-Categories for **this run's** blueprint only (client blueprint when the run
-has an entity, otherwise the company blueprint). Match facts only to these.
+Categories for **this run's** blueprint only. Company, CRM, and Job are all
+brain-scoped. Match facts only to these.
 A fact that belongs on a blueprint you cannot see is left out — do not
 force it into a category below:
 

@@ -1,7 +1,7 @@
 ---
 name: Getting Started
 code: BRA104
-version: 10
+version: 11
 description: Interactive onboarding interview to configure a brain schema from
   scratch — entity type, unit of work type, blueprint categories, and skill
   categories. Use after brain init, before the first deploy. If the host
@@ -28,8 +28,9 @@ the user, stop and load **BRA211** (auto-build) instead.
 runs that interview and edits the schema **before** `brain deploy`. There is
 no onboarding workflow. The category tables later in this skill are the
 generic starter (Operations, Finance, General). This business brain does not
-use them. Company memory is Team, Strategy, Systems, Customers, and Products
-and services. Processes go in the Company skill book, not in a blueprint.
+use them. Company memory is Team, Strategy, Systems, and Products and
+services. Who the business deals with belongs on the CRM blueprint.
+Processes go in the Company skill book, not in a blueprint.
 
 **Background (do not re-explain — load if needed):**
 

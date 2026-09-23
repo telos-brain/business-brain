@@ -1,0 +1,38 @@
+name: CRM
+version: 4
+description: >-
+  Shared memory of the companies and people this business interacts with.
+  Clients, partners, industry contacts, and prospects all belong here.
+  Not how this company does the work — that is a skill. Not company-wide
+  facts — those belong on the Company blueprint. Not a job's brief,
+  decisions, or status — those belong on the Job blueprint.
+scope: brain
+categories:
+  - name: Companies
+    description: >-
+      One entry per organisation this business deals with. Title is the
+      company name. Record what it does, and the kind of tie: client,
+      partner, industry, or prospect. Record what is already agreed —
+      terms, pricing, or the shape of a partnership — and the commitments
+      or constraints that will still matter after this week. A partner, an
+      industry body, or a prospect may have no commercial terms; record
+      the standing anyway. Update that entry when the standing changes.
+      Do not record the people — that is People. Do not record our own
+      company — that is the Company blueprint. Do not record how selling,
+      partnering, or invoicing is done — that is a skill. Do not record a
+      job's brief, decisions, or current status — that is the Job
+      blueprint. Do not record this week's task list or a transcript.
+      Distinct from People (the humans).
+  - name: People
+    description: >-
+      One entry per person this business deals with. Title is the person's
+      name. Record their role, which organisation they sit in, what they
+      care about in the relationship, and how they are involved. The kind
+      of tie with their organisation — client, partner, industry, or
+      prospect — belongs under Companies. Do not copy it onto the person.
+      When the person has no organisation, record the kind of tie on this
+      entry. Update the entry when the role or involvement changes. Do not
+      record personal life, small talk, or chatter. Do not record our own
+      team — that is the Company Team category. Do not record how we
+      manage relationships — that is a skill. Distinct from Companies
+      (the organisation and its standing).

@@ -5,7 +5,7 @@ description: >-
   Business MCP server. Exposes briefing into memory, Ask Sol, memory
   questions, and skill lookup so a calling agent can run this company brain.
   The schema is configured from the README before deploy.
-version: 3
+version: 4
 
 # MCP: published as an MCP server. Injected tools become the MCP tool list.
 # Instructions become the MCP prompt / resource for the calling agent.
@@ -28,7 +28,8 @@ tools:
 You are connected to a company brain. Sol is the advisor inside it. These
 tools are how you use the brain. Do not treat this as a chatbot.
 
-Memory holds facts about this company, its clients, and its work. Skills
+Memory holds facts about this company, the companies and people it deals
+with, and its work. Skills
 hold transferable practices. Most of what you hear is neither — do not file
 noise.
 
