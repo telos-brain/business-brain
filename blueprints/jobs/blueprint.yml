@@ -1,0 +1,32 @@
+name: Job
+version: 1
+description: >-
+  Memory for one piece of work (a project, engagement, or job). What it is,
+  the decisions made for it, and the durable state. Not the company's
+  process for doing this kind of work — that is a skill. Not the client's
+  standing file — that belongs on the client.
+scope:
+  type: unitofwork
+  code: jobs
+categories:
+  - name: Brief
+    description: >-
+      What this piece of work is: the outcome, the constraints that define
+      it, and who it is for. One entry, updated in place. Do not record the
+      general method for scoping work — that is a skill. Do not paste a
+      transcript. Distinct from Decisions (choices already made) and from
+      State (where it stands now).
+  - name: Decisions
+    description: >-
+      One entry per decision made for this work that should not be
+      relitigated: what was chosen, what was rejected, and why. Do not record
+      options that were only discussed, or a general decision-making method
+      — that is a skill. Distinct from Brief (what the work is) and from
+      State (current status).
+  - name: State
+    description: >-
+      Durable current state of this work: owner, status, and what is
+      blocking it. One entry, updated in place. Do not log every meeting,
+      weekly task list, or small talk. Do not record the process for running
+      this kind of work — that is a skill. Distinct from Brief (the
+      definition) and from Decisions (choices already made).

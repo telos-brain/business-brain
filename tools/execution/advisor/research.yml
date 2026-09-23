@@ -1,0 +1,18 @@
+name: research
+version: 3
+description: >-
+  Ask Sol to research a topic. Sol checks memory and skills, searches and
+  reads the web, and files what is worth keeping into the inbox so triage
+  can separate durable facts, repeatable practices, and noise. Returns a
+  short summary. Use when you need current or external information that
+  might be worth keeping. Do not use this for a single fact already in
+  memory — use ask_question. Do not use this to check a plan — use ask_sol.
+workflow:
+  code: WF-SOL-RESEARCH
+parameters:
+  - name: query
+    description: >-
+      The research question or topic. State it as a self-contained question
+      or a specific subject to look up.
+    type: string
+    required: true

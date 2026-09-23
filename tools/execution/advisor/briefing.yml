@@ -1,0 +1,19 @@
+name: briefing
+version: 3
+description: >-
+  Stores valued information in memory. The workflow reads the blueprint
+  categories first, searches for an existing entry, then updates or creates.
+  Use when you have a fact, a decision, or context that should be remembered.
+  Pass the information to file — do not pre-categorise. A practice or small
+  talk may be skipped.
+workflow:
+  code: WF-BRIEFING
+parameters:
+  - name: content
+    description: >-
+      The information to remember. Include enough raw detail to file well —
+      notes, a fact, a decision and its rationale, or current context.
+      Attribution (who, when, which client or job) helps. The workflow
+      chooses the blueprint category.
+    type: string
+    required: true

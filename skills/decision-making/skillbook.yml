@@ -1,0 +1,108 @@
+name: Decision Making
+code: DEC
+prefix: DEC
+version: 5
+description: >-
+  How to make and review decisions — critical thinking techniques, diagnosis,
+  assumptions, uncertainty, options, risk, commitment and after-the-fact
+  review. Skills are reusable methods, not the content of any one decision.
+categories:
+  - name: Critical Thinking
+    description: >-
+      Forcing functions that break tunnel vision and test a current conclusion
+      before you commit. Covers proportional review (how much thinking the
+      stakes justify) and techniques that assume the current answer is wrong.
+      Distinct from Problem Diagnosis (finding causes) and from Assumptions
+      and Evidence (making implicit beliefs explicit).
+    index: 100
+    skills:
+      - critical-thinking/DEC101-proportional-critical-thinking.md
+      - critical-thinking/DEC102-assume-we-are-wrong.md
+  - name: Problem Diagnosis
+    description: >-
+      How to find causes rather than treat symptoms — single versus multiple
+      root causes, contributing factors, and whether a fix would still leave
+      something broken. Distinct from Critical Thinking (challenging the
+      current answer) and from Options and Trade-offs (choosing what to do
+      once causes are known).
+    index: 200
+    skills:
+      - diagnosis/DEC201-assume-multiple-root-causes.md
+  - name: Assumptions and Evidence
+    description: >-
+      How to surface stated and implied assumptions — about the problem, the
+      people involved, the environment, the data, or expected behaviour — and
+      test them against evidence. Covers confidence, the assumption most
+      likely to be wrong, and re-framing when one falls. Distinct from
+      Uncertainty and Blind Spots (information you do not have) and from
+      Critical Thinking (the wider review protocol).
+    index: 300
+    skills:
+      - assumptions/DEC301-challenge-assumptions.md
+  - name: Uncertainty and Blind Spots
+    description: >-
+      How to map what you know, what you have not retrieved, what you know
+      you are missing, and true unknown unknowns. Covers the known/unknown
+      matrix and what to do in each quadrant. Distinct from Assumptions and
+      Evidence (beliefs you are already acting on) and from Risk and
+      Proportionality (how much uncertainty you can tolerate).
+    index: 400
+    skills:
+      - uncertainty/DEC401-map-blind-spots.md
+  - name: Options and Trade-offs
+    description: >-
+      How to generate alternatives and weigh them — opportunity cost, what
+      you give up, second-order effects, and refusing a false binary.
+      Distinct from Problem Diagnosis (what is going on) and from Decision
+      Process (how you commit once options are clear).
+    index: 500
+    skills:
+      - options/DEC501-refuse-the-false-binary.md
+      - options/DEC502-name-the-opportunity-cost.md
+      - options/DEC503-second-order-effects.md
+      - options/DEC504-count-the-cost.md
+  - name: Risk and Proportionality
+    description: >-
+      How to match the depth of analysis to the stakes — impact, reversibility,
+      live versus contained environments, and when a simple fix needs no
+      technique at all. Distinct from Critical Thinking (the techniques
+      themselves; proportionality of those techniques lives in **DEC101**)
+      and from Decision Process (when to decide versus gather more).
+    index: 600
+    skills:
+      - risk/DEC601-blast-radius.md
+  - name: Decision Process
+    description: >-
+      How to structure the act of deciding — when to decide, when to wait,
+      reversibility, commitment, and follow-through. Covers decision hygiene,
+      not the content of a choice. Distinct from Options and Trade-offs
+      (what to pick) and from Review and Learning (looking back).
+    index: 700
+    skills:
+      - process/DEC701-one-way-two-way-doors.md
+      - process/DEC702-when-information-will-not-help.md
+      - process/DEC703-plans-need-other-minds.md
+      - process/DEC704-do-not-boast-about-tomorrow.md
+      - process/DEC705-enough-is-a-decision.md
+      - process/DEC706-do-not-go-back-to-the-hole.md
+  - name: Review and Learning
+    description: >-
+      How to review a decision or a completed piece of work so the reasoning
+      is visible and the next decision is better. Covers documenting the
+      analysis, separating a new problem from the current one, and extracting
+      a lesson without relitigating. Distinct from Critical Thinking (review
+      before you act) and from Decision Process (the original commitment).
+    index: 800
+    skills:
+      - review/DEC801-extract-the-lesson.md
+      - review/DEC802-receive-correction.md
+      - review/DEC803-a-next-step-or-it-is-not-advice.md
+  - name: Decision Frameworks
+    description: >-
+      Named decision models and frameworks from books and practice — how
+      they work, when they help, and when they mislead. One skill per model
+      or a tight family. Distinct from the method categories above (how to
+      think) and from memory (a situation-specific fact, not a reusable
+      method).
+    index: 900
+    skills: []

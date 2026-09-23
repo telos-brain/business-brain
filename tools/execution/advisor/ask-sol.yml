@@ -1,0 +1,19 @@
+name: ask_sol
+version: 3
+description: >-
+  Ask Sol — the advisor — to sit with a proposed approach, plan or piece
+  of thinking. Sol frames it, checks memory, loads relevant skills, and
+  returns a few coaching questions plus relevant principles. Not a
+  recommended plan and not a rewrite. Use when you already have something
+  to check, the way you would ring Sol and say "this is what I'm thinking."
+  Do not use this to frame a new problem; use create_frame_of_reference
+  for that.
+workflow:
+  code: WF-ASK-FOR-ADVICE
+parameters:
+  - name: request
+    description: >-
+      The thinking or solution to put to Sol. Include the proposed approach
+      and enough context that Sol could respond on a short call.
+    type: string
+    required: true

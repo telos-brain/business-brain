@@ -1,0 +1,63 @@
+name: Business
+code: BUS
+prefix: BUS
+version: 4
+description: >-
+  Transferable business practices — how to sell, serve customers, run
+  operations, handle money, and lead. Skills are methods and standards, not
+  client-specific facts. Situation-specific commercial detail belongs in memory.
+categories:
+  - name: Sales
+    description: >-
+      How to find, qualify and convert demand — pipeline, conversations,
+      proposals, pricing conversations, and closing. Distinct from Customer
+      Management (after they are a customer) and from Finance (the numbers
+      behind a deal).
+    index: 100
+    skills: []
+  - name: Customer Management
+    description: >-
+      How to keep and grow a customer relationship — onboarding, communication,
+      retention, accounts, and handling tension. Distinct from Sales (winning
+      the work) and from Operations (delivering the work).
+    index: 200
+    skills:
+      - customer/BUS201-choose-your-table.md
+      - customer/BUS202-do-not-believe-every-report.md
+  - name: Operations
+    description: >-
+      How work gets done day to day — delivery, process, capacity, quality,
+      and the systems that keep a small operation reliable. Distinct from
+      Finance (money) and from Strategy skills in the Advisory book (what
+      to do, not how the shop runs).
+    index: 300
+    skills:
+      - operations/BUS301-field-before-house.md
+      - operations/BUS302-name-the-excuse-then-work.md
+      - operations/BUS303-know-the-actual-state.md
+      - operations/BUS304-do-not-rewrite-the-deal.md
+      - operations/BUS305-small-compromise-spreads.md
+  - name: Finance
+    description: >-
+      How money moves — cash, pricing, invoicing, margins, forecasting and
+      simple commercial hygiene. Distinct from Sales (the conversation) and
+      from Operations (the work that generates the invoice).
+    index: 400
+    skills:
+      - finance/BUS401-do-not-stand-surety.md
+      - finance/BUS402-slow-money.md
+      - finance/BUS403-honest-weights.md
+      - finance/BUS404-the-borrower-serves.md
+  - name: Leadership
+    description: >-
+      How to set direction, make people decisions, and run a small team or
+      business. Covers hiring, accountability, and owner-operator judgment.
+      Distinct from the Advisory book's Counsel (how advice is given) and
+      from Operations (the work system).
+    index: 500
+    skills:
+      - leadership/BUS501-iron-sharpens-iron.md
+      - leadership/BUS502-name-before-riches.md
+      - leadership/BUS503-what-you-tolerate-becomes-the-culture.md
+      - leadership/BUS504-do-not-hire-the-surface.md
+      - leadership/BUS505-do-not-partner-incompatible-aims.md

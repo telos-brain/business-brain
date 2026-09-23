@@ -1,0 +1,18 @@
+name: find_available_skills
+version: 2
+description: Always search for relevant skills before starting a task.  This tool returns a list of tool names, codes and descriptions.  Use this information to identify relevant skills and then load the full skill using get_skill.
+system:
+  tool: find_available_skills
+parameters:
+  - name: query
+    param: query
+    description: The search query used to find relevant skills.
+    type: string
+    required: true
+
+# Search returns stubs (code, name, description). The body is not JSON, so
+# {{result.result}} is the raw markdown (BRA204 §3.5).
+response-markdown: |
+  {{result.result}}
+
+  Note: These are stubs only — skill content is NOT loaded. You must call get_skill(code) before applying or referencing any skill. Do not answer from descriptions.

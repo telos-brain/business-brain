@@ -1,0 +1,111 @@
+name: Advisory
+code: ADV
+prefix: ADV
+version: 6
+description: >-
+  The craft of advising — how to think, frame, judge, decide and counsel.
+  Skills are transferable practices, not types of advice. Domain knowledge from
+  books and work belongs here when it is a reusable method; situation-specific
+  facts belong in memory.
+categories:
+  - name: Critical Thinking
+    description: >-
+      How to examine claims, test assumptions, spot gaps, and avoid common
+      biases. Covers argument quality, evidence standards, steelmanning,
+      and separating what is known from what is hoped. Named review
+      techniques (assume we are wrong, multiple causes, assumptions, blind
+      spots) live in the Decision Making book — start at **DEC101**. Distinct
+      from Framing (defining the problem) and from Judgment (choosing among
+      options).
+    index: 100
+    skills: []
+  - name: Framing and Inquiry
+    description: >-
+      How to bound a problem, ask better questions, and separate symptom from
+      cause. Covers problem statements, scope, reframing, and useful inquiry
+      before analysis. Distinct from Critical Thinking (evaluating what is
+      already on the table) and from Synthesis (pulling threads together).
+    index: 200
+    skills:
+      - framing/ADV201-bound-the-ask.md
+      - framing/ADV202-questions-that-change-this.md
+      - framing/ADV203-hear-the-other-side.md
+  - name: Judgment and Trade-offs
+    description: >-
+      How to weigh options — opportunity cost, second-order effects, what you
+      give up, and what you refuse to optimise. Covers local trade-offs and
+      proportional response. Distinct from Decision Quality (the process of
+      committing) and from Strategy (direction and what to ignore).
+    index: 300
+    skills:
+      - judgment/ADV301-rule-your-spirit.md
+      - judgment/ADV302-stay-out-of-the-quarrel.md
+      - judgment/ADV303-pride-check.md
+      - judgment/ADV304-check-your-own-fault-first.md
+  - name: Decision Quality
+    description: >-
+      How to structure a decision, when to decide versus gather more, and how
+      to treat reversibility, commitment and follow-through. Covers decision
+      hygiene, not the content of any one choice. Distinct from Judgment
+      (weighing) and from Counsel (how the advice is given).
+    index: 400
+    skills: []
+  - name: Counsel
+    description: >-
+      How to give advice that lands — brevity, candour, useful questions, and
+      leaving the work with the person who owns it. Covers tone, timing, and
+      what not to do (nitpicking, cheerleading, rewriting). Distinct from
+      Challenge (stress-testing the idea) and from Critical Thinking (the
+      analysis itself).
+    index: 500
+    skills:
+      - counsel/ADV501-steelmanning.md
+      - counsel/ADV502-hold-your-tongue.md
+      - counsel/ADV503-soft-answer.md
+      - counsel/ADV504-faithful-wound.md
+      - counsel/ADV505-who-you-are-talking-to.md
+      - counsel/ADV506-a-word-in-season.md
+      - counsel/ADV507-quick-to-hear.md
+      - counsel/ADV508-mean-the-word.md
+      - counsel/ADV509-take-it-to-them.md
+  - name: Challenge
+    description: >-
+      How to stress-test a plan or solution without being merely negative.
+      Covers pre-mortems, failure modes, missing constraints, and the few
+      questions that would change the recommendation. Distinct from Counsel
+      (how you speak) and from Critical Thinking (general reasoning).
+    index: 600
+    skills:
+      - challenge/ADV601-pre-mortem-the-plan.md
+      - challenge/ADV602-killing-constraint.md
+      - challenge/ADV603-see-the-danger-and-step-aside.md
+  - name: Synthesis
+    description: >-
+      How to pull threads together, see the bigger picture, and say what the
+      situation is really about in a few lines. Covers connecting memory,
+      skills and the current request. Distinct from Framing (setting the
+      problem) and from Models (named frameworks you apply).
+    index: 700
+    skills:
+      - synthesis/ADV701-what-this-is-really-about.md
+  - name: Strategy and Priorities
+    description: >-
+      How to choose where to play, what to ignore, and in what sequence.
+      Covers focus, opportunity selection, and saying no. Distinct from
+      Judgment (a local trade-off) and from Decision Quality (how a single
+      decision is made).
+    index: 800
+    skills:
+      - strategy/ADV801-what-would-you-stop.md
+      - strategy/ADV802-guard-attention.md
+      - strategy/ADV803-one-aim.md
+      - strategy/ADV804-fear-of-a-person-is-a-snare.md
+  - name: Models and Frameworks
+    description: >-
+      Named mental models and frameworks drawn from books and practice — how
+      they work, when they help, and when they mislead. One skill per model
+      or a tight family of models. Distinct from memory (a situation-specific
+      fact) and from other categories (the method of advising, not the named
+      tool).
+    index: 900
+    skills: []

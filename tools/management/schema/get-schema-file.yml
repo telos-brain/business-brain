@@ -1,0 +1,19 @@
+name: get_schema_file
+version: 2
+description: >-
+  Returns the full canonical content (YAML or markdown) of a single schema file
+  by its path, e.g. "workflows/ask-question.md". When you already have the
+  path (run telemetry workflowPath / telos.workflow.path, or a previous
+  list/search), pass it in one call — do not list or search first. Use
+  update_schema_file to edit a file.
+system:
+  tool: get_schema_file
+parameters:
+  - name: path
+    param: path
+    description: >-
+      The schema file path, e.g. "workflows/ask-question.md". Use the path
+      from telemetry when evaluating a run. Otherwise take it from
+      list_schema_files or search_schema_files.
+    type: string
+    required: true

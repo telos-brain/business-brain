@@ -1,0 +1,48 @@
+name: Company
+version: 1
+description: >-
+  Company-wide memory. Facts about this business that stay useful across
+  clients and projects: who works here, the direction, the systems in use,
+  who is served, and what is sold. Not processes — those belong in the
+  Company skill book. Not one client's file — that belongs on the client.
+scope: brain
+categories:
+  - name: Team
+    description: >-
+      One entry per person who works in this business. Title is the person's
+      name. Record their role, what they are responsible for, and what they
+      currently own. Update that same entry when the role or responsibilities
+      change. Do not record personal life, small talk, leave, sick days, or
+      one-off chatter. Do not record how to do the job — that is a skill.
+      Distinct from Customers (people outside the business) and from Strategy
+      (direction, not the roster).
+  - name: Strategy
+    description: >-
+      Durable direction for the whole business: why it exists, how it wins,
+      current priorities, and decisions that set direction. Keep few entries
+      and update them when direction changes. Do not record planning meetings,
+      weekly plans, or the method for making strategy — the method is a skill.
+      Distinct from Products and services (what is sold) and from Team (who
+      does the work).
+  - name: Systems
+    description: >-
+      One entry per system, SaaS product, or tool the business actually uses.
+      Title is the product name. Record what it is used for and who relies on
+      it. Do not record step-by-step operation — that is a skill. Do not
+      record tools that were only mentioned in passing. Distinct from Products
+      and services (what this business sells, not what it subscribes to).
+  - name: Customers
+    description: >-
+      Who the business serves, at portfolio level: segments, the kind of
+      customer it wants, and notable accounts only as facts about the customer
+      base. A specific client's people, commercial terms, and live work belong
+      on that client, not here. Do not record how to sell or serve — that is a
+      skill. Distinct from Products and services (the offering) and from Team
+      (our people).
+  - name: Products and services
+    description: >-
+      One entry per product or service this business sells. Title is the
+      offering. Record what it is, who it is for, and how it is positioned.
+      Do not record the delivery process or a particular client's purchase —
+      process is a skill, a client's deal is that client's memory. Distinct
+      from Systems (tools we use) and from Strategy (direction).

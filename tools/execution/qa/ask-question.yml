@@ -1,0 +1,14 @@
+name: ask_question
+version: 4
+description: >-
+  Asks one question against company memory and returns only what answers it.
+  Use for a focused factual lookup (who owns something, a system, a past
+  decision, a product). Do not use this for open-ended advice — use ask_sol.
+workflow:
+  code: WF-ASK-QUESTION
+parameters:
+  - name: query
+    description: >-
+      The question to answer. State it as a single, self-contained question.
+    type: string
+    required: true

@@ -1,0 +1,18 @@
+name: create_frame_of_reference
+version: 4
+description: >-
+  Frames a problem before you have a solution. Returns a problem statement,
+  contextual lens, domain model, bigger picture and considerations, grounded
+  in company memory. Use when you are first facing a task or challenge and
+  want things to think about. Do not use this to check a finished plan — use
+  ask_sol for that.
+workflow:
+  code: WF-FRAME-OF-REFERENCE
+parameters:
+  - name: context
+    description: >-
+      The situation, question, ticket, or task to ground. Include enough detail
+      for problem framing — raw user language is fine; the workflow will map it
+      to brain concepts or call out ambiguity.
+    type: string
+    required: true
