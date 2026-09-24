@@ -5,7 +5,7 @@ description: >-
   Applies one blueprint memory write from a review_blueprint inbox task —
   searches for a close match, then either merges into an existing entry or
   creates a new one. Never both.
-version: 7
+version: 8
 
 # Tasks are created by WF-REVIEW-UOW / WF-TRIAGE via add_inbox_task with
 # workflow_code WF-REVIEW-BLUEPRINT. An inbox: trigger with :low enables
@@ -37,7 +37,8 @@ Fully autonomous — do not ask questions or wait for confirmation. Do **not**
 update the inbox entry status.
 
 Blueprint scope (entity vs brain-global) is resolved automatically from the run
-context — never pass scope to tools.
+context — never pass scope to tools. The list below is every blueprint at that
+tier, not the first one.
 
 ## This task
 
@@ -73,14 +74,22 @@ in one line.
 
 ## What this write is allowed to be
 
-Memory is a durable fact in the named category. The categories in scope are
-below. Obey the matching description, including "one entry per …". If the
-parsed category is not in the list, stop with no tool writes.
+Memory is a durable fact in the named category. The blueprints below are every
+blueprint at this run's tier. A category is valid only under the blueprint
+heading it appears under. Obey that blueprint's description and the category
+description, including "one entry per …". If the parsed category is not in
+the list, stop with no tool writes.
 
 <blueprint_categories>
+{{#blueprints}}
+### {{blueprint.name}}
+{{blueprint.description}}
+
 {{#blueprint.categories}}
 - **{{category.name}}** — {{category.description}}
 {{/blueprint.categories}}
+
+{{/blueprints}}
 </blueprint_categories>
 
 Do **not** write, and stop with no tool calls, when the concept is:

@@ -1,7 +1,7 @@
 ---
 name: Brain Principles
 code: BRA105
-version: 6
+version: 5
 description: High-level principles for organising a Telos Brain — skills,
   tools, configuration, memory, and LLM budgets. Always inject when triaging
   learnings or editing the brain.
@@ -25,14 +25,8 @@ description: High-level principles for organising a Telos Brain — skills,
   reconfigure for a single eval or flip-flop between one-off fixes.
 - **Categories are the lens.** Skill-book and blueprint category descriptions
   decide what belongs. Extract signal; discard noise. Skills hold transferable
-  practices and processes — not personal or customer data, and not one
-  project's implementation. Memory holds scoped facts; match brain vs entity
-  vs unit-of-work scope. A process does not belong in memory.
-- **Nothing is a valid result.** Do not invent a skill or a memory to justify
-  an input. If a meeting is status and small talk, leave it out.
-- **A skill that still needs the case is not a skill.** If the client, the
-  project, or the one-off detail has to stay for the text to mean anything,
-  it is memory or it is noise.
+  practices and processes — not personal or customer data. Memory holds scoped
+  facts; match brain vs entity scope.
 - **Manage the LLM; don't let the LLM manage us.** We give the model a budget
   and we enforce it. Use the boundaries we have: daily and monthly spend limits,
   max turns, output-token and thinking-token budgets, and run-rate caps (per

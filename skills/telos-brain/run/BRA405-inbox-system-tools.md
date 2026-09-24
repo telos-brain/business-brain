@@ -1,7 +1,7 @@
 ---
 name: Inbox System Tools
 code: BRA405
-version: 15
+version: 14
 description: The in-brain system tools for operating the learning-signal inbox
   — create_inbox_entry, create_inbox_cluster, list_inbox_entries,
   get_inbox_entry, update_inbox_entry, list_inbox_tasks, add_inbox_task and
@@ -62,10 +62,8 @@ Intended flows:
 
 - **Learning evals:** `create_inbox_entry` (once per learning, with source-context
   metadata when available) then `set_run_grading` (BRA406 / BRA207)
-- **Triage / review:** classify first. Direct intake (email, document upload,
-  Granola, manual) → `add_inbox_task` immediately, no cluster. Eval learnings
-  → list entries → cluster related eval signals (`create_inbox_cluster`,
-  BRA413) when a pattern exists → add tasks on the cluster or the entry.
+- **Triage / review:** list entries → get entry → cluster related signals
+  (`create_inbox_cluster`, BRA413) or overwrite title/body → list/add/update tasks
 
 ---
 
