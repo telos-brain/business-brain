@@ -2,17 +2,15 @@
 name: Inbox Triage
 code: WF-TRIAGE
 description: >-
-  Triages every new inbox entry. Direct intake (email, document upload,
-  Granola, manual) is mostly noise: skip clustering, and create a
-  task only when there is a repeatable practice or a durable fact that
-  clearly fits a blueprint category. Creating nothing is a successful
-  triage. Eval findings from WF-EVAL-RUN stay PENDING until this workflow
-  clusters related signals and then creates apply tasks. Routes skill craft,
-  workflow/tool fixes, brain self-management, and research asks to the
-  matching workflows, and creates review_blueprint tasks for clear category
-  matches — without repeating the entry body into maintenance task
-  instructions.
-version: 20
+  Triages every new inbox entry. A direct instruction is imported now, at
+  weight 5. A skill inferred from a meeting transcript is clustered until
+  the cluster weight reaches 5, then the skill workflow runs. Creating
+  nothing is a successful triage. Eval findings may still be clustered.
+  Routes skill craft, workflow/tool fixes, brain self-management, and
+  research asks to the matching workflows, and creates review_blueprint
+  tasks for clear category matches — without repeating the entry body into
+  maintenance task instructions.
+version: 21
 
 type: TRIGGERED
 trigger: inbox:*
@@ -41,21 +39,24 @@ injected-skills:
 
 You are triaging a single inbox entry. You do **not** apply changes. You only:
 
-1. Classify the entry as **direct intake** or **eval learning** (see Signal
-   class below).
-2. **Eval learnings only:** scan recent open entries for duplicates or related
-   signals and cluster them when a clear pattern exists
-   (`create_inbox_cluster`). Never cluster direct intake.
+1. Classify the entry as a **direct instruction**, an **inferred practice**
+   (usually a meeting transcript), or an **eval learning** (see Signal class).
+2. Cluster when the skill is inferred from examples, or when this is an eval
+   learning. A direct instruction is not clustered.
 3. Decide which **maintenance** workflows should run (skill / workflow / brain)
    and whether a **research** request should run (`WF-RESEARCH`).
 4. Detect **blueprint** domain concepts that clearly fit a category and create
    `review_blueprint` tasks for them.
 
-Clustering is an eval-only pre-pass. If you cluster, create tasks **immediately**
-on the **new cluster** entry (its reference is in the tool result). Do not
-create tasks on the source entries — they are `COMPLETED` and their open tasks
-are cancelled. If you only flag a partial signal or find no relationship,
-create tasks on this entry as usual. Direct intake never enters this pre-pass.
+`WF-UPDATE-SKILL` auto-runs only when the parent entry's weight is **5 or
+higher**. Set that weight in the same call that creates the cluster
+(`weight` on `create_inbox_cluster`). For a direct instruction that stands
+alone, set it with `update_inbox_entry` before `add_inbox_task`.
+
+If you cluster, create tasks on the **new cluster** entry (its reference is
+in the tool result). Do not create tasks on the source entries — they are
+`COMPLETED` and their open tasks are cancelled. Skill and brain tasks wait
+until that cluster's weight is 5 or higher. Blueprint tasks do not wait.
 
 Work is dispatched **on the task**. Each `add_inbox_task` names a
 `workflow_code`; auto-run vs `AWAITING_APPROVAL` is decided from that linked
@@ -73,12 +74,10 @@ it as filed (eval entries stay `EVAL`).
 `routing_type: EVAL` and `source: WF-EVAL-RUN`. Those are extracted fragments.
 This workflow may cluster them before creating apply tasks.
 
-**Direct intake** (email, document upload, Granola, manual create)
-is raw material from the business. A full meeting can contain no skill and
-no memory. Process it on this entry now — do not cluster it, do not wait
-for more signals, and do not apply the eval weight-1 seed rules — but create
-a task only when the bar below is cleared. Weight 1 does not mean "extract
-more".
+**Imported material** (email, document upload, Granola, manual create) is raw
+material from the business. Read what kind of skill it is before deciding
+whether to import or cluster. A full meeting can contain no skill and no
+memory. Weight 1 does not mean "extract more".
 
 Maintenance/research routing and blueprint detection are independent and
 additive. Blueprint detection must not change maintenance/research routing, and
@@ -125,37 +124,43 @@ cannot see is **not** filed under a category you can see — leave it out.
 Classify **before** clustering or routing. Use `Source` and `Routing` from
 the inbox entry block.
 
+### Direct instruction — import now
+
+The text **states** the practice, the rule, or the change. Someone is telling
+the brain what to learn: an SOP, a written process, "we always…", "the
+process is…", or an instruction to update a skill, workflow, or the brain.
+Source does not decide this. An email or an upload can be a direct
+instruction. A meeting usually is not.
+
+Do not cluster. If `{{inboxEntry.weight}}` is below 5, call
+`update_inbox_entry` on this entry with `weight` `5` before any
+`add_inbox_task`. Then create each maintenance task that clears the bar, on
+`{{inboxEntry.reference}}`.
+
+### Inferred practice — cluster, then wait for weight 5
+
+The text is an example of a skill being applied, not a statement of the
+skill. A meeting, call, or transcript (often `Granola`) is this case. The
+practice has to be inferred by removing the client, the project, and the
+people.
+
+Cluster it with other open inferred entries about the same practice. Do
+**not** create `WF-UPDATE-SKILL` or `WF-UPDATE-BRAIN` until the entry you
+would task has weight **5 or higher**. Blueprint tasks are still created
+now. A meeting with no inferable skill and no durable fact produces no tasks.
+
 ### Eval learning — clustering allowed
 
 `Source` is `WF-EVAL-RUN` or `WF-EVAL`, or `Routing` is `EVAL`. These are
-already-extracted fragments (title + recommended change). Clustering,
-partial-signal annotation, and the weight-1 seed rules apply only here.
+already-extracted fragments (title + recommended change). Cluster related
+eval seeds. Do not mix them with meeting transcripts.
 
-### Direct intake — skip clustering, decide now
-
-Everything else is **direct intake**: the operator (or an external system
-on their behalf) supplied this material on purpose. Typical sources:
-`Postmark` (email), document / file upload, `Granola`, `Manual`,
-portal, Management API, Execution API. Weight 1 is normal.
-Most of a meeting, email, or transcript will not clear the bar. That is
-the expected result when every meeting is piped in.
-
-Never:
-
-- Call `create_inbox_cluster`
-- Call `list_inbox_entries` to hunt for related signals
-- Annotate `Partial signal — awaiting further signals…`
-- Hold back a task that **has** cleared the bar because weight is below 5
-- Create a task in order to have created one
-
-Create each task that clears the bar on `{{inboxEntry.reference}}` in this
-run. If none clear it, create none.
-
-If class is ambiguous, prefer **direct intake** (decide now, no cluster).
+If the class is ambiguous, treat a transcript as **inferred practice** and a
+stated rule as a **direct instruction**.
 
 ## Decision criteria — maintenance
 
-### Direct intake
+### Imported material
 
 Read the body as source material. Do not go looking for a lesson. A status
 meeting, a planning session, or an inbox full of small talk often yields
@@ -254,21 +259,25 @@ contains both a research ask and a separate maintenance signal.
 A mixed entry is common: create a task only for the part that clears the
 bar. The rest is discarded, not filed "somewhere".
 
-## Decision criteria — clustering (eval learnings only)
+## Decision criteria — clustering
 
-Skip this entire section for **direct intake**. Do not list other entries.
-Do not cluster. Do not annotate a partial signal.
+Skip this entire section for a **direct instruction**. Do not list other
+entries. Do not cluster. Do not annotate a partial signal.
 
-For **eval learnings**, clustering is continuous quality improvement, not a
-one-time cleanup. Goals: raise learning quality, collapse near-duplicates,
-and amplify recurrent eval signals. Do **not** cluster for its own sake.
-Never pull a direct-intake entry into an eval cluster.
+Cluster an **inferred practice** with other open inferred entries about the
+same practice, and an **eval learning** with other open eval entries about
+the same learning. Do not mix the two. Do **not** cluster for its own sake.
 
-A new eval entry is a **seed** (weight 1). Seeds are valid records. Most
-eval seeds should reach weight **5+** (via clustering) before they are
-treated as a complete brain-level learning. A weight-1 eval may still be
-routed when the signal is clear, well-evidenced, and not over-fitted to a
-single run. These seed rules do **not** apply to direct intake.
+A new entry is a **seed** (weight 1). `WF-UPDATE-SKILL` runs when the entry
+it is tasked on has weight **5 or higher**. For an inferred practice, that
+weight is the cluster's weight. Omit `weight` on `create_inbox_cluster` so
+the cluster keeps the sum of its sources. Create the skill task only when
+that sum is 5 or higher. Below 5, flag a partial signal and do not create
+`WF-UPDATE-SKILL` or `WF-UPDATE-BRAIN`.
+
+Pass `weight` `5` on `create_inbox_cluster` only when this cluster is the
+import itself — the practice is stated, not inferred — so the skill workflow
+can run from this call without a later `update_inbox_entry`.
 
 ### Grouping signals (strongest first)
 
@@ -290,13 +299,15 @@ tool requires two or more; two is a minimum, not a target).
 create_inbox_cluster(
   inbox_entry_references: "<this reference plus every related ref, comma-separated>",
   cluster_title: "<short generalised title>",
-  cluster_description: "<consolidated learning; name the source refs and the pattern>"
+  cluster_description: "<consolidated learning; name the source refs and the pattern>",
+  weight: "<5 only when this cluster is a direct import; otherwise omit>"
 )
 ```
 
 Include **this** entry's reference. Capture the new cluster **reference** from
-the result. Then run the maintenance and blueprint passes **immediately**
-against that cluster reference — do not wait for another triage run.
+the result. Blueprint tasks go on that cluster now. Skill and brain tasks go
+on it only when its weight is 5 or higher — the sum, unless you passed
+`weight`.
 
 **Flag as partial signal** — the current entry looks like a fragment, but
 there are not enough related entries to generalise confidently. Call
@@ -305,8 +316,8 @@ body plus:
 
 `Partial signal — awaiting further signals before consolidation.`
 
-and the references of related entries. Do **not** close anyone. Continue with
-maintenance and blueprint routing.
+and the references of related entries. Do **not** close anyone. Do not
+create a skill or brain task. Continue with the blueprint pass.
 
 **No action** — no meaningful relationship, or the entry is already a clear
 standalone learning. Continue with existing routing unmodified.
@@ -315,10 +326,10 @@ standalone learning. Continue with existing routing unmodified.
 
 - Never force-fit unrelated entries into a cluster
 - Never invent relatedness from timestamp alone
-- Never include a direct-intake entry (email, upload, Granola, manual) in
-  an eval cluster
+- Never put a direct instruction or a meeting transcript into an eval cluster
+- Never put an eval entry into a meeting cluster
 - Skip this entry's own row when reading `list_inbox_entries`
-- From the list, include **all** related **eval** references in the cluster.
+- From the list, include **all** related references of the same class.
   Use `get_inbox_entry` only when title/metadata is not enough to confirm a
   relationship — do not cap the cluster at two entries.
 - Do not call `create_inbox_cluster` on entries that are already `COMPLETED`
@@ -359,21 +370,20 @@ find is a process, create no blueprint task.
 
 1. Read the entry body and the **Existing tasks** list at the end of this
    prompt — do not call a tool to list tasks; they are already injected.
-   Classify as **direct intake** or **eval learning**.
-2. **Clustering pass (eval learnings only)** — if this is direct intake:
-   skip this step entirely. Task target is `{{inboxEntry.reference}}`.
-   If this is an eval learning: call `list_inbox_entries` once (omit `status`
-   and `count` so you get the default 50 open entries). Ignore this entry's
-   own `Reference` and skip any row that is itself direct intake. From
-   `WorkflowName`, `EntityName`, `UnitOfWorkName`, `Source`, `Date`, and
-   title, collect **every** related open eval entry. Then apply Cluster /
-   Partial signal / No action from **Decision criteria — clustering**.
-   After a cluster, the task target is the **new cluster reference**; otherwise
-   it is `{{inboxEntry.reference}}`.
+   Classify as **direct instruction**, **inferred practice**, or **eval learning**.
+2. **Clustering pass** — a direct instruction skips this step. If its weight
+   is below 5, call `update_inbox_entry` with `weight` `5` on
+   `{{inboxEntry.reference}}` before creating tasks. Task target is this entry.
+   An inferred practice or eval learning: call `list_inbox_entries` once
+   (omit `status` and `count`). Ignore this entry's own `Reference` and skip
+   rows of the other class. Collect every related open entry, then apply
+   Cluster / Partial signal / No action. After a cluster, the task target is
+   the **new cluster reference**; otherwise it is `{{inboxEntry.reference}}`.
 3. **Maintenance pass** — decide which maintenance destinations apply (zero or
-   more), including `WF-RESEARCH` when criteria match. For direct intake,
-   route only signals that clear the bar — do not mine the document for
-   more. Skip any destination whose workflow code already has a
+   more), including `WF-RESEARCH` when criteria match. Do not mine the
+   document for more. For an inferred practice whose task target is still
+   below weight 5, skip `WF-UPDATE-SKILL` and `WF-UPDATE-BRAIN`. Skip any
+   destination whose workflow code already has a
    non-`CANCELLED` / non-`FAILED` task. For each new destination, call
    `add_inbox_task` with:
    - `inbox_entry_reference` = the task target from step 2
@@ -394,11 +404,12 @@ find is a process, create no blueprint task.
    - `instructions` = exactly this format (em dash):
      `review blueprint: {category name} — {short concept description}`
      Example: `review blueprint: Team — Alex Morgan, operations lead, owns scheduling`
-5. If neither pass produces tasks: stop. For direct intake, no task is a
-   successful triage. An extra unjustified task is worse than a miss. Do not
-   create a placeholder task so the entry "went somewhere".
-6. Reply in a few lines: signal class (direct intake / eval), clustering
-   outcome (skipped / clustered / partial signal / none), maintenance
+5. If neither pass produces tasks: stop. No task is a successful triage.
+   An extra unjustified task is worse than a miss. Do not create a
+   placeholder task so the entry "went somewhere".
+6. Reply in a few lines: signal class (direct instruction / inferred practice /
+   eval), clustering outcome (skipped / clustered / partial signal / none),
+   the weight used, maintenance
    destinations (including research), blueprint task count, and any skips
    for duplicates.
 
@@ -414,7 +425,8 @@ find is a process, create no blueprint task.
 - Prefer a missed research route over a false `RESEARCH` classification
 - Prefer no blueprint task over force-fitting a category or saving a process
 - Prefer a missed cluster over force-fitting unrelated entries
-- Never cluster direct intake (email, document upload, Granola, manual)
+- Never cluster a direct instruction
+- Never create a skill or brain task on an inferred practice below weight 5
 - Never close an entry as COMPLETED except via `create_inbox_cluster`
 - Never change `source`. Leave `routing_type` as filed.
 

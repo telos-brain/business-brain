@@ -30,10 +30,11 @@ UUID.
 ## Purpose
 
 Clustering reduces noise: related or near-duplicate signals become one
-inbox entry. Weight is the sum of the source entries' current weights
-(manual overrides included) and is not recalculated afterwards. The
-cluster is created as `PROCESSED` with no trigger tasks — triage adds
-tasks afterwards.
+inbox entry. Weight defaults to the sum of the source entries' current
+weights (manual overrides included) and is not recalculated afterwards.
+Pass `weight` to store an absolute weight on the new cluster instead of
+that sum. The cluster is created as `PROCESSED` with no trigger tasks —
+triage adds tasks afterwards.
 
 ---
 
@@ -54,6 +55,7 @@ All parameters are strings. `BrainId` is harness-injected — never a parameter.
 | `inbox_entry_references` | Yes | Comma-separated 8-character references (at least two). Whitespace is trimmed. |
 | `cluster_title` | Yes | Title for the new cluster entry (max 500 characters). |
 | `cluster_description` | Yes | Body/description for the new cluster entry (markdown). |
+| `weight` | No | Absolute weight for the new cluster (positive integer). Replaces the sum of the source weights. Omit to keep the sum. |
 
 ### Return value
 

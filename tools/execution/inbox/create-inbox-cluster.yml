@@ -1,11 +1,12 @@
 name: create_inbox_cluster
-version: 2
+version: 3
 description: >-
   Consolidates two or more related inbox entries (no upper limit) into a
   single PROCESSED cluster entry. Pass comma-separated source references, a
   cluster title, and a cluster description. Source entries become COMPLETED
   and their open tasks are cancelled. Add apply tasks to the new cluster
-  reference immediately.
+  reference immediately. Weight defaults to the sum of the source weights;
+  pass weight to store an absolute weight on the new cluster instead.
 system:
   tool: create_inbox_cluster
 parameters:
@@ -26,3 +27,11 @@ parameters:
     description: Required. Body/description for the new cluster inbox entry (markdown).
     type: string
     required: true
+  - name: weight
+    param: weight
+    description: >-
+      Optional. Absolute weight for the new cluster, a positive integer. When
+      set, this replaces the sum of the source weights. Omit to keep the sum.
+      Use 5 when this cluster should meet the skill-update threshold in the
+      same call. Zero, negative, and non-numeric values are rejected.
+    type: string
