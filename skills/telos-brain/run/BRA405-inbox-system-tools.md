@@ -50,7 +50,7 @@ but documented in **BRA406** — eval workflows typically call both
 | Tool | Purpose | Key parameters | Returns |
 |---|---|---|---|
 | **`create_inbox_entry`** | Create a learning signal | `title`, `body`, `routing_type`; optional `source`, `status`, `weight`, `workflow_name`, `entity_name`, `unit_of_work_name` | Confirmation with new entry **reference** |
-| **`create_inbox_cluster`** | Consolidate related entries | `inbox_entry_references`, `cluster_title`, `cluster_description`; optional `weight` | Confirmation with new cluster **reference** (BRA413) |
+| **`create_inbox_cluster`** | Consolidate related entries | `inbox_entry_references`, `cluster_title`, `cluster_description` | Confirmation with new cluster **reference** (BRA413) |
 | **`list_inbox_entries`** | List entries (optional filters) | `status`, `routing_type`, `count` | CSV keyed by `Reference` |
 | **`get_inbox_entry`** | Full entry + tasks | `inbox_entry_reference` | Markdown |
 | **`update_inbox_entry`** | Status, routing type, title, body, and/or absolute weight | `inbox_entry_reference`, `status`, `routing_type`, `title`, `body`, `weight` | Confirmation |
@@ -77,7 +77,6 @@ Intended flows:
 | `create_inbox_entry` | `workflow_name`, `entity_name`, `unit_of_work_name` | Optional source-context labels for triage grouping (BRA323) |
 | `create_inbox_cluster` | `inbox_entry_references` | Required; comma-separated, at least two |
 | `create_inbox_cluster` | `cluster_title`, `cluster_description` | Required |
-| `create_inbox_cluster` | `weight` | Optional positive integer. Absolute weight of the new cluster. Omit to keep the sum of the source weights |
 | `list_inbox_entries` | `status`, `routing_type`, `count` | All optional; see below |
 | `get_inbox_entry` | `inbox_entry_reference` | Required |
 | `update_inbox_entry` | `inbox_entry_reference` | Required; plus at least one of `status`, `routing_type`, `title`, `body`, `weight` |

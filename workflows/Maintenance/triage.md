@@ -9,9 +9,9 @@ description: >-
   findings, not meeting transcripts. Eval findings may still be clustered.
   Routes skill craft, workflow/tool fixes, brain self-management, and
   research asks to the matching workflows, and creates review_blueprint
-  tasks for clear category matches — without repeating the entry body into
-  maintenance task instructions.
-version: 23
+  tasks for clear category matches on any blueprint at this tier — without
+  repeating the entry body into maintenance task instructions.
+version: 24
 
 type: TRIGGERED
 trigger: inbox:*
@@ -103,10 +103,10 @@ destinations into a single task.
 
 ## Blueprint categories
 
-Categories in the current scope only. Company, CRM, and Job are all
-brain-scoped. The platform injects **one** blueprint for this run. Use
-**only** the categories listed. A fact that belongs on a blueprint you
-cannot see is **not** filed under a category you can see — leave it out.
+Every blueprint at this tier is listed below. Company, CRM, and Job are all
+brain-scoped, so all three appear. Use a category only under the blueprint
+heading it appears under. Do not file a fact into a category on a different
+blueprint because the names feel close.
 
 - Company categories (team, strategy, systems, products): facts about this
   business. A company or person we deal with does not go here.
@@ -116,9 +116,15 @@ cannot see is **not** filed under a category you can see — leave it out.
   a CRM standing or a company-wide fact here.
 
 <blueprint_categories>
+{{#blueprints}}
+### {{blueprint.name}}
+{{blueprint.description}}
+
 {{#blueprint.categories}}
 - **{{category.name}}** — {{category.description}}
 {{/blueprint.categories}}
+
+{{/blueprints}}
 </blueprint_categories>
 
 ## Signal class
@@ -381,10 +387,10 @@ find is a process, create no blueprint task.
 - **Systems:** one task per system the business actually uses, including a
   spreadsheet or offline routine. Skip a system that was only mentioned.
 - **Products and services:** one task per offering. Not the delivery process.
-- **CRM and jobs:** only when that blueprint's categories are in the list
-  above. Do not copy a company or person into company Team or Products and
-  services. If this run cannot see the CRM categories, leave that company or
-  person out. If this run cannot see the Job categories, leave the job fact out.
+- **CRM:** a company or person this business deals with, under that CRM
+  category. Do not copy them into Company Team or Products and services.
+- **Job:** one piece of work, under Brief, Decisions, or State. Do not copy
+  a job onto CRM, and do not copy a CRM standing onto the job.
 - Skip a blueprint task if an existing non-`CANCELLED` / non-`FAILED` task on
   this entry already has the same `instructions` text.
 - Several `WF-REVIEW-BLUEPRINT` tasks are allowed when several facts each
@@ -429,7 +435,11 @@ find is a process, create no blueprint task.
    - `workflow_code` = `WF-REVIEW-BLUEPRINT`
    - `instructions` = exactly this format (em dash):
      `review blueprint: {category name} — {short concept description}`
-     Example: `review blueprint: Team — Alex Morgan, operations lead, owns scheduling`
+     The category name is the one under that blueprint's heading. Do not put
+     the blueprint name in the instruction.
+     Examples:
+     - `review blueprint: Team — Alex Morgan, operations lead, owns scheduling`
+     - `review blueprint: Companies — Acme, client`
 5. If neither pass produces tasks: stop. No task is a successful triage.
    An extra unjustified task is worse than a miss. Do not create a
    placeholder task so the entry "went somewhere".
