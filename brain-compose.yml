@@ -35,17 +35,16 @@ allowed-callback-domains:
 
 # Entities: top-level things the brain reasons about (multi-tenancy anchor).
 entities:
-  - code: crm
-    name: CRM
+  - code: client
+    name: Client
     description: >-
-      A company or person this business interacts with — a client, partner,
-      industry contact, or prospect
+      A client this business does work for
 
 # Units of work: scoped pieces of work that trigger learning on completion.
 unitsofwork:
-  - code: jobs
-    name: Jobs
-    scope: entity:crm
+  - code: job
+    name: Job
+    scope: entity:client
 
 # Connectors are named integrations with external services (REST/MCP). Each file
 # under connectors/ declares URL, auth type, scope and required auth parameters.
@@ -62,6 +61,7 @@ tools:
   - tools/execution/advisor/tools.yml
   - tools/execution/native/tools.yml
   - tools/execution/inbox/tools.yml
+  - tools/execution/uow/tools.yml
   - tools/execution/simulation/tools.yml
   - tools/execution/my-app/tools.yml
   - tools/management/schema/tools.yml
@@ -89,6 +89,7 @@ workflows:
   - workflows/ask-question.md
   - workflows/create-frame-of-reference.md
   - workflows/review-unit-of-work.md
+  - workflows/run-job.md
   - workflows/review-blueprint.md
   - workflows/research.md
   - workflows/eval.md

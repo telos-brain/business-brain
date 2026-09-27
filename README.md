@@ -76,10 +76,10 @@ Ask, once:
 
 > Do you have clients you would want the brain to remember one by one? And does a piece of work — a project, a job, an engagement — have a life of its own, separate from the client?
 
-Defaults already in the schema: CRM (`crm`) and jobs (`jobs`). CRM is one record per company or person this business interacts with — clients, partners, industry contacts, and prospects. Accept the default when they are unsure and they clearly deal with people outside the company.
+Defaults already in the schema: one entity, Client (`client`), and one unit of work, Job (`job`), scoped to that client. Accept the default when they are unsure and they clearly deal with people outside the company.
 
-- No outside roster (a product sold to a market, with no companies or people to remember one by one): remove the `crm` entity from `brain-compose.yml` and remove `blueprints/crm/blueprint.yml` from the compose list. Do not add a Customers category on Company. Who the business deals with belongs on CRM.
-- Clients, but no projects: remove the `jobs` unit of work and `blueprints/jobs/blueprint.yml`.
+- No outside roster (a product sold to a market, with no companies or people to remember one by one): remove the `client` entity from `brain-compose.yml` and remove `blueprints/crm/blueprint.yml` from the compose list. Do not add a Customers category on Company. Who the business deals with belongs on the CRM blueprint.
+- Clients, but no projects: remove the `job` unit of work and `blueprints/jobs/blueprint.yml`.
 - They use another word (engagements, matters, accounts): rename the entity or unit-of-work `code` to a lowercase hyphen-free word. Blueprint scope stays `brain`. Confirm the code with them only if the word is ambiguous.
 
 When you explain memory, use this shape unless their correction demands a change. Do not add a process category. Do not add a catch-all "General" category. **BRA104**'s starter categories (Operations, Finance, General on both blueprints) are the wrong defaults for this brain — do not put them back.

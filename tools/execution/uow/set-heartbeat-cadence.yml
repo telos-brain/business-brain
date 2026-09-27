@@ -1,0 +1,17 @@
+name: set_heartbeat_cadence
+version: 1
+description: >-
+  Sets when this async run looks at the same job again. Pass cadence_minutes
+  as the gap before the next pass. Pass 0 to stop further repetitions. Has no
+  effect on a synchronous run. A successor is created only when this run was
+  started with max_runs above the current run count.
+system:
+  tool: set_heartbeat_cadence
+parameters:
+  - name: cadence_minutes
+    param: cadence_minutes
+    description: >-
+      Required. Minutes until the next pass of this job. 0 cancels further
+      repetitions.
+    type: int
+    required: true
