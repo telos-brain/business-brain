@@ -1,40 +1,56 @@
 name: Company
-version: 4
+version: 5
 description: >-
   Company-wide memory. Facts about this business that stay useful across
-  relationships and projects: who works here, the direction, the systems in
-  use, and what is sold. Not processes — those belong in the Company skill
-  book. Not a company or person we deal with — that belongs on the CRM blueprint.
+  relationships and projects: who works here, the vision and values, the
+  direction, the systems in use, and what is sold. Not processes — those
+  belong in the Company skill book. Not a company or person we deal with —
+  that belongs on the CRM blueprint. Not a client's vision, values, or
+  strategy.
 scope: brain
 categories:
   - name: Team
     description: >-
       One entry per person who works in this business. Title is the person's
-      name. Record their role, what they are responsible for, and what they
-      currently own. Update that same entry when the role or responsibilities
-      change. Do not record personal life, small talk, leave, sick days, or
-      one-off chatter. Do not record how to do the job — that is a skill.
-      Distinct from CRM (companies and people outside the business) and from
-      Strategy (direction, not the roster).
+      name. Record their role, responsibilities, and the standing
+      relationships that explain who they are here. Update that same entry
+      when the role or responsibilities change. A name in a transcript is
+      not enough — write only when the source shows they work here. Do not
+      record what they said, what they are doing this week, personal life,
+      leave, or small talk. Do not record how to do the job — that is a
+      skill. Distinct from CRM People (people outside the business) and
+      from Strategy (direction, not the roster).
+  - name: Vision and values
+    description: >-
+      What this company is: its vision, what it does, and the values that
+      govern how it operates. Company-level only. Record only what the
+      source states as such — do not invent vision or values. Do not record
+      a client's vision or values. Do not record current priorities — that
+      is Strategy. Do not record a procedure — that is a skill. Keep few
+      entries and update them in place.
   - name: Strategy
     description: >-
-      Durable direction for the whole business: why it exists, how it wins,
-      current priorities, and decisions that set direction. Keep few entries
-      and update them when direction changes. Do not record planning meetings,
-      weekly plans, or the method for making strategy — the method is a skill.
-      Distinct from Products and services (what is sold) and from Team (who
-      does the work).
+      Durable direction for this business: how it wins, the priorities that
+      set direction, and decisions that set direction. Company strategy
+      only — not a client's strategy, and not vision or values. Keep few
+      entries and update them when direction changes. Do not record
+      planning meetings, weekly plans, a task list, or the method for
+      making strategy — the method is a skill. Distinct from Vision and
+      values (what the company is), from Products and services (what is
+      sold), and from Team (who does the work).
   - name: Systems
     description: >-
-      One entry per system, SaaS product, or tool the business actually uses.
-      Title is the product name. Record what it is used for and who relies on
-      it. Do not record step-by-step operation — that is a skill. Do not
-      record tools that were only mentioned in passing. Distinct from Products
-      and services (what this business sells, not what it subscribes to).
+      One entry per system the business actually uses, including a
+      spreadsheet or other offline routine, not only named software. Title
+      is the system. Record what it is and, separately, who uses it, how
+      it is deployed, and the purpose it serves. Mentioning a system is
+      not use. Do not record step-by-step operation — that is a skill.
+      Distinct from Products and services (what this business sells).
   - name: Products and services
     description: >-
       One entry per product or service this business sells. Title is the
-      offering. Record what it is, who it is for, and how it is positioned.
-      Do not record the delivery process or a particular relationship's
-      purchase — process is a skill, a deal belongs on the CRM blueprint.
-      Distinct from Systems (tools we use) and from Strategy (direction).
+      offering. Record what it is, who it is for, and how it is positioned,
+      specifically enough to know what is sold. Do not record the delivery
+      process or a particular relationship's purchase — process is a skill,
+      a deal belongs on the CRM blueprint. Distinct from Systems (what we
+      run) and from Strategy (direction).

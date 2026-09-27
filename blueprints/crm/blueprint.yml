@@ -1,5 +1,5 @@
 name: CRM
-version: 4
+version: 5
 description: >-
   Shared memory of the companies and people this business interacts with.
   Clients, partners, industry contacts, and prospects all belong here.
@@ -11,8 +11,9 @@ categories:
   - name: Companies
     description: >-
       One entry per organisation this business deals with. Title is the
-      company name. Record what it does, and the kind of tie: client,
-      partner, industry, or prospect. Record what is already agreed —
+      company name — specific enough to find this organisation again. A
+      vague label is not an entry. Record what it does, and the kind of
+      tie: client, partner, industry, or prospect. Record what is already agreed —
       terms, pricing, or the shape of a partnership — and the commitments
       or constraints that will still matter after this week. A partner, an
       industry body, or a prospect may have no commercial terms; record
@@ -26,8 +27,10 @@ categories:
   - name: People
     description: >-
       One entry per person this business deals with. Title is the person's
-      name. Record their role, which organisation they sit in, what they
-      care about in the relationship, and how they are involved. The kind
+      name. A first name alone is not enough unless the entry also names
+      their organisation exactly. Record their role, which organisation
+      they sit in, what they care about in the relationship, and how they
+      are involved. The kind
       of tie with their organisation — client, partner, industry, or
       prospect — belongs under Companies. Do not copy it onto the person.
       When the person has no organisation, record the kind of tie on this

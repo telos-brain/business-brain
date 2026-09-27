@@ -1,7 +1,7 @@
 name: Company
 code: CMP
 prefix: CMP
-version: 1
+version: 2
 description: >-
   Starter placeholder: replace these categories during onboarding before
   extracting company practices. This book is for how THIS company does the
@@ -84,8 +84,9 @@ categories:
   - name: Choosing direction
     description: >-
       How this company chooses what to pursue, stop, or refuse — the
-      repeatable judgment, not the current strategy. Current priorities and
-      why the business exists belong in memory under Strategy. Distinct from
+      repeatable judgment, not the current strategy. Current priorities
+      belong in memory under Strategy. What the company is, its vision,
+      and its values belong under Vision and values. Distinct from
       Planning and scoping (a single piece of work) and from Winning work
       (a single sale).
     index: 900

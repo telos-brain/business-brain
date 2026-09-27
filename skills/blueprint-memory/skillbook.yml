@@ -1,0 +1,20 @@
+name: Blueprint memory
+code: BPM
+prefix: BPM
+version: 1
+description: >-
+  How to write an entry on each blueprint so it stays useful later. One skill
+  per blueprint. Load the skill for the blueprint being updated. These are
+  not operating procedures — those belong in the Company skill book.
+categories:
+  - name: Blueprints
+    description: >-
+      One skill per blueprint. Each skill says what that blueprint is for,
+      what each category may hold, and the bar for a write: who or what
+      qualifies, what is durable, and how specific a name must be before an
+      entry is worth keeping.
+    index: 100
+    skills:
+      - blueprints/BPM101-company-blueprint.md
+      - blueprints/BPM102-crm-blueprint.md
+      - blueprints/BPM103-job-blueprint.md

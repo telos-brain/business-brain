@@ -88,17 +88,18 @@ When you explain memory, use this shape unless their correction demands a change
 
 | Category | One entry is |
 |---|---|
-| Team | One person. Role and what they own. Not their personal life. |
-| Strategy | Direction and current priorities. Updated in place. Not the planning process. |
-| Systems | One SaaS product or tool the business actually uses. Not how to operate it. |
-| Products and services | One thing the business sells. Not the delivery process. |
+| Team | One person who works here. Role, responsibilities, standing relationships. Not this week's work. |
+| Vision and values | What this company is: vision, what it does, and how it operates. Stated, not inferred. Not a client's. |
+| Strategy | This company's direction and priorities. Not a client's strategy, and not vision or values. |
+| Systems | One system the business actually uses, including a spreadsheet or offline routine. Not a tool that was only mentioned. |
+| Products and services | One thing the business sells, specifically enough to know what it is. Not the delivery process. |
 
 **CRM** (`blueprints/crm/blueprint.yml`) — brain-scoped. Clients, partners, industry contacts, and prospects:
 
 | Category | One entry is |
 |---|---|
-| Companies | One organisation. What it does, the kind of tie, and anything already agreed. Updated in place. |
-| People | One person. Role, which organisation they sit in, and how they are involved. |
+| Companies | One organisation, named specifically enough to find again. What it does, the kind of tie, and anything already agreed. |
+| People | One person. A first name needs the company named exactly. Role, organisation, and how they are involved. |
 
 **Job** (`blueprints/jobs/blueprint.yml`) — brain-scoped:
 
@@ -259,7 +260,7 @@ If tools do not appear, have the user toggle the MCP server off and on in the cl
 
 Granola, email, and uploaded documents land in the inbox as direct intake. Triage is the only path that turns them into skills or memory.
 
-- A fact about this business, with no outside company or person in it, updates the **company** blueprint only, and only when it fits Team, Strategy, Systems, or Products and services.
+- A fact about this business, with no outside company or person in it, updates the **company** blueprint only, and only when it fits Team, Vision and values, Strategy, Systems, or Products and services.
 - A specific company or person is written on the CRM blueprint — under Companies or People. It is not copied onto the company record. If this run cannot see the CRM categories, those facts are left out.
 - A job is written on the Job blueprint — Brief, Decisions, or State — one entry per piece of work. If this run cannot see the Job categories, leave the job fact out.
 

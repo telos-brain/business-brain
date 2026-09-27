@@ -5,7 +5,7 @@ description: >-
   Applies one blueprint memory write from a review_blueprint inbox task —
   searches for a close match, then either merges into an existing entry or
   creates a new one. Never both.
-version: 8
+version: 9
 
 # Tasks are created by WF-REVIEW-UOW / WF-TRIAGE via add_inbox_task with
 # workflow_code WF-REVIEW-BLUEPRINT. An inbox: trigger with :low enables
@@ -24,10 +24,16 @@ thinking: effort
 max-runs-per-hour: 500
 
 tools:
+  - get_skill
   - search_blueprint_entries
   - get_blueprint_entry
   - add_blueprint_entry
   - update_blueprint_entry
+
+available-skills:
+  - BPM101
+  - BPM102
+  - BPM103
 ---
 
 # Instructions
@@ -72,6 +78,19 @@ After the first ` — ` (space-em-dash-space):
 If you cannot parse a category and concept, stop with no tool writes and say so
 in one line.
 
+## Load the skill for this blueprint
+
+Call `get_skill` for the blueprint this category belongs to before you search
+or write. The category one-liner is not enough. Apply the skill.
+
+| Blueprint | Categories | Skill |
+| --- | --- | --- |
+| Company | Team, Vision and values, Strategy, Systems, Products and services | `BPM101` |
+| CRM | Companies, People | `BPM102` |
+| Job | Brief, Decisions, State | `BPM103` |
+
+If the category is not in that table, stop with no writes.
+
 ## What this write is allowed to be
 
 Memory is a durable fact in the named category. The blueprints below are every
@@ -92,14 +111,15 @@ the list, stop with no tool writes.
 {{/blueprints}}
 </blueprint_categories>
 
-Do **not** write, and stop with no tool calls, when the concept is:
+Do **not** write a memory entry when the concept is:
 
 - Small talk, personal life, leave, sick days, or banter
 - A weekly task list or scheduling that will be stale immediately
 - A process, method, or "how we do this" — that belongs in a skill, and this
   workflow does not create skills
 - A CRM or project fact filed into a company-wide category that is only
-  about the team, the strategy, the systems, or the catalogue
+  about the team, the vision, the strategy, the systems, or the catalogue
+- A client's vision, values, or strategy filed onto the Company blueprint
 - A guess not supported by the task and the entry body
 
 **One entry per named thing.** When the category is people, team, systems,
@@ -155,30 +175,33 @@ the task instructions remain authoritative for category and concept.
 
 ## Process (one write only)
 
-If the concept failed the bar above, stop. Do not search and do not write.
-
-1. Call `search_blueprint_entries` with:
+1. Call `get_skill` for the skill in the table above. Do not search or write
+   until it has loaded.
+2. If the concept fails the bar above, or fails the loaded skill, stop. Do
+   not search and do not write.
+3. Call `search_blueprint_entries` with:
    - `query` = the concept description
    - `category` = the parsed category name
    - `max_results` = a small number (e.g. 5)
-2. If search returns candidates that look like a **close match** (same concept,
+4. If search returns candidates that look like a **close match** (same concept,
    not merely the same category): call `get_blueprint_entry` for the best match
    (`category` + exact `title`). Then call **`update_blueprint_entry` once**:
    - Merge the new concept information into the existing content
    - Preserve existing knowledge — do not wholesale replace. When the fact
      moves over time, add a new date heading and keep the older dated section
    - `old_str` must appear exactly once; include enough context to be unique
-3. If there is **no** close match: call **`add_blueprint_entry` once** with:
+5. If there is **no** close match: call **`add_blueprint_entry` once** with:
    - `category` = parsed category
    - `title` = short concept name (unique within the category)
    - `content` = markdown grounded in the concept description (and entry body
      if helpful). Open with a date heading only when **Date headings** says to
-4. **Never** call both `update_blueprint_entry` and `add_blueprint_entry` in the
+6. **Never** call both `update_blueprint_entry` and `add_blueprint_entry` in the
    same run. **Never** perform a second write after the first succeeds.
-5. Reply in one or two lines: created vs updated, category, and entry title.
+7. Reply in one or two lines: created vs updated, category, and entry title.
 
 ## Rules
 
+- Always load the blueprint skill with `get_skill` before a memory write
 - Always search (and load a candidate) before creating — no duplicate titles /
   duplicate concepts
 - Prefer update when an existing entry already covers the same concept

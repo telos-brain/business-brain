@@ -10,7 +10,7 @@ description: >-
   research asks to the matching workflows, and creates review_blueprint
   tasks for clear category matches — without repeating the entry body into
   maintenance task instructions.
-version: 21
+version: 22
 
 type: TRIGGERED
 trigger: inbox:*
@@ -351,11 +351,18 @@ find is a process, create no blueprint task.
   `WF-REVIEW-BLUEPRINT` tasks. A whole meeting with no memory is normal.
 - One fact → one category → one task. A transcript does not deserve a task
   per paragraph. A handful is a lot. Twenty is a sign you are transcribing.
-- **Team / people:** one task per person, and only for role, responsibility,
-  or what they own. The concept must lead with the person's name. Skip
-  anyone who is only small talk.
-- **Systems:** one task per product the business actually uses. Skip tools
-  mentioned in passing.
+- **Team:** one task per person who works in this business, and only when
+  the source shows that. Role, responsibilities, and standing
+  relationships. Not what they are doing this week. The concept must lead
+  with the person's name. A client, partner, or other outside person is
+  not Team.
+- **Vision and values:** only what the source states as this company's
+  vision, what it does, or a value it holds. Do not invent. Do not file a
+  client's vision or values.
+- **Strategy:** this company's direction only. Not a client's strategy,
+  and not vision or values.
+- **Systems:** one task per system the business actually uses, including a
+  spreadsheet or offline routine. Skip a system that was only mentioned.
 - **Products and services:** one task per offering. Not the delivery process.
 - **CRM and jobs:** only when that blueprint's categories are in the list
   above. Do not copy a company or person into company Team or Products and

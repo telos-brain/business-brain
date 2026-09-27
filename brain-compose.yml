@@ -72,6 +72,7 @@ skills:
   - skills/decision-making/skillbook.yml
   - skills/business/skillbook.yml
   - skills/company/skillbook.yml
+  - skills/blueprint-memory/skillbook.yml
 
 blueprints:
   - blueprints/company/blueprint.yml
