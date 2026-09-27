@@ -5,12 +5,13 @@ description: >-
   Triages every new inbox entry. A direct instruction is imported now, at
   weight 5. A skill inferred from a meeting transcript is clustered until
   the cluster weight reaches 5, then the skill workflow runs. Creating
-  nothing is a successful triage. Eval findings may still be clustered.
+  nothing is a successful triage. Brain self-management is for eval
+  findings, not meeting transcripts. Eval findings may still be clustered.
   Routes skill craft, workflow/tool fixes, brain self-management, and
   research asks to the matching workflows, and creates review_blueprint
   tasks for clear category matches — without repeating the entry body into
   maintenance task instructions.
-version: 22
+version: 23
 
 type: TRIGGERED
 trigger: inbox:*
@@ -55,8 +56,9 @@ alone, set it with `update_inbox_entry` before `add_inbox_task`.
 
 If you cluster, create tasks on the **new cluster** entry (its reference is
 in the tool result). Do not create tasks on the source entries — they are
-`COMPLETED` and their open tasks are cancelled. Skill and brain tasks wait
-until that cluster's weight is 5 or higher. Blueprint tasks do not wait.
+`COMPLETED` and their open tasks are cancelled. A skill task on an inferred
+practice waits until that cluster's weight is 5 or higher. A brain task is
+not created from a meeting cluster. Blueprint tasks do not wait.
 
 Work is dispatched **on the task**. Each `add_inbox_task` names a
 `workflow_code`; auto-run vs `AWAITING_APPROVAL` is decided from that linked
@@ -92,7 +94,7 @@ only; all operating rules are above the body.
 |---|---|
 | Transferable skill / craft knowledge | `WF-UPDATE-SKILL` |
 | Workflow instruction or tool-definition fix | `WF-UPDATE-WORKFLOW` |
-| Subagents, wiring, structural self-heal / self-manage | `WF-UPDATE-BRAIN` |
+| Subagents, wiring, structural self-heal / self-manage (eval learning, or a stated direct instruction — never a meeting transcript) | `WF-UPDATE-BRAIN` |
 | Explicit external research / look-up request | `WF-RESEARCH` |
 
 An entry may warrant **more than one** maintenance task when distinct signals are
@@ -130,7 +132,9 @@ The text **states** the practice, the rule, or the change. Someone is telling
 the brain what to learn: an SOP, a written process, "we always…", "the
 process is…", or an instruction to update a skill, workflow, or the brain.
 Source does not decide this. An email or an upload can be a direct
-instruction. A meeting usually is not.
+instruction. A meeting transcript is not. People discussing a platform
+change, another product, or "we should change the brain" inside a meeting
+are still an inferred practice.
 
 Do not cluster. If `{{inboxEntry.weight}}` is below 5, call
 `update_inbox_entry` on this entry with `weight` `5` before any
@@ -145,15 +149,19 @@ practice has to be inferred by removing the client, the project, and the
 people.
 
 Cluster it with other open inferred entries about the same practice. Do
-**not** create `WF-UPDATE-SKILL` or `WF-UPDATE-BRAIN` until the entry you
-would task has weight **5 or higher**. Blueprint tasks are still created
-now. A meeting with no inferable skill and no durable fact produces no tasks.
+**not** create `WF-UPDATE-SKILL` until the entry you would task has weight
+**5 or higher**. Do **not** create `WF-UPDATE-BRAIN` from an inferred
+practice at any weight. A meeting is not a structural self-heal, including
+a meeting about this brain, onboarding, triage, or another product.
+Blueprint tasks are still created now. A meeting with no inferable skill
+and no durable fact produces no tasks.
 
 ### Eval learning — clustering allowed
 
 `Source` is `WF-EVAL-RUN` or `WF-EVAL`, or `Routing` is `EVAL`. These are
 already-extracted fragments (title + recommended change). Cluster related
-eval seeds. Do not mix them with meeting transcripts.
+eval seeds. Do not mix them with meeting transcripts. This is the class
+that routes structural self-heal to `WF-UPDATE-BRAIN`.
 
 If the class is ambiguous, treat a transcript as **inferred practice** and a
 stated rule as a **direct instruction**.
@@ -216,13 +224,19 @@ smuggle the company or person into it.
 - A small new tool/workflow is needed to fix runtime behaviour (not a subagent
   programme)
 
-### Route to `WF-UPDATE-BRAIN` when
+### Route to `WF-UPDATE-BRAIN` when all of these are true
 
+- The entry is an **eval learning**, or a **direct instruction** that states
+  a structural change. An inferred practice never qualifies, at any weight
 - The brain needs a **subagent** (dedicated `type: TOOL` workflow + workflow-tool
-  wrapper + parent wiring)
-- Cross-cutting capability / wiring / structural self-heal is required
-- The learning is about how the brain manages itself, not a single skill or a
-  narrow copy edit
+  wrapper + parent wiring), or cross-cutting wiring / structural self-heal
+- The learning is about how **this** brain manages itself, not a single skill,
+  a narrow copy edit, a plan for another product, or work already reflected
+  in the current workflows
+
+Planning dumps, onboarding discussions, client meetings, and transcripts
+that mention the brain are not self-heal signals. Leave them with no
+`WF-UPDATE-BRAIN` task.
 
 ### Route to `WF-RESEARCH` when
 
@@ -273,7 +287,9 @@ it is tasked on has weight **5 or higher**. For an inferred practice, that
 weight is the cluster's weight. Omit `weight` on `create_inbox_cluster` so
 the cluster keeps the sum of its sources. Create the skill task only when
 that sum is 5 or higher. Below 5, flag a partial signal and do not create
-`WF-UPDATE-SKILL` or `WF-UPDATE-BRAIN`.
+`WF-UPDATE-SKILL`. Never create `WF-UPDATE-BRAIN` on an inferred practice.
+On an eval learning, create `WF-UPDATE-BRAIN` only when the structural
+criteria match and the task target's weight is 5 or higher.
 
 Pass `weight` `5` on `create_inbox_cluster` only when this cluster is the
 import itself — the practice is stated, not inferred — so the skill workflow
@@ -305,9 +321,10 @@ create_inbox_cluster(
 ```
 
 Include **this** entry's reference. Capture the new cluster **reference** from
-the result. Blueprint tasks go on that cluster now. Skill and brain tasks go
-on it only when its weight is 5 or higher — the sum, unless you passed
-`weight`.
+the result. Blueprint tasks go on that cluster now. A skill task goes on it
+only when its weight is 5 or higher — the sum, unless you passed `weight`.
+A brain task goes on an **eval** cluster on that same weight rule. It never
+goes on a meeting cluster.
 
 **Flag as partial signal** — the current entry looks like a fragment, but
 there are not enough related entries to generalise confidently. Call
@@ -388,8 +405,10 @@ find is a process, create no blueprint task.
    the **new cluster reference**; otherwise it is `{{inboxEntry.reference}}`.
 3. **Maintenance pass** — decide which maintenance destinations apply (zero or
    more), including `WF-RESEARCH` when criteria match. Do not mine the
-   document for more. For an inferred practice whose task target is still
-   below weight 5, skip `WF-UPDATE-SKILL` and `WF-UPDATE-BRAIN`. Skip any
+   document for more. For an inferred practice, never create
+   `WF-UPDATE-BRAIN`. Skip `WF-UPDATE-SKILL` while the task target is still
+   below weight 5. For an eval learning below weight 5, skip
+   `WF-UPDATE-SKILL` and `WF-UPDATE-BRAIN`. Skip any
    destination whose workflow code already has a
    non-`CANCELLED` / non-`FAILED` task. For each new destination, call
    `add_inbox_task` with:
@@ -433,7 +452,10 @@ find is a process, create no blueprint task.
 - Prefer no blueprint task over force-fitting a category or saving a process
 - Prefer a missed cluster over force-fitting unrelated entries
 - Never cluster a direct instruction
-- Never create a skill or brain task on an inferred practice below weight 5
+- Never create a skill task on an inferred practice below weight 5
+- Never create a brain task from a meeting transcript or other inferred
+  practice. `WF-UPDATE-BRAIN` is for an eval learning, or a direct
+  instruction that states a structural change
 - Never close an entry as COMPLETED except via `create_inbox_cluster`
 - Never change `source`. Leave `routing_type` as filed.
 
