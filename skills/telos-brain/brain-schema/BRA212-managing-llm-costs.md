@@ -1,7 +1,7 @@
 ---
 name: Managing LLM Costs
 code: BRA212
-version: 5
+version: 6
 description: How to keep LLM spend down in a Telos Brain — aim for 80% cache
   reads (or turn on automatic caching), convert JSON tool data to markdown or
   CSV, treat tool definitions as mini-skills to cut retries, compact older
@@ -60,11 +60,16 @@ caching: automatic
 | omitted | Historic hand-crafted per-block `cache_control` markers |
 | `none` | Suppress all cache markers — only for short, one-shot jobs (e.g. `WF-COMPACT`) |
 
-Applied on Anthropic and xAI; OpenAI ignores it (**BRA210** §5).
+Applied on Anthropic and xAI; OpenAI ignores it (**BRA210** §6).
 
 - **Claude:** top-level `cache_control` — the API places the breakpoint.
-- **xAI / Grok:** `x-grok-conv-id` sticky-routing header keyed by
-  `WorkflowRunId`, which is what makes Grok cache hits possible.
+  `caching: automatic` is required; omitted keeps the older per-block markers.
+- **xAI / Grok:** the API caches by itself. Chat Completions uses
+  `x-grok-conv-id` (the `prompt_cache_key`) keyed by `WorkflowRunId`, sent on
+  every call unless `caching: none`. Without that header a follow-up often
+  lands on a cache-cold server and pays full input price. Later turns append
+  to the previous messages and send `reasoning_content` back. See
+  [What Breaks Caching](https://docs.x.ai/developers/advanced-api-usage/prompt-caching/multi-turn).
 
 ### How to actually hit 80%
 
@@ -350,7 +355,7 @@ max-recursion-depth: 5
 |---|---|---|
 | `output-tokens` | `4096` (one attempt) | Ceiling per attempt. A list (`2048, 4096, 16384`) is ordered retries when a turn stops at `max_tokens`. Failed truncated attempts are still billed. Prefer a short first cap. |
 | `max-turns` | `10` | Tool-use loop cap. The run **Fails** when it is exhausted. Chat (`WF-CHAT`) may need more; a lookup workflow should stay at 3–8. |
-| `thinking` / `thinking-effort` / `thinking-budget` | thinking off | Claude-only at request time (**BRA210** §5). `thinking-effort` is the spend lever — Anthropic bills tokens *generated*, not `output-tokens`. Prefer `adaptive` + `low` over `extended`. |
+| `thinking` / `thinking-effort` / `thinking-budget` | thinking omitted (provider default; Grok `high`) | Applied on every provider (**BRA210** §6). `thinking-effort` is the spend lever — billed tokens *generated*, not `output-tokens`. Omitted `thinking` does not override Grok's default of `high`. `thinking-budget` is Claude and OpenRouter `extended` only. Prefer `adaptive` + `low` over `extended`. |
 | `max-runs-per-hour` | `50` | Rolling-hour cap per workflow. Heartbeats and eval batches set this *up*; user-facing tools should stay low. |
 | `max-recursion-depth` | `5` | Caps `run_workflow` / workflow-tool nesting before a child `WorkflowRun` is created. |
 | `session-timeout` | `30` (minutes) | Closes idle chat sessions so they stop accruing and become eligible for eval (**BRA217**). |
