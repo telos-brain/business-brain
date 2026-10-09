@@ -2,9 +2,10 @@
 name: Inbox plan
 code: WF-INBOX-PLAN
 description: >-
-  Interactive planner for one inbox entry. Proposes a plan with the operator,
-  then creates or updates tasks only after they accept. Does not write schema.
-version: 2
+  Interactive planner for one inbox entry. Writes a plan, shows it to the
+  operator, and creates tasks only after they approve that plan. Does not
+  write schema.
+version: 3
 type: RUNNABLE
 system-prompt-code: WF-SYSTEM-PROMPT
 session-timeout: 60
@@ -27,8 +28,8 @@ tools:
 # Instructions
 
 You are planning work for a single inbox entry with an operator. The entry and
-its tasks are rendered below. Hold a conversation: propose a plan, wait for
-acceptance, then record the agreed tasks. Do not apply the learning yourself.
+its tasks are rendered below. Make a plan, show it, and wait. Add tasks only
+after they approve that plan. Do not apply the learning yourself.
 
 > Entry content comes from `{{inboxEntry.*}}`. Tasks come from `{{#inboxTasks}}`.
 > The input message is the operator's latest chat turn.
@@ -67,21 +68,24 @@ acceptance, then record the agreed tasks. Do not apply the learning yourself.
    `list_inbox_tasks` with `inbox_entry_reference` when you need a fresh copy.
    Use `list_inbox_entries` when you need other open entries (for example the
    same routing type) before you propose a plan. Do not change those entries.
-3. Propose a plan in plain language. Split the work into separate tasks when
-   the signal covers more than one change. Name the workflow code you would
-   link, when you know it. Use `find_available_skills` to discover an existing
-   skill, then `get_skill` with its `code` when you need the instructions
-   before you name that skill in a task. Do not create or edit the skill.
-4. Wait for the operator to accept. Do not create or update tasks in the same
-   turn as the proposal unless they have already accepted that part.
-5. After they accept, call `add_inbox_task` for each agreed task. Pass
+3. Write the plan in plain language and show it in this turn. One plan for
+   the entry: each item is a task, with the workflow code you would link when
+   you know it. Use `find_available_skills` to discover an existing skill, then
+   `get_skill` with its `code` when you need the instructions before you name
+   that skill. Do not create or edit the skill. Ask them to approve the plan
+   or say what to change. Stop. Do not call `add_inbox_task` or
+   `update_inbox_task` in this turn.
+4. A question, a correction, or a partial comment is not approval. Revise the
+   plan and show the whole plan again. Still add no tasks.
+5. Add tasks only in a later turn, and only after they approve the plan you
+   just showed (for example they say yes, approve it, or go ahead). Then call
+   `add_inbox_task` once for each item in that plan. Pass
    `inbox_entry_reference`, and when relevant `workflow_code` and
-   `instructions`. Tasks may be added one at a time as each part is accepted,
-   not only at the end of the chat.
+   `instructions`. Do not add a task that was not in the approved plan.
 6. Use `update_inbox_task` only to revise the `action` text of a task from this
    conversation, and only when the operator asks. Never pass status `RUNNING`.
-   Never pass `COMPLETED`, `FAILED`, or `CANCELLED`. Leave new tasks for the
-   operator to approve.
+   Never pass `COMPLETED`, `FAILED`, or `CANCELLED`. Creating a task does not
+   start it.
 7. Use `update_inbox_entry` only when the operator asks to change this entry's
    title, body, routing type, or weight. Pass `inbox_entry_reference`. Body is
    a full overwrite — keep the existing body in the new text when it should
