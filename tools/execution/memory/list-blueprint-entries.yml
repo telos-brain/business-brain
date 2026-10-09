@@ -1,14 +1,23 @@
 name: list_blueprint_entries
-version: 1
+version: 2
 description: >-
-  Lists the entries in this brain's memory blueprint for the current context,
-  optionally filtered by category. Returns CSV with columns Title,Category,
-  UpdatedAt. Use get_blueprint_entry to read an entry's full content.
+  Lists memory entries for the current scope. Returns CSV
+  Blueprint,Title,Category,Version,UpdatedAt. Pass blueprint, category, and
+  title to get_blueprint_entry to read an entry's full content. Omit blueprint
+  to list every blueprint at this scope.
 system:
   tool: list_blueprint_entries
 parameters:
   - name: category
     param: category
     description: Optional. Only list entries filed under this category name. Omit to list all entries.
+    type: string
+    required: false
+  - name: blueprint
+    param: blueprint
+    description: >-
+      Optional. Code or title of one blueprint to list (company, crm, or jobs).
+      Omit to list every blueprint at the current scope. An unknown name is an
+      error and does not fall back to another blueprint.
     type: string
     required: false

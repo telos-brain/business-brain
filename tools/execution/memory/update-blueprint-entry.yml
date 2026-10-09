@@ -1,13 +1,22 @@
 name: update_blueprint_entry
-version: 1
+version: 2
 description: >-
   Updates an existing memory entry by replacing an exact substring of its
   content with new text. old_str must appear exactly once in the current
   content; if it matches zero or several times the update is rejected so you
-  can supply a longer, unique substring.
+  can supply a longer, unique substring. This brain has more than one
+  blueprint, so pass blueprint (a code or title) on every call.
 system:
   tool: update_blueprint_entry
 parameters:
+  - name: blueprint
+    param: blueprint
+    description: >-
+      Code or title of the blueprint that holds the entry (company, crm, or
+      jobs). Required when more than one blueprint exists. An unknown name is
+      an error and does not fall back to another blueprint.
+    type: string
+    required: true
   - name: title
     param: title
     description: The exact title of the entry to update.

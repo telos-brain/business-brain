@@ -1,12 +1,21 @@
 name: get_blueprint_entry
-version: 1
+version: 2
 description: >-
-  Retrieves a single memory entry by its category and title and returns its full
-  content. Use after search_blueprint_entries or list_blueprint_entries to read
-  an entry in full.
+  Retrieves a single memory entry by its blueprint, category, and title and
+  returns its full content. Use after search_blueprint_entries or
+  list_blueprint_entries to read an entry in full. This brain has more than
+  one blueprint, so pass blueprint (a code or title) on every call.
 system:
   tool: get_blueprint_entry
 parameters:
+  - name: blueprint
+    param: blueprint
+    description: >-
+      Code or title of the blueprint that holds the entry (company, crm, or
+      jobs). Required when more than one blueprint exists. An unknown name is
+      an error and does not fall back to another blueprint.
+    type: string
+    required: true
   - name: category
     param: category
     description: The name of the category the entry is filed under.
