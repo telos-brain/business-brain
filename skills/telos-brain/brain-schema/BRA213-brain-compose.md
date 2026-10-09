@@ -210,7 +210,8 @@ Rules:
 The Brain makes outbound HTTP calls to harness-owned URLs in two places:
 
 1. **Async run callbacks** — optional `callbackUrl` on
-   `POST /workflows/{code}/run/async` (see BRA403).
+   `POST /workflows/{code}/run/async`. On completion the engine POSTs a JSON
+   body to that URL (`Content-Type: application/json`). See BRA403.
 2. **Declared API tools** — `api.path` webhook URLs dispatched by the Tool Router
    during a run.
 

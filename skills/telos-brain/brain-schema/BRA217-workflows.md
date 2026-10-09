@@ -313,6 +313,38 @@ Notes:
   set an elevated value so they are not throttled under load. Omit the field to
   use the default of `50`.
 
+## 3a. Entity and unit-of-work scope (`entity`, `unit-of-work`)
+
+Optional. Omitted settings keep today's behaviour: Execution API `entity_id` /
+`unit_of_work_id` are stored as supplied, and an MCP `tools/call` stays unscoped.
+
+When set, a top-level run reads the named parameter and writes the matched id
+onto the run before the instructions are rendered. Execution API runs read
+`variables`. MCP runs read the tool-call arguments (those arguments are not
+copied into the run's variables). Nested `run_workflow` children and heartbeat
+successors inherit the parent's ids and do not match again.
+
+```yaml
+entity: clients:slug:slug
+unit-of-work: jobs:reference:reference
+```
+
+Each value is `type-code:parameter-name:match-key`. Two parts are allowed
+(`clients:entityId`); the match key then defaults to `id`.
+
+- `type-code` is the entity type or unit-of-work type code on this brain.
+- `parameter-name` is the incoming key. The match is case-sensitive. A missing
+  or blank value leaves that id unset.
+- `id` matches `Entities.Id` or `UnitsOfWork.Id`. Any other match key, including
+  `reference`, is an entity variable or unit-of-work variable key. The built-in
+  8-character Reference column is not used. Names are not used.
+- The first match wins (`CreatedAt`, then `Id`). A miss does not fail the run
+  and does not fall back to a caller-supplied id.
+- Unit of work is resolved only after an entity is in scope, and only among
+  that entity's units of work.
+- A malformed value fails deploy. An unknown type code does not: it matches
+  nothing at run time.
+
 ## 4. Chat session settings (optional)
 
 A workflow run started synchronously (`POST /workflows/{code}/run/sync`, see
