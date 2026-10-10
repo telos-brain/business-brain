@@ -30,8 +30,10 @@ parameters:
   - name: type
     param: type
     description: >-
-      Optional. What the task is for: WORKFLOW, TASK, SKILL, TOOL, MEMORY,
-      TRIAGE, or PLAN. At least one of status, type, or action is required.
+      What this task is for. Set WORKFLOW, SKILL, TOOL, or MEMORY when the task
+      belongs in that Learning Centre quadrant. Set TASK for a general task,
+      TRIAGE for triage, and PLAN for planning. At least one of status, type,
+      or action is required.
     type: string
     enum:
       - WORKFLOW

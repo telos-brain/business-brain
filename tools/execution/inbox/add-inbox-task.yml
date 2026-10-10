@@ -3,7 +3,9 @@ version: 3
 description: >-
   Creates a new task under an inbox entry, optionally targeting a workflow (by
   code) and optionally assigning an Organisation member. The task is created
-  with status PENDING and type TASK unless type is set. Provide the parent
+  with status PENDING. Set type to WORKFLOW, SKILL, TOOL, or MEMORY when the
+  task belongs in that Learning Centre quadrant, TASK for a general task,
+  TRIAGE for triage, or PLAN for planning. Provide the parent
   inbox_entry_reference; workflow_code, instructions, assigned_to, and type
   are optional.
 system:
@@ -39,9 +41,9 @@ parameters:
   - name: type
     param: type
     description: >-
-      Optional. What the task is for: WORKFLOW, TASK, SKILL, TOOL, MEMORY,
-      TRIAGE, or PLAN. Defaults to TASK when omitted. WORKFLOW, SKILL, TOOL,
-      and MEMORY place the task in that Learning Centre quadrant.
+      What this task is for. Set WORKFLOW, SKILL, TOOL, or MEMORY when the task
+      belongs in that Learning Centre quadrant. Set TASK for a general task,
+      TRIAGE for triage, and PLAN for planning.
     type: string
     enum:
       - WORKFLOW
@@ -51,3 +53,4 @@ parameters:
       - MEMORY
       - TRIAGE
       - PLAN
+

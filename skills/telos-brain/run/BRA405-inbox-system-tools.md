@@ -86,10 +86,10 @@ Intended flows:
 | `add_inbox_task` | `workflow_code` | Optional — workflow **code**, not id |
 | `add_inbox_task` | `instructions` | Optional — instructions-only task action |
 | `add_inbox_task` | `assigned_to` | Optional — email of an active Organisation member; omit/null leaves unassigned (BRA408) |
-| `add_inbox_task` | `type` | Optional — `WORKFLOW`, `TASK`, `SKILL`, `TOOL`, `MEMORY`, `TRIAGE`, or `PLAN`. Defaults to `TASK` |
+| `add_inbox_task` | `type` | Set `WORKFLOW`, `SKILL`, `TOOL`, or `MEMORY` for that Learning Centre quadrant; `TASK` for a general task; `TRIAGE` for triage; `PLAN` for planning |
 | `update_inbox_task` | `inbox_task_reference` | Required |
 | `update_inbox_task` | `status` / `type` / `action` | At least one required |
-| `update_inbox_task` | `type` | Optional — same values as `add_inbox_task` |
+| `update_inbox_task` | `type` | Same values as `add_inbox_task`. Set it to the quadrant or purpose of the task |
 
 Deprecated / invalid for these tools: `id`, `inbox_entry_id`, `workflow_id`,
 `task_id`.
@@ -209,9 +209,10 @@ Requires `inbox_entry_reference`. Optional `workflow_code` (resolved server-side
 `instructions` (stored as the task action — instructions-only; entry content
 reaches triggered workflows via `{{inboxEntry.*}}`, see BRA204), and
 `assigned_to` (email of an active Organisation member — same validation as
-`assign_task_to_user` in **BRA408**; omit or pass null to leave unassigned), and
-`type` (`WORKFLOW`, `TASK`, `SKILL`, `TOOL`, `MEMORY`, `TRIAGE`, or `PLAN`;
-omit to default to `TASK`).
+`assign_task_to_user` in **BRA408**; omit or pass null to leave unassigned).
+Set `type` to what the task is for: `WORKFLOW`, `SKILL`, `TOOL`, or `MEMORY`
+when it belongs in that Learning Centre quadrant, `TASK` for a general task,
+`TRIAGE` for triage, or `PLAN` for planning.
 Creates status `PENDING` and returns the new task's **reference**.
 
 **Auto-run:** the engine decides from the **workflow named by
@@ -231,7 +232,8 @@ of recreating it.
 ## `update_inbox_task`
 
 Requires `inbox_task_reference` and at least one of `status`, `type`, or `action`.
-`type` is `WORKFLOW`, `TASK`, `SKILL`, `TOOL`, `MEMORY`, `TRIAGE`, or `PLAN`.
+Set `type` the same way as `add_inbox_task`: the Learning Centre quadrant, or
+`TASK`, `TRIAGE`, or `PLAN`.
 Forward-only task lifecycle. Setting `status` to `RUNNING` from
 `AWAITING_APPROVAL` **approves** the task and runs the linked workflow
 synchronously (settles `COMPLETED` or `FAILED`; never left stranded in

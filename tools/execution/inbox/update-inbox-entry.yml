@@ -49,6 +49,5 @@ parameters:
     description: >-
       Optional. Absolute signal weight as a positive integer (1 or greater).
       Replaces the stored weight on this entry when supplied. Omit to leave
-      the stored weight unchanged. Zero, negative, and non-numeric values are
-      rejected. Does not recalculate a cluster's weight.
+      the stored weight unchanged. Does not recalculate a cluster's weight.
     type: string
