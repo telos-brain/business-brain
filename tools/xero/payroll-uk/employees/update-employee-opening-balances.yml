@@ -1,0 +1,38 @@
+name: xero_uk_update_employee_opening_balances
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Updates a specific employee's opening balances. Xero API PUT /payroll.xro/2.0/Employees/{EmployeeID}/ukopeningbalances.
+api:
+  method: PUT
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/ukopeningbalances
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: statutoryAdoptionPay
+    description: >-
+      The total accumulated statutory adoption pay amount received by the employee for current fiscal year to date.
+    type: decimal
+  - name: statutoryMaternityPay
+    description: >-
+      The total accumulated statutory maternity pay amount received by the employee for current fiscal year to date.
+    type: decimal
+  - name: statutoryPaternityPay
+    description: >-
+      The total accumulated statutory paternity pay amount received by the employee for current fiscal year to date.
+    type: decimal
+  - name: statutorySharedParentalPay
+    description: >-
+      The total accumulated statutory shared parental pay amount received by the employee for current fiscal year to date.
+    type: decimal
+  - name: statutorySickPay
+    description: >-
+      The total accumulated statutory sick pay amount received by the employee for current fiscal year to date.
+    type: decimal
+  - name: priorEmployeeNumber
+    description: >-
+      The unique employee number issued by the employee's former employer.
+    type: decimal

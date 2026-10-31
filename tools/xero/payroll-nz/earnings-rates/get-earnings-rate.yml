@@ -1,0 +1,14 @@
+name: xero_nz_get_earnings_rate
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a specific earnings rates by using a unique earnings rate id. Xero API GET /payroll.xro/2.0/EarningsRates/{EarningsRateID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/EarningsRates/{EarningsRateID}
+  connector: xero
+parameters:
+  - name: EarningsRateID
+    description: >-
+      Identifier for the earnings rate.
+    type: string
+    required: true

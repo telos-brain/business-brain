@@ -1,0 +1,17 @@
+name: xero_nz_get_employees
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves employees. Xero API GET /payroll.xro/2.0/Employees.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees
+  connector: xero
+parameters:
+  - name: filter
+    description: >-
+      Filter by first name and/or lastname.
+    type: string
+  - name: page
+    description: >-
+      Page number which specifies the set of records to retrieve. By default the number of the records per set is 100.
+    type: int

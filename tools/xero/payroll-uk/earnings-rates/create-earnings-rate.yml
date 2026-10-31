@@ -1,0 +1,54 @@
+name: xero_uk_create_earnings_rate
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates a new earnings rate. Xero API POST /payroll.xro/2.0/EarningsRates.
+api:
+  method: POST
+  path: /payroll.xro/2.0/EarningsRates
+  connector: xero
+parameters:
+  - name: earningsRateID
+    description: >-
+      Xero unique identifier for an earning rate.
+    type: string
+  - name: name
+    description: >-
+      Name of the earning rate.
+    type: string
+    required: true
+  - name: earningsType
+    description: >-
+      Indicates how an employee will be paid when taking this type of earning. One of: Allowance, BackPay, Bonus, Commission, LumpSum, OtherEarnings, OvertimeEarnings, RegularEarnings, StatutoryAdoptionPay, StatutoryAdoptionPayNonPensionable, StatutoryBereavementPay, StatutoryMaternityPay, StatutoryMaternityPayNonPensionable, StatutoryPaternityPay, StatutoryPaternityPayNonPensionable, StatutoryParentalBereavementPayNonPensionable, StatutorySharedParentalPay, StatutorySharedParentalPayNonPensionable, StatutorySickPay, StatutorySickPayNonPensionable (26 values).
+    type: string
+    required: true
+  - name: rateType
+    description: >-
+      Indicates the type of the earning rate. One of: RatePerUnit, MultipleOfOrdinaryEarningsRate, FixedAmount.
+    type: string
+    required: true
+  - name: typeOfUnits
+    description: >-
+      The type of units used to record earnings.
+    type: string
+    required: true
+  - name: currentRecord
+    description: >-
+      Indicates whether an earning type is active. Use true or false.
+    type: string
+  - name: expenseAccountID
+    description: >-
+      The account that will be used for the earnings rate.
+    type: string
+    required: true
+  - name: ratePerUnit
+    description: >-
+      Default rate per unit (optional). Only applicable if RateType is RatePerUnit.
+    type: decimal
+  - name: multipleOfOrdinaryEarningsRate
+    description: >-
+      This is the multiplier used to calculate the rate per unit, based on the employee’s ordinary earnings rate. For example, for time and a half enter 1.5. Only applicable if RateType is MultipleOfOrdinaryEarningsRate.
+    type: decimal
+  - name: fixedAmount
+    description: >-
+      Optional Fixed Rate Amount. Applicable for FixedAmount Rate.
+    type: decimal

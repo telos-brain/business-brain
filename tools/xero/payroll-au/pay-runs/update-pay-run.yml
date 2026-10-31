@@ -1,0 +1,19 @@
+name: xero_au_update_pay_run
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Updates a pay run. Update properties on a single PayRun Xero API POST /payroll.xro/1.0/PayRuns/{PayRunID}.
+api:
+  method: POST
+  path: /payroll.xro/1.0/PayRuns/{PayRunID}
+  connector: xero
+parameters:
+  - name: PayRunID
+    description: >-
+      PayRun id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: PayrollCalendarID (string): Xero identifier for pay run; PayRunID (string): Xero identifier for pay run; PayRunPeriodStartDate (string): Period Start Date for the PayRun (YYYY-MM-DD); PayRunPeriodEndDate (string): Period End Date for the PayRun (YYYY-MM-DD); PayRunStatus (string) [DRAFT, POSTED]; PaymentDate (string): Payment Date for the PayRun (YYYY-MM-DD); PayslipMessage (string): Payslip message for the PayRun; Payslips (array): The payslips in the payrun; Wages (number): The total Wages for the Payrun; Deductions (number): The total Deductions for the Payrun; Tax (number): The total Tax for the Payrun; Super (number): The total Super for the Payrun; Reimbursement (number): The total Reimbursements for the Payrun; NetPay (number): The total NetPay for the Payrun.
+    type: json
+    required: true

@@ -1,0 +1,14 @@
+name: xero_nz_get_deduction
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a single deduction by using a unique deduction ID. Xero API GET /payroll.xro/2.0/Deductions/{deductionId}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Deductions/{deductionId}
+  connector: xero
+parameters:
+  - name: deductionId
+    description: >-
+      Identifier for the deduction.
+    type: string
+    required: true

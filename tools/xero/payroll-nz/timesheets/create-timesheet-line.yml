@@ -1,0 +1,37 @@
+name: xero_nz_create_timesheet_line
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Create a new timesheet line for a specific time sheet. Xero API POST /payroll.xro/2.0/Timesheets/{TimesheetID}/Lines.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Timesheets/{TimesheetID}/Lines
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Identifier for the timesheet.
+    type: string
+    required: true
+  - name: timesheetLineID
+    description: >-
+      The Xero identifier for a Timesheet Line.
+    type: string
+  - name: date
+    description: >-
+      The Date that this Timesheet Line is for (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: earningsRateID
+    description: >-
+      The Xero identifier for the Earnings Rate that the Timesheet is for.
+    type: string
+    required: true
+  - name: trackingItemID
+    description: >-
+      The Xero identifier for the Tracking Item that the Timesheet is for.
+    type: string
+  - name: numberOfUnits
+    description: >-
+      The Number of Units of the Timesheet Line.
+    type: decimal
+    required: true

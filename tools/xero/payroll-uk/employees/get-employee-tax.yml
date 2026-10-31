@@ -1,0 +1,14 @@
+name: xero_uk_get_employee_tax
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves tax records for a specific employee using a unique employee ID. Xero API GET /payroll.xro/2.0/Employees/{EmployeeID}/Tax.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Tax
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true

@@ -1,0 +1,19 @@
+name: xero_uk_delete_employee_earnings_template
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Deletes a specific employee's earnings template record. Xero API DELETE /payroll.xro/2.0/Employees/{EmployeeID}/PayTemplates/earnings/{PayTemplateEarningID}.
+api:
+  method: DELETE
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/PayTemplates/earnings/{PayTemplateEarningID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: PayTemplateEarningID
+    description: >-
+      Id for single pay template earnings object.
+    type: string
+    required: true

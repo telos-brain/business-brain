@@ -1,0 +1,19 @@
+name: xero_uk_get_employee_salary_and_wage
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific salary and wages record for a specific employee using a unique salary and wage id. Xero API GET /payroll.xro/2.0/Employees/{EmployeeID}/SalaryAndWages/{SalaryAndWagesID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/SalaryAndWages/{SalaryAndWagesID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: SalaryAndWagesID
+    description: >-
+      Id for single pay template earnings object.
+    type: string
+    required: true

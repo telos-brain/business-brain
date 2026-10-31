@@ -1,0 +1,86 @@
+name: xero_nz_update_employee_tax
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Updates the tax records for a specific employee. Replaces the entire EmployeeTax record. This is not a partial update. Any field omitted from the request is treated as null and overwrites the stored value. To change individual fields, GET the current record, merge your changes, remove deprecated fields such as isEligibleForKiwiSaver, and POST the complete object. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/Tax.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Tax
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: irdNumber
+    description: >-
+      The IRD Number.
+    type: string
+  - name: taxCode
+    description: >-
+      Tax codes used for employee tax. One of: ND, M, ME, MSL, MESL, SB, S, SH, ST, SBSL, SSL, SHSL, STSL, WT, CAE, EDW, NSW, STC, STCSL.
+    type: string
+  - name: specialTaxRatePercentage
+    description: >-
+      Special tax rate percentage.
+    type: decimal
+  - name: hasSpecialStudentLoanRate
+    description: >-
+      Does the employee have a special student loan rate?. Use true or false.
+    type: string
+  - name: specialStudentLoanRatePercentage
+    description: >-
+      The employee student loan rate percentage.
+    type: decimal
+  - name: isEligibleForKiwiSaver
+    description: >-
+      The employee eligibility for KiwiSaver. Deprecated, replaced by kiwiSaverStatus. Omit this field from POST requests. Use true or false.
+    type: string
+  - name: esctRatePercentage
+    description: >-
+      Employer superannuation contribution tax rate.
+    type: decimal
+  - name: kiwiSaverContributions
+    description: >-
+      Contribution Option which can be 'MakeContributions' 'OptOut', 'OnAContributionsHoliday', 'OnASavingsSuspension', 'NotCurrentlyAKiwiSaverMember' for employees without a KiwiSaver membership. One of: MakeContributions, OptOut, OnAContributionsHoliday, OnASavingsSuspension, NotCurrentlyAKiwiSaverMember.
+    type: string
+  - name: kiwiSaverStatus
+    description: >-
+      KiwiSaver eligibility. Required in POST requests for all tax codes except WT and NSW. One of: ActiveKiwiSaverMember, AutomaticallyEnrolledIntoKiwiSaver, EmployedForLessThan28Days, NotRequiredToBeAutomaticallyEnrolled, OptedIntoKiwiSaver, NotEligibleForKiwiSaver.
+    type: string
+  - name: kiwiSaverEmployeeContributionRatePercentage
+    description: >-
+      Employee Contribution percentage.
+    type: decimal
+  - name: kiwiSaverEmployerContributionRatePercentage
+    description: >-
+      Employer Contribution percentage.
+    type: decimal
+  - name: kiwiSaverEmployerSalarySacrificeContributionRatePercentage
+    description: >-
+      Employer Contribution through Salary Sacrifice percentage.
+    type: decimal
+  - name: kiwiSaverOptOutDate
+    description: >-
+      Opt Out Date.
+    type: date
+  - name: kiwiSaverContributionHolidayEndDate
+    description: >-
+      Contribution holiday expiry date or end date.
+    type: date
+  - name: hasStudentLoanBalance
+    description: >-
+      Does the employee have a remaining student loan balance? Set a remaining balance if you have received a letter from IR. Use true or false.
+    type: string
+  - name: studentLoanBalance
+    description: >-
+      The employee's student loan balance shown on the letter from IR.
+    type: decimal
+  - name: studentLoanAsAt
+    description: >-
+      The date of the letter from IR.
+    type: date
+  - name: registeredForGST
+    description: >-
+      Is the employee registered for GST? Required in POST requests when taxCode is WT. Use true or false.
+    type: string

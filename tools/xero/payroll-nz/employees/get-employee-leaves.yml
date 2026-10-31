@@ -1,0 +1,14 @@
+name: xero_nz_get_employee_leaves
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves leave records for a specific employee. Xero API GET /payroll.xro/2.0/Employees/{EmployeeID}/Leave.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Leave
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true

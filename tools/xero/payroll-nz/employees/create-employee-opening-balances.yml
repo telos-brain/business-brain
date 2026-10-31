@@ -1,0 +1,19 @@
+name: xero_nz_create_employee_opening_balances
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates opening balances for a specific employee. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/OpeningBalances.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/OpeningBalances
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: periodEndDate (string): The opening balance period end date; daysPaid (integer): The paid number of days; unpaidWeeks (integer): The number of unpaid weeks; grossEarnings (number): The gross earnings during the period.
+    type: json
+    required: true

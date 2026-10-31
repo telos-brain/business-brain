@@ -1,6 +1,9 @@
-# Xero Accounting + Identity API — https://developer.xero.com/documentation/api/accounting/overview
+# Xero Accounting + Identity + Payroll APIs
+# https://developer.xero.com/documentation/api/accounting/overview
 # Accounting base: https://api.xero.com/api.xro/2.0
 # Connections:     https://api.xero.com/connections
+# Payroll AU:      https://api.xero.com/payroll.xro/1.0
+# Payroll AU v2, NZ, UK: https://api.xero.com/payroll.xro/2.0
 #
 # Brain-scoped OAuth connection. A token may cover several organisations.
 # xeroTenantId is a shown request-default (BRA209): the model supplies it
@@ -20,10 +23,18 @@ token-url: https://identity.xero.com/connect/token
 # Do not request: accounting.journals.read (Advanced + certification),
 # accounting.classicexpenses (not a valid OAuth scope; Classic Expenses is
 # deprecated), accounting.reports.budgetsummary.read (not accepted — causes
-# invalid_scope), payroll/files/assets/projects (no tools here).
+# invalid_scope), files/assets/projects (no tools here).
+#
+# Payroll write scopes include read. The same names apply in Australia,
+# New Zealand, and the United Kingdom. The organisation's payroll region
+# selects the API (AU 1.0, AU timesheets 2.0, NZ 2.0, UK 2.0). Enable the
+# same list on the Xero app, then reconnect.
 # https://developer.xero.com/documentation/guides/oauth2/scopes
+# https://developer.xero.com/documentation/api/payrollau/overview
+# https://developer.xero.com/documentation/api/payrollnz/overview
+# https://developer.xero.com/documentation/api/payrolluk/overview
 # https://developer.xero.com/faq/granular-scopes
-oauth-scope: offline_access openid profile email accounting.contacts accounting.settings accounting.attachments accounting.budgets.read accounting.invoices accounting.payments accounting.banktransactions accounting.manualjournals accounting.reports.aged.read accounting.reports.balancesheet.read accounting.reports.banksummary.read accounting.reports.executivesummary.read accounting.reports.profitandloss.read accounting.reports.trialbalance.read accounting.reports.taxreports.read accounting.reports.tenninetynine.read
+oauth-scope: offline_access openid profile email accounting.contacts accounting.settings accounting.attachments accounting.budgets.read accounting.invoices accounting.payments accounting.banktransactions accounting.manualjournals accounting.reports.aged.read accounting.reports.balancesheet.read accounting.reports.banksummary.read accounting.reports.executivesummary.read accounting.reports.profitandloss.read accounting.reports.trialbalance.read accounting.reports.taxreports.read accounting.reports.tenninetynine.read payroll.employees payroll.payruns payroll.payslip payroll.settings payroll.timesheets
 parameters:
   - name: client-id
     description: Xero OAuth 2 client ID from the Xero developer portal.

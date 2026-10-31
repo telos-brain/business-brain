@@ -1,0 +1,27 @@
+name: xero_uk_create_reimbursement
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates a new reimbursement. Xero API POST /payroll.xro/2.0/Reimbursements.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Reimbursements
+  connector: xero
+parameters:
+  - name: reimbursementID
+    description: >-
+      Xero unique identifier for a reimbursement.
+    type: string
+  - name: name
+    description: >-
+      Name of the reimbursement.
+    type: string
+    required: true
+  - name: accountID
+    description: >-
+      Xero unique identifier for the account used for the reimbursement.
+    type: string
+    required: true
+  - name: currentRecord
+    description: >-
+      Indicates that whether the reimbursement is active. Use true or false.
+    type: string

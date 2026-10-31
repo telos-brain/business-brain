@@ -1,0 +1,80 @@
+name: xero_uk_create_employee_statutory_sick_leave
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates statutory sick leave records. Xero API POST /payroll.xro/2.0/StatutoryLeaves/Sick.
+api:
+  method: POST
+  path: /payroll.xro/2.0/StatutoryLeaves/Sick
+  connector: xero
+parameters:
+  - name: statutoryLeaveID
+    description: >-
+      The unique identifier (guid) of a statutory leave.
+    type: string
+  - name: employeeID
+    description: >-
+      The unique identifier (guid) of the employee.
+    type: string
+    required: true
+  - name: leaveTypeID
+    description: >-
+      The unique identifier (guid) of the "Statutory Sick Leave (non-pensionable)" pay item.
+    type: string
+    required: true
+  - name: startDate
+    description: >-
+      The date when the leave starts.
+    type: date
+    required: true
+  - name: endDate
+    description: >-
+      The date when the leave ends.
+    type: date
+    required: true
+  - name: type
+    description: >-
+      the type of statutory leave.
+    type: string
+  - name: status
+    description: >-
+      the type of statutory leave.
+    type: string
+  - name: workPattern
+    description: >-
+      The days of the work week the employee is scheduled to work at the time the leave is taken. Pass as a JSON array.
+    type: json
+    required: true
+  - name: isPregnancyRelated
+    description: >-
+      Whether the sick leave was pregnancy related. Use true or false.
+    type: string
+    required: true
+  - name: sufficientNotice
+    description: >-
+      Whether the employee provided sufficient notice and documentation as required by the employer supporting the sick leave request. Use true or false.
+    type: string
+    required: true
+  - name: isEntitled
+    description: >-
+      Whether the leave was entitled to receive payment. Use true or false.
+    type: string
+  - name: entitlementWeeksRequested
+    description: >-
+      The amount of requested time (in weeks).
+    type: decimal
+  - name: entitlementWeeksQualified
+    description: >-
+      The amount of statutory sick leave time off (in weeks) that is available to take at the time the leave was requested.
+    type: decimal
+  - name: entitlementWeeksRemaining
+    description: >-
+      A calculated amount of time (in weeks) that remains for the statutory sick leave period.
+    type: decimal
+  - name: overlapsWithOtherLeave
+    description: >-
+      Whether another leave (Paternity, Shared Parental specifically) occurs during the requested leave's period. While this is allowed it could affect payment amounts. Use true or false.
+    type: string
+  - name: entitlementFailureReasons
+    description: >-
+      If the leave requested was considered "not entitled", the reasons why are listed here. Pass as a JSON array.
+    type: json

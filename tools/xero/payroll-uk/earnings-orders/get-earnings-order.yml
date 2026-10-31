@@ -1,0 +1,14 @@
+name: xero_uk_get_earnings_order
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific earnings orders by using a unique earnings orders id. Xero API GET /payroll.xro/2.0/EarningsOrders/{id}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/EarningsOrders/{id}
+  connector: xero
+parameters:
+  - name: id
+    description: >-
+      Identifier for the deduction.
+    type: string
+    required: true

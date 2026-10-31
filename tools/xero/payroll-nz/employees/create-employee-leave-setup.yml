@@ -1,0 +1,54 @@
+name: xero_nz_create_employee_leave_setup
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates a leave set-up for a specific employee. This is required before viewing, configuring and requesting leave for an employee. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/LeaveSetup.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/LeaveSetup
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: includeHolidayPay
+    description: >-
+      Identifier if holiday pay will be included in each payslip. Use true or false.
+    type: string
+  - name: holidayPayOpeningBalance
+    description: >-
+      Initial holiday pay balance. A percentage — usually 8% — of gross earnings since their last work anniversary.
+    type: decimal
+  - name: annualLeaveOpeningBalance
+    description: >-
+      Initial annual leave balance. The balance at their last anniversary, less any leave taken since then and excluding accrued annual leave.
+    type: decimal
+  - name: negativeAnnualLeaveBalancePaidAmount
+    description: >-
+      The dollar value of annual leave opening balance if negative.
+    type: decimal
+  - name: SickLeaveToAccrueAnnually
+    description: >-
+      Number of units accrued annually for sick leave. The type of units is determined by the property "TypeOfUnitsToAccrue" on the "Sick Leave" leave type.
+    type: decimal
+  - name: SickLeaveMaximumToAccrue
+    description: >-
+      Maximum number of units accrued annually for sick leave. The type of units is determined by the property "TypeOfUnitsToAccrue" on the "Sick Leave" leave type.
+    type: decimal
+  - name: sickLeaveOpeningBalance
+    description: >-
+      Initial sick leave balance. This will be positive unless they've taken sick leave in advance.
+    type: decimal
+  - name: SickLeaveScheduleOfAccrual
+    description: >-
+      Set Schedule of Accrual Type for Sick Leave.
+    type: string
+  - name: SickLeaveAnniversaryDate
+    description: >-
+      If Sick Leave Schedule of Accrual is "OnAnniversaryDate", this is the date when entitled to Sick Leave. When null the Employee's start date is used as the anniversary date.
+    type: date
+  - name: AnnualLeaveAnniversaryDate
+    description: >-
+      The first date the employee will accrue Annual Leave. When null the Employee's start date is used as the anniversary date.
+    type: date

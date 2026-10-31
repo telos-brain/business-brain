@@ -1,0 +1,19 @@
+name: xero_au_update_timesheet
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Updates a timesheet. Update properties on a single timesheet Xero API POST /payroll.xro/1.0/Timesheets/{TimesheetID}.
+api:
+  method: POST
+  path: /payroll.xro/1.0/Timesheets/{TimesheetID}
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Timesheet id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: EmployeeID (string): The Xero identifier for an employee; StartDate (string): Period start date (YYYY-MM-DD); EndDate (string): Period end date (YYYY-MM-DD); Status (string) [DRAFT, PROCESSED, APPROVED, REJECTED, REQUESTED]; Hours (number): Timesheet total hours; TimesheetID (string): The Xero identifier for a Payroll Timesheet; TimesheetLines (array).
+    type: json
+    required: true

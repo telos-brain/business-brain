@@ -1,0 +1,14 @@
+name: xero_uk_get_deduction
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific deduction by using a unique deduction ID. Xero API GET /payroll.xro/2.0/Deductions/{deductionId}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Deductions/{deductionId}
+  connector: xero
+parameters:
+  - name: deductionId
+    description: >-
+      Identifier for the deduction.
+    type: string
+    required: true

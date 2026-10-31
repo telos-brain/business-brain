@@ -1,0 +1,44 @@
+name: xero_uk_create_employee_leave_type
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates employee leave type records. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/LeaveTypes.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/LeaveTypes
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: leaveTypeID
+    description: >-
+      The Xero identifier for leave type.
+    type: string
+    required: true
+  - name: scheduleOfAccrual
+    description: >-
+      The schedule of accrual. One of: BeginningOfCalendarYear, OnAnniversaryDate, EachPayPeriod, OnHourWorked.
+    type: string
+    required: true
+  - name: hoursAccruedAnnually
+    description: >-
+      The number of hours accrued for the leave annually. This is 0 when the scheduleOfAccrual chosen is "OnHourWorked".
+    type: decimal
+  - name: maximumToAccrue
+    description: >-
+      The maximum number of hours that can be accrued for the leave.
+    type: decimal
+  - name: openingBalance
+    description: >-
+      The initial number of hours assigned when the leave was added to the employee.
+    type: decimal
+  - name: rateAccruedHourly
+    description: >-
+      The number of hours added to the leave balance for every hour worked by the employee. This is normally 0, unless the scheduleOfAccrual chosen is "OnHourWorked".
+    type: decimal
+  - name: scheduleOfAccrualDate
+    description: >-
+      The date when an employee becomes entitled to their accrual. Only applicable when scheduleOfAccrual is "OnAnniversaryDate".
+    type: date

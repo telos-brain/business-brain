@@ -1,0 +1,57 @@
+name: xero_nz_create_pay_run
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates a pay run. Xero API POST /payroll.xro/2.0/PayRuns.
+api:
+  method: POST
+  path: /payroll.xro/2.0/PayRuns
+  connector: xero
+parameters:
+  - name: payRunID
+    description: >-
+      Xero unique identifier for the pay run.
+    type: string
+  - name: payrollCalendarID
+    description: >-
+      Xero unique identifier for the payroll calendar.
+    type: string
+  - name: periodStartDate
+    description: >-
+      Period start date of the payroll calendar.
+    type: date
+  - name: periodEndDate
+    description: >-
+      Period end date of the payroll calendar.
+    type: date
+  - name: paymentDate
+    description: >-
+      Payment date of the pay run.
+    type: date
+  - name: totalCost
+    description: >-
+      Total cost of the pay run.
+    type: decimal
+  - name: totalPay
+    description: >-
+      Total pay of the pay run.
+    type: decimal
+  - name: payRunStatus
+    description: >-
+      Pay run status. One of: Draft, Posted.
+    type: string
+  - name: payRunType
+    description: >-
+      Pay run type. One of: Scheduled, Unscheduled, EarlierYearUpdate.
+    type: string
+  - name: calendarType
+    description: >-
+      Calendar type of the pay run. One of: Weekly, Fortnightly, FourWeekly, Monthly, Annual, Quarterly, TwiceMonthly.
+    type: string
+  - name: postedDateTime
+    description: >-
+      Posted date time of the pay run.
+    type: date
+  - name: paySlips
+    description: >-
+      Pass as a JSON array. Each item may include: paySlipID (string): The Xero identifier for a PaySlip; employeeID (string): The Xero identifier for payroll employee; payRunID (string): The Xero identifier for the associated payrun; lastEdited (string): The date payslip was last updated; firstName (string): Employee first name; lastName (string): Employee last name; totalEarnings (number): Total earnings before any deductions. Same as gross earnings for NZ; grossEarnings (number): Total earnings before any deductions. Same as total earnings for NZ; totalPay (number): The employee net pay; totalEmployerTaxes (number): The employer's tax obligation; totalEmployeeTaxes (number): The part of an employee's earnings that is deducted for tax purposes; totalDeductions (number): Total amount subtracted from an employee's earnings to reach total pay; totalReimbursements (number): Total reimbursements are nontaxable payments to an employee used to repay out-of-pocket expenses when the person incurs those expenses through employment; totalStatutoryDeductions (number): Total amounts required by law to subtract from the employee's earnings; totalSuperannuation (number): Benefits (also called fringe benefits, perquisites or perks) are various non-earnings compensations provided to employees in addition to their normal earnings or salaries; bacsHash (string): BACS Service User Number; paymentMethod (string) [Cheque, Electronically, Manual]; earningsLines (array) and 12 more.
+    type: json

@@ -1,0 +1,14 @@
+name: xero_uk_get_leave_type
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific leave type by using a unique leave type ID. Xero API GET /payroll.xro/2.0/LeaveTypes/{LeaveTypeID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/LeaveTypes/{LeaveTypeID}
+  connector: xero
+parameters:
+  - name: LeaveTypeID
+    description: >-
+      Identifier for the leave type.
+    type: string
+    required: true

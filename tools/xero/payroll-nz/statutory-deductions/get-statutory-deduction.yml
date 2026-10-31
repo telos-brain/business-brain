@@ -1,0 +1,14 @@
+name: xero_nz_get_statutory_deduction
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a specific statutory deduction by using a unique statutory deductions id. Xero API GET /payroll.xro/2.0/StatutoryDeductions/{id}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/StatutoryDeductions/{id}
+  connector: xero
+parameters:
+  - name: id
+    description: >-
+      Identifier for the statutory deduction.
+    type: string
+    required: true

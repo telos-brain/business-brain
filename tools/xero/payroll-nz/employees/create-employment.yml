@@ -1,0 +1,37 @@
+name: xero_nz_create_employment
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates an employment detail for a specific employee. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/Employment.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Employment
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: payrollCalendarID
+    description: >-
+      Xero unique identifier for the payroll calendar of the employee.
+    type: string
+    required: true
+  - name: payRunCalendarID
+    description: >-
+      Xero unique identifier for the payrun calendar for the employee (Deprecated in version 1.1.6).
+    type: string
+  - name: startDate
+    description: >-
+      Start date of the employment (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: engagementType
+    description: >-
+      Engagement type of the employee.
+    type: string
+    required: true
+  - name: fixedTermEndDate
+    description: >-
+      End date for an employee with a fixed-term engagement type.
+    type: date

@@ -1,0 +1,19 @@
+name: xero_nz_get_employee_working_pattern
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves employee's working patterns. Xero API GET /payroll.xro/2.0/Employees/{EmployeeID}/Working-Patterns/{EmployeeWorkingPatternID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Working-Patterns/{EmployeeWorkingPatternID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: EmployeeWorkingPatternID
+    description: >-
+      Employee working pattern id for single object.
+    type: string
+    required: true

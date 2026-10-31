@@ -1,0 +1,37 @@
+name: xero_au_v2_create_timesheet_line
+version: 1
+description: >-
+  Xero Payroll Australia timesheets v2 (payroll.xro/2.0). Use for Australian timesheet lines, approve, and revert. Do not use for New Zealand or the United Kingdom. Creates a new timesheet line for a specific timesheet using a unique timesheet ID. Xero API POST /payroll.xro/2.0/Timesheets/{TimesheetID}/Lines.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Timesheets/{TimesheetID}/Lines
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Identifier for the timesheet.
+    type: string
+    required: true
+  - name: timesheetLineID
+    description: >-
+      The Xero identifier for a Timesheet Line.
+    type: string
+  - name: date
+    description: >-
+      The Date that this Timesheet Line is for (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: earningsRateID
+    description: >-
+      The Xero identifier for the Earnings Rate that the Timesheet is for.
+    type: string
+    required: true
+  - name: trackingItemID
+    description: >-
+      The Xero identifier for the Tracking Item that the Timesheet is for.
+    type: string
+  - name: numberOfUnits
+    description: >-
+      The Number of Units of the Timesheet Line.
+    type: decimal
+    required: true

@@ -1,0 +1,8 @@
+name: xero_uk_get_settings
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves payroll settings. Xero API GET /payroll.xro/2.0/Settings.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Settings
+  connector: xero

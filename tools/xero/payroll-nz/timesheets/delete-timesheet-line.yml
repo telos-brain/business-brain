@@ -1,0 +1,19 @@
+name: xero_nz_delete_timesheet_line
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Deletes a timesheet line for a specific timesheet. Xero API DELETE /payroll.xro/2.0/Timesheets/{TimesheetID}/Lines/{TimesheetLineID}.
+api:
+  method: DELETE
+  path: /payroll.xro/2.0/Timesheets/{TimesheetID}/Lines/{TimesheetLineID}
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Identifier for the timesheet.
+    type: string
+    required: true
+  - name: TimesheetLineID
+    description: >-
+      Identifier for the timesheet line.
+    type: string
+    required: true

@@ -1,0 +1,19 @@
+name: xero_nz_delete_employee_earnings_template
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Deletes an employee's earnings template record. Xero API DELETE /payroll.xro/2.0/Employees/{EmployeeID}/PayTemplates/Earnings/{PayTemplateEarningID}.
+api:
+  method: DELETE
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/PayTemplates/Earnings/{PayTemplateEarningID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: PayTemplateEarningID
+    description: >-
+      Id for single pay template earnings object.
+    type: string
+    required: true

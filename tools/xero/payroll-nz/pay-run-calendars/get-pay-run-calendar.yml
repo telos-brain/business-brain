@@ -1,0 +1,14 @@
+name: xero_nz_get_pay_run_calendar
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a specific payrun calendar by using a unique payroll calendar ID. Xero API GET /payroll.xro/2.0/PayRunCalendars/{PayrollCalendarID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/PayRunCalendars/{PayrollCalendarID}
+  connector: xero
+parameters:
+  - name: PayrollCalendarID
+    description: >-
+      Identifier for the payrun calendars.
+    type: string
+    required: true

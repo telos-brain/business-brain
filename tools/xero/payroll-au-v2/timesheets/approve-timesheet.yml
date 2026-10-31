@@ -1,0 +1,14 @@
+name: xero_au_v2_approve_timesheet
+version: 1
+description: >-
+  Xero Payroll Australia timesheets v2 (payroll.xro/2.0). Use for Australian timesheet lines, approve, and revert. Do not use for New Zealand or the United Kingdom. Approves a specific timesheet. Xero API POST /payroll.xro/2.0/Timesheets/{TimesheetID}/Approve.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Timesheets/{TimesheetID}/Approve
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Identifier for the timesheet.
+    type: string
+    required: true

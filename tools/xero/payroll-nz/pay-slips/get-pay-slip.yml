@@ -1,0 +1,14 @@
+name: xero_nz_get_pay_slip
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a specific payslip by a unique pay slip ID. Xero API GET /payroll.xro/2.0/PaySlips/{PaySlipID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/PaySlips/{PaySlipID}
+  connector: xero
+parameters:
+  - name: PaySlipID
+    description: >-
+      Identifier for the payslip.
+    type: string
+    required: true

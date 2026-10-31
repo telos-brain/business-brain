@@ -1,0 +1,19 @@
+name: xero_au_update_employee
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Updates an employee's detail. Update properties on a single employee Xero API POST /payroll.xro/1.0/Employees/{EmployeeID}.
+api:
+  method: POST
+  path: /payroll.xro/1.0/Employees/{EmployeeID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: FirstName (string): First name of employee; LastName (string): Last name of employee; DateOfBirth (string): Date of birth of the employee (YYYY-MM-DD); HomeAddress (object); StartDate (string): Start date for an employee (YYYY-MM-DD); Title (string): Title of the employee; MiddleNames (string): Middle name(s) of the employee; Email (string): The email address for the employee; Gender (string) [N, M, F, I]; Phone (string): Employee phone number; Mobile (string): Employee mobile number; TwitterUserName (string): Employee’s twitter name; IsAuthorisedToApproveLeave (boolean): Authorised to approve other employees' leave requests; IsAuthorisedToApproveTimesheets (boolean): Authorised to approve timesheets; JobTitle (string): JobTitle of the employee; Classification (string): Employees classification; OrdinaryEarningsRateID (string): Xero unique identifier for earnings rate; PayrollCalendarID (string): Xero unique identifier for payroll calendar for the employee and 17 more.
+    type: json
+    required: true

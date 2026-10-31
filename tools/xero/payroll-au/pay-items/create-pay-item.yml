@@ -1,0 +1,25 @@
+name: xero_au_create_pay_item
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Creates a pay item. Xero API POST /payroll.xro/1.0/PayItems.
+api:
+  method: POST
+  path: /payroll.xro/1.0/PayItems
+  connector: xero
+parameters:
+  - name: EarningsRates
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): Name of the earnings rate (max length = 100); AccountCode (string): See Accounts; TypeOfUnits (string): Type of units used to record earnings (max length = 50). Only When RateType is RATEPERUNIT; IsExemptFromTax (boolean): Most payments are subject to tax, so you should only set this value if you are sure that a payment is exempt from PAYG withholding; IsExemptFromSuper (boolean): See the ATO website for details of which payments are exempt from SGC; IsReportableAsW1 (boolean): Boolean to determine if the earnings rate is reportable or exempt from W1; IsQualifyingEarnings (boolean): Boolean to determine if the earnings rate is considered as qualifying earnings for superannuation guarantee calculations; AllowanceContributesToAnnualLeaveRate (boolean): Boolean to determine if the allowance earnings rate contributes towards annual leave rate. Only applicable if EarningsType is ALLOWANCE and RateType is RATEPERUNIT; AllowanceContributesToOvertimeRate (boolean): Boolean to determine if the allowance earnings rate contributes towards overtime allowance rate. Only applicable if EarningsType is ALLOWANCE and RateType is RATEPERUNIT; EarningsType (string) [FIXED, ORDINARYTIMEEARNINGS, OVERTIMEEARNINGS, ALLOWANCE, LUMPSUMD, EMPLOYMENTTERMINATIONPAYMENT, LUMPSUMA, LUMPSUMB]; EarningsRateID (string): Xero identifier; RateType (string) [FIXEDAMOUNT, MULTIPLE, RATEPERUNIT]; RatePerUnit (string): Default rate per unit (optional). Only applicable if RateType is RATEPERUNIT; Multiplier (number): This is the multiplier used to calculate the rate per unit, based on the employee’s ordinary earnings rate. For example, for time and a half enter 1.5. Only applicable if RateType is MULTIPLE; AccrueLeave (boolean): Indicates that this earnings rate should accrue leave. Only applicable if RateType is MULTIPLE; Amount (number): Optional Amount for FIXEDAMOUNT RateType EarningsRate; EmploymentTerminationPaymentType (string) [O, R] and 3 more.
+    type: json
+  - name: DeductionTypes
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): Name of the earnings rate (max length = 100); AccountCode (string): See Accounts; ReducesTax (boolean): Indicates that this is a pre-tax deduction that will reduce the amount of tax you withhold from an employee; ReducesSuper (boolean): Most deductions don’t reduce your superannuation guarantee contribution liability, so typically you will not set any value for this; IsExemptFromW1 (boolean): Boolean to determine if the deduction type is reportable or exempt from W1; DeductionTypeID (string): Xero identifier; DeductionCategory (string) [NONE, UNIONFEES, WORKPLACEGIVING]; CurrentRecord (boolean): Is the current record.
+    type: json
+  - name: LeaveTypes
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): Name of the earnings rate (max length = 100); TypeOfUnits (string): The type of units by which leave entitlements are normally tracked. These are typically the same as the type of units used for the employee’s ordinary earnings rate; LeaveTypeID (string): Xero identifier; NormalEntitlement (number): The number of units the employee is entitled to each year; LeaveLoadingRate (number): Enter an amount here if your organisation pays an additional percentage on top of ordinary earnings when your employees take leave (typically 17.5%); IsPaidLeave (boolean): Set this to indicate that an employee will be paid when taking this type of leave; ShowOnPayslip (boolean): Set this if you want a balance for this leave type to be shown on your employee’s payslips; CurrentRecord (boolean): Is the current record; LeaveCategoryCode (string) [ANNUALLEAVE, LONGSERVICELEAVE, PERSONALSICKCARERSLEAVE, ROSTEREDDAYOFF, TIMEOFFINLIEU, COMPASSIONATEANDBEREAVEMENTLEAVE, STUDYLEAVE, FAMILYANDDOMESTICVIOLENCELEAVE]; SGCExempt (boolean): Set this to indicate that the leave type is exempt from superannuation guarantee contribution; IsQualifyingEarnings (boolean): Boolean to determine if the leave type is considered as qualifying earnings for superannuation guarantee calculations.
+    type: json
+  - name: ReimbursementTypes
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): Name of the earnings rate (max length = 100); AccountCode (string): See Accounts; ReimbursementTypeID (string): Xero identifier; CurrentRecord (boolean): Is the current record.
+    type: json

@@ -1,0 +1,134 @@
+name: xero_nz_update_pay_slip_line_items
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates an employee pay slip. Xero API PUT /payroll.xro/2.0/PaySlips/{PaySlipID}.
+api:
+  method: PUT
+  path: /payroll.xro/2.0/PaySlips/{PaySlipID}
+  connector: xero
+parameters:
+  - name: PaySlipID
+    description: >-
+      Identifier for the payslip.
+    type: string
+    required: true
+  - name: paySlipID
+    description: >-
+      The Xero identifier for a PaySlip.
+    type: string
+  - name: employeeID
+    description: >-
+      The Xero identifier for payroll employee.
+    type: string
+  - name: payRunID
+    description: >-
+      The Xero identifier for the associated payrun.
+    type: string
+  - name: lastEdited
+    description: >-
+      The date payslip was last updated.
+    type: date
+  - name: firstName
+    description: >-
+      Employee first name.
+    type: string
+  - name: lastName
+    description: >-
+      Employee last name.
+    type: string
+  - name: totalEarnings
+    description: >-
+      Total earnings before any deductions. Same as gross earnings for NZ.
+    type: decimal
+  - name: grossEarnings
+    description: >-
+      Total earnings before any deductions. Same as total earnings for NZ.
+    type: decimal
+  - name: totalPay
+    description: >-
+      The employee net pay.
+    type: decimal
+  - name: totalEmployerTaxes
+    description: >-
+      The employer's tax obligation.
+    type: decimal
+  - name: totalEmployeeTaxes
+    description: >-
+      The part of an employee's earnings that is deducted for tax purposes.
+    type: decimal
+  - name: totalDeductions
+    description: >-
+      Total amount subtracted from an employee's earnings to reach total pay.
+    type: decimal
+  - name: totalReimbursements
+    description: >-
+      Total reimbursements are nontaxable payments to an employee used to repay out-of-pocket expenses when the person incurs those expenses through employment.
+    type: decimal
+  - name: totalStatutoryDeductions
+    description: >-
+      Total amounts required by law to subtract from the employee's earnings.
+    type: decimal
+  - name: totalSuperannuation
+    description: >-
+      Benefits (also called fringe benefits, perquisites or perks) are various non-earnings compensations provided to employees in addition to their normal earnings or salaries.
+    type: decimal
+  - name: bacsHash
+    description: >-
+      BACS Service User Number.
+    type: string
+  - name: paymentMethod
+    description: >-
+      The payment method code. One of: Cheque, Electronically, Manual.
+    type: string
+  - name: earningsLines
+    description: >-
+      Pass as a JSON array. Each item may include: earningsLineID (string): Xero identifier for payroll earnings line; earningsRateID (string): Xero identifier for payroll earnings rate; displayName (string): name of earnings rate for display in UI; ratePerUnit (number): Rate per unit for earnings line; numberOfUnits (number): Earnings number of units; fixedAmount (number): Earnings fixed amount. Only applicable if the EarningsRate RateType is Fixed; amount (number): The amount of the earnings line; isLinkedToTimesheet (boolean): Identifies if the earnings is taken from the timesheet. False for earnings line; isAverageDailyPayRate (boolean): Identifies if the earnings is using an average daily pay rate; isSystemGenerated (boolean): Flag to identify whether the earnings line is system generated or not.
+    type: json
+  - name: leaveEarningsLines
+    description: >-
+      Pass as a JSON array. Each item may include: earningsLineID (string): Xero identifier for payroll earnings line; earningsRateID (string): Xero identifier for payroll leave earnings rate; displayName (string): name of earnings rate for display in UI; ratePerUnit (number): Rate per unit for leave earnings line; numberOfUnits (number): Leave earnings number of units; fixedAmount (number): Leave earnings fixed amount. Only applicable if the EarningsRate RateType is Fixed; amount (number): The amount of the earnings line; isLinkedToTimesheet (boolean): Identifies if the leave earnings is taken from the timesheet. False for leave earnings line; isAverageDailyPayRate (boolean): Identifies if the earnings is using an average daily pay rate; isSystemGenerated (boolean): Flag to identify whether the earnings line is system generated or not.
+    type: json
+  - name: timesheetEarningsLines
+    description: >-
+      Pass as a JSON array. Each item may include: earningsLineID (string): Xero identifier for payroll earnings line; earningsRateID (string): Xero identifier for payroll leave earnings rate; displayName (string): name of earnings rate for display in UI; ratePerUnit (number): Rate per unit for leave earnings line; numberOfUnits (number): Leave earnings number of units; fixedAmount (number): Leave earnings fixed amount. Only applicable if the EarningsRate RateType is Fixed; amount (number): The amount of the earnings line; isLinkedToTimesheet (boolean): Identifies if the leave earnings is taken from the timesheet. False for leave earnings line; isAverageDailyPayRate (boolean): Identifies if the earnings is using an average daily pay rate; isSystemGenerated (boolean): Flag to identify whether the earnings line is system generated or not.
+    type: json
+  - name: deductionLines
+    description: >-
+      Pass as a JSON array. Each item may include: deductionTypeID (string): Xero identifier for payroll deduction; displayName (string): name of earnings rate for display in UI; amount (number): The amount of the deduction line; subjectToTax (boolean): Identifies if the deduction is subject to tax; percentage (number): Deduction rate percentage.
+    type: json
+  - name: reimbursementLines
+    description: >-
+      Pass as a JSON array. Each item may include: reimbursementTypeID (string): Xero identifier for payroll reimbursement; description (string): Reimbursement line description; amount (number): Reimbursement amount; ratePerUnit (number): Rate per unit for leave earnings line; numberOfUnits (number): Leave earnings number of units.
+    type: json
+  - name: leaveAccrualLines
+    description: >-
+      Pass as a JSON array. Each item may include: leaveTypeID (string): Xero identifier for the Leave type; numberOfUnits (number): Leave accrual number of units.
+    type: json
+  - name: superannuationLines
+    description: >-
+      Pass as a JSON array. Each item may include: superannuationTypeID (string): Xero identifier for payroll superannuation type; displayName (string): Benefit display name; amount (number): The amount of the superannuation line; fixedAmount (number): Superannuation fixed amount; percentage (number): Superannuation rate percentage; manualAdjustment (boolean): manual adjustment made.
+    type: json
+  - name: paymentLines
+    description: >-
+      Pass as a JSON array. Each item may include: paymentLineID (string): Xero identifier for payroll payment line; amount (number): The amount of the payment line; accountNumber (string): The account number; sortCode (string): The account sort code; accountName (string): The account name.
+    type: json
+  - name: employeeTaxLines
+    description: >-
+      Pass as a JSON array. Each item may include: taxLineID (string): Xero identifier for payroll tax line; description (string): Tax line description; amount (number): The amount of the tax line; globalTaxTypeID (string): Tax type ID; manualAdjustment (boolean): Identifies if the tax line is a manual adjustment.
+    type: json
+  - name: employerTaxLines
+    description: >-
+      Pass as a JSON array. Each item may include: taxLineID (string): Xero identifier for payroll tax line; description (string): Tax line description; amount (number): The amount of the tax line; globalTaxTypeID (string): Tax type ID; manualAdjustment (boolean): Identifies if the tax line is a manual adjustment.
+    type: json
+  - name: statutoryDeductionLines
+    description: >-
+      Pass as a JSON array. Each item may include: statutoryDeductionTypeID (string): Xero identifier for payroll statutory deduction type; amount (number): The amount of the statutory deduction line; fixedAmount (number): Fixed Amount; manualAdjustment (boolean): Identifies if the tax line is a manual adjustment.
+    type: json
+  - name: taxSettings
+    description: >-
+      Pass as a JSON object. Fields: periodUnits (number): The number of units for the period type; periodType (string) [weeks, months]; taxCode (string) [ND, M, ME, MSL, MESL, SB, S, SH]; specialTaxRate (string): Tax rate for STC and WT; lumpSumTaxCode (string): Tax code for a lump sum amount; lumpSumAmount (string): The total of the lump sum amount.
+    type: json
+  - name: grossEarningsHistory
+    description: >-
+      Pass as a JSON object. Fields: daysPaid (integer): Number of days the employee worked in the pay period (0 - 365); unpaidWeeks (integer): Number of full weeks the employee didn't work in the pay period (0 - 52).
+    type: json

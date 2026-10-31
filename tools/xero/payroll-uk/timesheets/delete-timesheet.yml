@@ -1,0 +1,14 @@
+name: xero_uk_delete_timesheet
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Deletes a specific timesheet. Xero API DELETE /payroll.xro/2.0/Timesheets/{TimesheetID}.
+api:
+  method: DELETE
+  path: /payroll.xro/2.0/Timesheets/{TimesheetID}
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Identifier for the timesheet.
+    type: string
+    required: true

@@ -1,0 +1,18 @@
+name: xero_nz_get_pay_slips
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves payslips. Xero API GET /payroll.xro/2.0/PaySlips.
+api:
+  method: GET
+  path: /payroll.xro/2.0/PaySlips
+  connector: xero
+parameters:
+  - name: page
+    description: >-
+      Page number which specifies the set of records to retrieve. By default the number of the records per set is 100.
+    type: int
+  - name: PayRunID
+    description: >-
+      PayrunID which specifies the containing payrun of payslips to retrieve. By default, the API does not group payslips by payrun.
+    type: string
+    required: true

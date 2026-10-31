@@ -1,0 +1,33 @@
+name: xero_nz_get_timesheets
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves timesheets. Xero API GET /payroll.xro/2.0/Timesheets.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Timesheets
+  connector: xero
+parameters:
+  - name: page
+    description: >-
+      Page number which specifies the set of records to retrieve. By default the number of the records per set is 100.
+    type: int
+  - name: filter
+    description: >-
+      Filter by employeeId and/or payrollCalendarId.
+    type: string
+  - name: status
+    description: >-
+      filter results by any timesheets with a matching timesheet status.
+    type: string
+  - name: startDate
+    description: >-
+      filter results by any timesheets with a startDate on or after the provided date.
+    type: date
+  - name: endDate
+    description: >-
+      filter results by any timesheets with a endDate on or before the provided date.
+    type: date
+  - name: sort
+    description: >-
+      sort the order of timesheets returned. The default is based on the timesheets createdDate, sorted oldest to newest. Currently, the only other option is to reverse the order based on the timesheets startDate, sorted newest to oldest.
+    type: string

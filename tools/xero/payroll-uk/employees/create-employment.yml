@@ -1,0 +1,42 @@
+name: xero_uk_create_employment
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates employment detail for a specific employee using a unique employee ID. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/Employment.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Employment
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: payrollCalendarID
+    description: >-
+      Xero unique identifier for the payroll calendar of the employee.
+    type: string
+    required: true
+  - name: startDate
+    description: >-
+      Start date of the employment (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: employeeNumber
+    description: >-
+      The employment number of the employee.
+    type: string
+    required: true
+  - name: niCategory
+    description: >-
+      The employee's NI Category letter. One of: A, B, C, F, H, I, J, L, M, S, V, X, Z, D, E, K, N.
+    type: string
+  - name: niCategories
+    description: >-
+      The employee's NI categories. Pass as a JSON array. Each item may include: startDate (string): The start date of the NI category (YYYY-MM-DD); niCategory (string) [A, B, C, F, H, I, J, L]; niCategoryID (number): Xero unique identifier for the NI category; dateFirstEmployedAsCivilian (string): The date in which the employee was first employed as a civilian (YYYY-MM-DD); workplacePostcode (string): The workplace postcode.
+    type: json
+    required: true
+  - name: contracts
+    description: >-
+      The employee's contracts. Pass as a JSON array. Each item may include: startDate (string): The contract start date of the employee. This will be locked once an employee has been paid and cannot be changed (YYYY-MM-DD); employmentStatus (string) [Employee, Worker, Unspecified, OffPayrollWorker]; contractType (string) [FullTime, PartTime, ZeroHour, Unspecified]; publicKey (string): The public key of the contract. Public key is required if the intention is to edit an existing contract. If no key is supplied a new contract will be created; isFixedTerm (boolean): describes whether the contract is fixed term (required if trying to create Fixed term contract); fixedTermEndDate (string): The fixed term end date of the employee. Not required if isFixedTerm is false or not provided (required if trying to create Fixed term contract); developmentalRoleDetails (object).
+    type: json

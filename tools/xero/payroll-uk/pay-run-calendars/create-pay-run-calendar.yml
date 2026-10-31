@@ -1,0 +1,41 @@
+name: xero_uk_create_pay_run_calendar
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates a new payrun calendar. Xero API POST /payroll.xro/2.0/PayRunCalendars.
+api:
+  method: POST
+  path: /payroll.xro/2.0/PayRunCalendars
+  connector: xero
+parameters:
+  - name: payrollCalendarID
+    description: >-
+      Xero unique identifier for the payroll calendar.
+    type: string
+  - name: name
+    description: >-
+      Name of the calendar.
+    type: string
+    required: true
+  - name: calendarType
+    description: >-
+      Type of the calendar. One of: Weekly, Fortnightly, FourWeekly, Monthly, Annual, Quarterly.
+    type: string
+    required: true
+  - name: periodStartDate
+    description: >-
+      Period start date of the calendar.
+    type: date
+    required: true
+  - name: periodEndDate
+    description: >-
+      Period end date of the calendar.
+    type: date
+  - name: paymentDate
+    description: >-
+      Payment date of the calendar.
+    type: date
+    required: true
+  - name: updatedDateUTC
+    description: >-
+      UTC timestamp of the last update to the pay run calendar.
+    type: datetime

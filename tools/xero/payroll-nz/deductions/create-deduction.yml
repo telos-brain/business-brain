@@ -1,0 +1,36 @@
+name: xero_nz_create_deduction
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates a new deduction for a specific employee. Xero API POST /payroll.xro/2.0/Deductions.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Deductions
+  connector: xero
+parameters:
+  - name: deductionId
+    description: >-
+      The Xero identifier for Deduction.
+    type: string
+  - name: deductionName
+    description: >-
+      Name of the deduction.
+    type: string
+    required: true
+  - name: deductionCategory
+    description: >-
+      Deduction Category type. One of: PayrollGiving, KiwiSaverVoluntaryContributions, Superannuation, NzOther.
+    type: string
+    required: true
+  - name: liabilityAccountId
+    description: >-
+      Xero identifier for Liability Account.
+    type: string
+    required: true
+  - name: currentRecord
+    description: >-
+      Identifier of a record is active or not. Use true or false.
+    type: string
+  - name: standardAmount
+    description: >-
+      Standard amount of the deduction.
+    type: decimal

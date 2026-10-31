@@ -1,0 +1,70 @@
+name: xero_nz_update_employee_salary_and_wage
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Updates an employee's salary and wages record. Xero API PUT /payroll.xro/2.0/Employees/{EmployeeID}/SalaryAndWages/{SalaryAndWagesID}.
+api:
+  method: PUT
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/SalaryAndWages/{SalaryAndWagesID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: SalaryAndWagesID
+    description: >-
+      Id for single pay template earnings object.
+    type: string
+    required: true
+  - name: salaryAndWagesID
+    description: >-
+      Xero unique identifier for a salary and wages record.
+    type: string
+  - name: earningsRateID
+    description: >-
+      Xero unique identifier for an earnings rate.
+    type: string
+    required: true
+  - name: numberOfUnitsPerWeek
+    description: >-
+      The Number of Units per week for the corresponding salary and wages.
+    type: decimal
+    required: true
+  - name: ratePerUnit
+    description: >-
+      The rate of each unit for the corresponding salary and wages.
+    type: decimal
+  - name: numberOfUnitsPerDay
+    description: >-
+      The Number of Units per day for the corresponding salary and wages.
+    type: decimal
+    required: true
+  - name: daysPerWeek
+    description: >-
+      The days per week for the salary.
+    type: decimal
+  - name: effectiveFrom
+    description: >-
+      The effective date of the corresponding salary and wages.
+    type: date
+    required: true
+  - name: annualSalary
+    description: >-
+      The annual salary.
+    type: decimal
+    required: true
+  - name: status
+    description: >-
+      The current status of the corresponding salary and wages. One of: Active, Pending, History.
+    type: string
+    required: true
+  - name: paymentType
+    description: >-
+      The type of the payment of the corresponding salary and wages. One of: Salary, Hourly.
+    type: string
+    required: true
+  - name: workPatternType
+    description: >-
+      The type of the Working Pattern of the corresponding salary and wages. One of: DaysAndHours, RegularWeek.
+    type: string

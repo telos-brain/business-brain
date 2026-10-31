@@ -1,0 +1,14 @@
+name: xero_uk_get_employee_statutory_sick_leave
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a statutory sick leave for an employee. Xero API GET /payroll.xro/2.0/StatutoryLeaves/Sick/{StatutorySickLeaveID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/StatutoryLeaves/Sick/{StatutorySickLeaveID}
+  connector: xero
+parameters:
+  - name: StatutorySickLeaveID
+    description: >-
+      Statutory sick leave id for single object.
+    type: string
+    required: true

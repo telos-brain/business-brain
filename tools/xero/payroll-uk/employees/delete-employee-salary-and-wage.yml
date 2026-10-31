@@ -1,0 +1,19 @@
+name: xero_uk_delete_employee_salary_and_wage
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Deletes a salary and wages record for a specific employee. Xero API DELETE /payroll.xro/2.0/Employees/{EmployeeID}/SalaryAndWages/{SalaryAndWagesID}.
+api:
+  method: DELETE
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/SalaryAndWages/{SalaryAndWagesID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: SalaryAndWagesID
+    description: >-
+      Id for single salary and wages object.
+    type: string
+    required: true

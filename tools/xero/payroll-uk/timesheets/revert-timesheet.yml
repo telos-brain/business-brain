@@ -1,0 +1,14 @@
+name: xero_uk_revert_timesheet
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Reverts a specific timesheet to draft. Xero API POST /payroll.xro/2.0/Timesheets/{TimesheetID}/RevertToDraft.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Timesheets/{TimesheetID}/RevertToDraft
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Identifier for the timesheet.
+    type: string
+    required: true

@@ -1,0 +1,14 @@
+name: xero_uk_get_benefit
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific benefit by using a unique benefit ID. Xero API GET /payroll.xro/2.0/Benefits/{id}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Benefits/{id}
+  connector: xero
+parameters:
+  - name: id
+    description: >-
+      Identifier for the benefit.
+    type: string
+    required: true

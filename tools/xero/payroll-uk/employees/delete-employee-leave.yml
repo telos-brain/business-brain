@@ -1,0 +1,19 @@
+name: xero_uk_delete_employee_leave
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Deletes a specific employee's leave record. Xero API DELETE /payroll.xro/2.0/Employees/{EmployeeID}/Leave/{LeaveID}.
+api:
+  method: DELETE
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Leave/{LeaveID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: LeaveID
+    description: >-
+      Leave id for single object.
+    type: string
+    required: true

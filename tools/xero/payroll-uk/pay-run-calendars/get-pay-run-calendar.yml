@@ -1,0 +1,14 @@
+name: xero_uk_get_pay_run_calendar
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific payrun calendar by using a unique payrun calendar ID. Xero API GET /payroll.xro/2.0/PayRunCalendars/{PayRunCalendarID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/PayRunCalendars/{PayRunCalendarID}
+  connector: xero
+parameters:
+  - name: PayRunCalendarID
+    description: >-
+      Identifier for the payrun calendars.
+    type: string
+    required: true

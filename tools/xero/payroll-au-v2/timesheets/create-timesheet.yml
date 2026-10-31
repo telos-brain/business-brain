@@ -1,0 +1,49 @@
+name: xero_au_v2_create_timesheet
+version: 1
+description: >-
+  Xero Payroll Australia timesheets v2 (payroll.xro/2.0). Use for Australian timesheet lines, approve, and revert. Do not use for New Zealand or the United Kingdom. Creates a new timesheet. Xero API POST /payroll.xro/2.0/Timesheets.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Timesheets
+  connector: xero
+parameters:
+  - name: timesheetID
+    description: >-
+      The Xero identifier for a Timesheet.
+    type: string
+  - name: payrollCalendarID
+    description: >-
+      The Xero identifier for the Payroll Calendar that the Timesheet applies to.
+    type: string
+    required: true
+  - name: employeeID
+    description: >-
+      The Xero identifier for the Employee that the Timesheet is for.
+    type: string
+    required: true
+  - name: startDate
+    description: >-
+      The Start Date of the Timesheet period (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: endDate
+    description: >-
+      The End Date of the Timesheet period (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: status
+    description: >-
+      Status of the timesheet. One of: Draft, Approved, Completed.
+    type: string
+  - name: totalHours
+    description: >-
+      The Total Hours of the Timesheet.
+    type: decimal
+  - name: updatedDateUTC
+    description: >-
+      The UTC date time that the Timesheet was last updated.
+    type: datetime
+  - name: timesheetLines
+    description: >-
+      Pass as a JSON array. Each item may include: timesheetLineID (string): The Xero identifier for a Timesheet Line; date (string): The Date that this Timesheet Line is for (YYYY-MM-DD); earningsRateID (string): The Xero identifier for the Earnings Rate that the Timesheet is for; trackingItemID (string): The Xero identifier for the Tracking Item that the Timesheet is for; numberOfUnits (number): The Number of Units of the Timesheet Line.
+    type: json

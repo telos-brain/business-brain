@@ -1,0 +1,14 @@
+name: xero_au_get_timesheet
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Retrieves a timesheet by using a unique timesheet id. Xero API GET /payroll.xro/1.0/Timesheets/{TimesheetID}.
+api:
+  method: GET
+  path: /payroll.xro/1.0/Timesheets/{TimesheetID}
+  connector: xero
+parameters:
+  - name: TimesheetID
+    description: >-
+      Timesheet id for single object.
+    type: string
+    required: true

@@ -1,0 +1,14 @@
+name: xero_nz_get_pay_run
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a specific pay run by using a unique pay run ID. Xero API GET /payroll.xro/2.0/PayRuns/{PayRunID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/PayRuns/{PayRunID}
+  connector: xero
+parameters:
+  - name: PayRunID
+    description: >-
+      Identifier for the pay run.
+    type: string
+    required: true

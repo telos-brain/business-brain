@@ -1,0 +1,21 @@
+name: xero_au_get_pay_runs
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Retrieves pay runs. Xero API GET /payroll.xro/1.0/PayRuns.
+api:
+  method: GET
+  path: /payroll.xro/1.0/PayRuns
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: page
+    description: >-
+      e.g. page=1 – Up to 100 PayRuns will be returned in a single API call.
+    type: int

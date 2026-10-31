@@ -1,0 +1,51 @@
+name: xero_nz_update_employee_leave
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Updates leave records for a specific employee. Xero API PUT /payroll.xro/2.0/Employees/{EmployeeID}/Leave/{LeaveID}.
+api:
+  method: PUT
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Leave/{LeaveID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: LeaveID
+    description: >-
+      Leave id for single object.
+    type: string
+    required: true
+  - name: leaveID
+    description: >-
+      The Xero identifier for LeaveType.
+    type: string
+  - name: leaveTypeID
+    description: >-
+      The Xero identifier for LeaveType.
+    type: string
+    required: true
+  - name: description
+    description: >-
+      The description of the leave (max length = 50).
+    type: string
+    required: true
+  - name: startDate
+    description: >-
+      Start date of the leave (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: endDate
+    description: >-
+      End date of the leave (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: periods
+    description: >-
+      The leave period information. The StartDate, EndDate and NumberOfUnits needs to be specified when you do not want to calculate NumberOfUnits automatically. Using incorrect period StartDate and EndDate will result in automatic computation of the NumberOfUnits. Pass as a JSON array. Each item may include: periodStartDate (string): The Pay Period Start Date (YYYY-MM-DD); periodEndDate (string): The Pay Period End Date (YYYY-MM-DD); numberOfUnits (number): The Number of Units for the leave; numberOfUnitsTaken (number): The number of units taken for the leave; typeOfUnits (string): The type of units paid for the leave; typeOfUnitsTaken (string): The type of units taken for the leave; periodStatus (string) [Approved, Completed, Estimated].
+    type: json
+  - name: updatedDateUTC
+    description: >-
+      UTC timestamp of last update to the leave type note.
+    type: datetime

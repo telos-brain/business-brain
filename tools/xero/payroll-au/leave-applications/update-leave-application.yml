@@ -1,0 +1,19 @@
+name: xero_au_update_leave_application
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Updates a specific leave application. Xero API POST /payroll.xro/1.0/LeaveApplications/{LeaveApplicationID}.
+api:
+  method: POST
+  path: /payroll.xro/1.0/LeaveApplications/{LeaveApplicationID}
+  connector: xero
+parameters:
+  - name: LeaveApplicationID
+    description: >-
+      Leave Application id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: LeaveApplicationID (string): The Xero identifier for Payroll Employee; EmployeeID (string): The Xero identifier for Payroll Employee; LeaveTypeID (string): The Xero identifier for Leave Type; Title (string): The title of the leave; StartDate (string): Start date of the leave (YYYY-MM-DD); EndDate (string): End date of the leave (YYYY-MM-DD); Description (string): The Description of the Leave; PayOutType (string) [DEFAULT, CASHED_OUT]; LeavePeriods (array).
+    type: json
+    required: true

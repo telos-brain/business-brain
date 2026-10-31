@@ -1,0 +1,14 @@
+name: xero_au_get_superfund
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Retrieves a superfund by using a unique superfund ID. Xero API GET /payroll.xro/1.0/Superfunds/{SuperFundID}.
+api:
+  method: GET
+  path: /payroll.xro/1.0/Superfunds/{SuperFundID}
+  connector: xero
+parameters:
+  - name: SuperFundID
+    description: >-
+      Superfund id for single object.
+    type: string
+    required: true

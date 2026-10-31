@@ -1,0 +1,19 @@
+name: xero_au_update_payslip
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Updates a payslip. Update lines on a single payslips Xero API POST /payroll.xro/1.0/Payslip/{PayslipID}.
+api:
+  method: POST
+  path: /payroll.xro/1.0/Payslip/{PayslipID}
+  connector: xero
+parameters:
+  - name: PayslipID
+    description: >-
+      Payslip id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: EarningsLines (array); LeaveEarningsLines (array); TimesheetEarningsLines (array); DeductionLines (array); LeaveAccrualLines (array); ReimbursementLines (array); SuperannuationLines (array); TaxLines (array).
+    type: json
+    required: true

@@ -1,0 +1,14 @@
+name: xero_au_reject_leave_application
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Reject a leave application by a unique leave application id. Xero API POST /payroll.xro/1.0/LeaveApplications/{LeaveApplicationID}/reject.
+api:
+  method: POST
+  path: /payroll.xro/1.0/LeaveApplications/{LeaveApplicationID}/reject
+  connector: xero
+parameters:
+  - name: LeaveApplicationID
+    description: >-
+      Leave Application id for single object.
+    type: string
+    required: true

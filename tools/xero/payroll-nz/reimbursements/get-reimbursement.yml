@@ -1,0 +1,14 @@
+name: xero_nz_get_reimbursement
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves a specific reimbursement by using a unique reimbursement ID. Xero API GET /payroll.xro/2.0/Reimbursements/{ReimbursementID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Reimbursements/{ReimbursementID}
+  connector: xero
+parameters:
+  - name: ReimbursementID
+    description: >-
+      Identifier for the reimbursement.
+    type: string
+    required: true

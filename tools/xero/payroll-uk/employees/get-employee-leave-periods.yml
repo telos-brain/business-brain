@@ -1,0 +1,22 @@
+name: xero_uk_get_employee_leave_periods
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific employee's leave periods using a unique employee ID. Xero API GET /payroll.xro/2.0/Employees/{EmployeeID}/LeavePeriods.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/LeavePeriods
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: startDate
+    description: >-
+      Filter by start date.
+    type: date
+  - name: endDate
+    description: >-
+      Filter by end date.
+    type: date

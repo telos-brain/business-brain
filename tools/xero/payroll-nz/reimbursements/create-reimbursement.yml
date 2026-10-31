@@ -1,0 +1,47 @@
+name: xero_nz_create_reimbursement
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates a new reimbursement. Xero API POST /payroll.xro/2.0/Reimbursements.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Reimbursements
+  connector: xero
+parameters:
+  - name: reimbursementID
+    description: >-
+      Xero unique identifier for a reimbursement.
+    type: string
+  - name: name
+    description: >-
+      Name of the reimbursement.
+    type: string
+    required: true
+  - name: accountID
+    description: >-
+      Xero unique identifier for the account used for the reimbursement.
+    type: string
+    required: true
+  - name: currentRecord
+    description: >-
+      Indicates that whether the reimbursement is active. Use true or false.
+    type: string
+  - name: reimbursementCategory
+    description: >-
+      See Reimbursement Categories. One of: GST, NoGST, GSTInclusive.
+    type: string
+  - name: calculationType
+    description: >-
+      See Calculation Types. One of: Unknown, FixedAmount, RatePerUnit.
+    type: string
+  - name: standardAmount
+    description: >-
+      Optional Fixed Rate Amount. Applicable when calculation type is Fixed Amount.
+    type: string
+  - name: standardTypeOfUnits
+    description: >-
+      Optional Type Of Units. Applicable when calculation type is Rate Per Unit. One of: Hours, km.
+    type: string
+  - name: standardRatePerUnit
+    description: >-
+      Optional Rate Per Unit. Applicable when calculation type is Rate Per Unit.
+    type: decimal

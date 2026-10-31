@@ -1,0 +1,17 @@
+name: xero_au_get_superfund_products
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Retrieves superfund products. Xero API GET /payroll.xro/1.0/SuperfundProducts.
+api:
+  method: GET
+  path: /payroll.xro/1.0/SuperfundProducts
+  connector: xero
+parameters:
+  - name: ABN
+    description: >-
+      The ABN of the Regulated SuperFund.
+    type: string
+  - name: USI
+    description: >-
+      The USI of the Regulated SuperFund.
+    type: string

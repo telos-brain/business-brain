@@ -1,0 +1,19 @@
+name: xero_uk_create_multiple_employee_earnings_template
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates multiple earnings template records for a specific employee using a unique employee ID. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/paytemplateearnings.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/paytemplateearnings
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: payTemplateEarningID (string): The Xero identifier for the earnings template; ratePerUnit (number): The rate per unit; numberOfUnits (number): The rate per unit; fixedAmount (number): The fixed amount per period; earningsRateID (string): The corresponding earnings rate identifier; name (string): The read-only name of the Earning Template.
+    type: json
+    required: true

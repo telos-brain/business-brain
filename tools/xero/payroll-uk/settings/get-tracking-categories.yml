@@ -1,0 +1,8 @@
+name: xero_uk_get_tracking_categories
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves tracking categories. Xero API GET /payroll.xro/2.0/Settings/trackingCategories.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Settings/trackingCategories
+  connector: xero

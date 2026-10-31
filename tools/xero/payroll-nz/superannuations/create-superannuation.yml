@@ -1,0 +1,53 @@
+name: xero_nz_create_superannuation
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates a new superannuation. Xero API POST /payroll.xro/2.0/Superannuations.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Superannuations
+  connector: xero
+parameters:
+  - name: id
+    description: >-
+      The Xero identifier for superannuation.
+    type: string
+  - name: name
+    description: >-
+      Name of the superannuations.
+    type: string
+    required: true
+  - name: category
+    description: >-
+      Superannuations Category type. One of: KiwiSaver, ComplyingFund, Other.
+    type: string
+    required: true
+  - name: liabilityAccountId
+    description: >-
+      Xero identifier for Liability Account.
+    type: string
+    required: true
+  - name: expenseAccountId
+    description: >-
+      Xero identifier for Expense Account.
+    type: string
+    required: true
+  - name: calculationTypeNZ
+    description: >-
+      Calculation Type of the superannuation either FixedAmount or PercentageOfTaxableEarnings. One of: FixedAmount, PercentageOfTaxableEarnings.
+    type: string
+  - name: standardAmount
+    description: >-
+      Standard amount of the superannuation.
+    type: decimal
+  - name: percentage
+    description: >-
+      Percentage of Taxable Earnings of the superannuation.
+    type: decimal
+  - name: companyMax
+    description: >-
+      Company Maximum amount of the superannuation.
+    type: decimal
+  - name: currentRecord
+    description: >-
+      Identifier of a record is active or not. Use true or false.
+    type: string

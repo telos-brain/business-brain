@@ -1,0 +1,71 @@
+name: xero_uk_create_benefit
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates a new employee benefit. Xero API POST /payroll.xro/2.0/Benefits.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Benefits
+  connector: xero
+parameters:
+  - name: id
+    description: >-
+      unique identifier in Xero.
+    type: string
+  - name: name
+    description: >-
+      Name of the employer pension.
+    type: string
+    required: true
+  - name: category
+    description: >-
+      Category type of the employer pension. One of: StakeholderPension, Other.
+    type: string
+    required: true
+  - name: liabilityAccountId
+    description: >-
+      Xero identifier for Liability Account.
+    type: string
+    required: true
+  - name: expenseAccountId
+    description: >-
+      Xero identifier for Expense Account.
+    type: string
+    required: true
+  - name: standardAmount
+    description: >-
+      Standard amount of the employer pension.
+    type: decimal
+  - name: percentage
+    description: >-
+      Percentage of gross of the employer pension.
+    type: decimal
+    required: true
+  - name: calculationType
+    description: >-
+      Calculation Type of the employer pension (FixedAmount or PercentageOfGross). One of: FixedAmount, PercentageOfGross.
+    type: string
+    required: true
+  - name: currentRecord
+    description: >-
+      Identifier of a record is active or not. Use true or false.
+    type: string
+  - name: subjectToNIC
+    description: >-
+      Identifier of subject To NIC. Use true or false.
+    type: string
+  - name: subjectToPension
+    description: >-
+      Identifier of subject To pension. Use true or false.
+    type: string
+  - name: subjectToTax
+    description: >-
+      Identifier of subject To Tax. Use true or false.
+    type: string
+  - name: isCalculatingOnQualifyingEarnings
+    description: >-
+      Identifier of calculating on qualifying earnings. Use true or false.
+    type: string
+  - name: showBalanceToEmployee
+    description: >-
+      display the balance to employee. Use true or false.
+    type: string

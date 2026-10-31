@@ -4,13 +4,52 @@
 from __future__ import annotations
 
 import re
+import sys
 from pathlib import Path
 
 import yaml
 
 ACCOUNTING_SPEC = Path("/tmp/xero_accounting.yaml")
 IDENTITY_SPEC = Path("/tmp/xero_identity.yaml")
+SPEC_DIR = Path("/tmp/xero-specs")
+# region key, spec file, folder prefix, sentence prepended to each description.
+PAYROLL_SPECS = (
+    (
+        "au",
+        SPEC_DIR / "xero-payroll-au.yaml",
+        "payroll-au",
+        "Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation.",
+    ),
+    (
+        "au_v2",
+        SPEC_DIR / "xero-payroll-au-v2.yaml",
+        "payroll-au-v2",
+        "Xero Payroll Australia timesheets v2 (payroll.xro/2.0). Use for Australian timesheet lines, approve, and revert. Do not use for New Zealand or the United Kingdom.",
+    ),
+    (
+        "nz",
+        SPEC_DIR / "xero-payroll-nz.yaml",
+        "payroll-nz",
+        "Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation.",
+    ),
+    (
+        "uk",
+        SPEC_DIR / "xero-payroll-uk.yaml",
+        "payroll-uk",
+        "Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation.",
+    ),
+)
 OUT_DIR = Path(__file__).resolve().parent
+MANIFEST_HEADER = [
+    "name: Xero",
+    "description: >-",
+    "  Tools for the Xero Accounting API (api.xro/2.0), Identity connections,",
+    "  and Payroll APIs (Australia 1.0, Australia timesheets 2.0, New Zealand,",
+    "  United Kingdom). Each tool maps one-to-one to a documented Xero endpoint.",
+    "  Accept and xeroTenantId (header Xero-Tenant-Id) come from connectors/xero.yml",
+    "  request-defaults.",
+    "tools:",
+]
 
 SKIP_BODY_FIELDS = {
     "pagination",
@@ -113,9 +152,12 @@ def kebab(value: str) -> str:
     return value.strip("-").lower()
 
 
-def snake_operation(operation_id: str) -> str:
+def snake_operation(operation_id: str, region: str = "") -> str:
     value = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", operation_id)
-    return "xero_" + value.replace("-", "_").lower()
+    value = value.replace("-", "_").lower()
+    if region:
+        return f"xero_{region}_{value}"
+    return "xero_" + value
 
 
 def folder_for(path: str, tag: str) -> str:
@@ -332,18 +374,31 @@ def iter_ops(spec: dict):
             yield path, item, method, op
 
 
-def build_from_spec(spec: dict, *, prefix: str, default_tag: str) -> list[dict]:
+def build_from_spec(
+    spec: dict,
+    *,
+    prefix: str,
+    default_tag: str,
+    region: str = "",
+    folder_prefix: str = "",
+    summary_prefix: str = "",
+) -> list[dict]:
     tools = []
     for path, item, method, op in iter_ops(spec):
         operation_id = op.get("operationId") or f"{method}_{path.strip('/').replace('/', '_')}"
-        name = snake_operation(operation_id)
+        name = snake_operation(operation_id, region)
         tag = (op.get("tags") or [default_tag])[0]
         folder = folder_for(path, tag if default_tag != "identity" else "identity")
+        if folder_prefix:
+            folder = f"{folder_prefix}/{folder}"
         summary = collapse(op.get("summary")) or collapse(operation_id)
         extra = collapse(op.get("description"))
         if summary and not summary.endswith("."):
             summary += "."
-        parts = [summary]
+        parts = []
+        if summary_prefix:
+            parts.append(summary_prefix if summary_prefix.endswith(".") else summary_prefix + ".")
+        parts.append(summary)
         if (
             extra
             and extra != summary
@@ -364,7 +419,10 @@ def build_from_spec(spec: dict, *, prefix: str, default_tag: str) -> list[dict]:
                 params.append(p)
                 existing.add(p["name"])
 
-        filename = kebab(name[5:] if name.startswith("xero_") else name) + ".yml"
+        short = name[5:] if name.startswith("xero_") else name
+        if region and short.startswith(region + "_"):
+            short = short[len(region) + 1 :]
+        filename = kebab(short) + ".yml"
         tools.append(
             {
                 "name": name,
@@ -379,6 +437,81 @@ def build_from_spec(spec: dict, *, prefix: str, default_tag: str) -> list[dict]:
     return tools
 
 
+def assert_unique(tools: list[dict]) -> None:
+    names = [t["name"] for t in tools]
+    if len(names) != len(set(names)):
+        dupes = sorted({n for n in names if names.count(n) > 1})
+        raise SystemExit(f"Duplicate names: {dupes}")
+    rels = [t["rel"] for t in tools]
+    if len(rels) != len(set(rels)):
+        dupes = sorted({n for n in rels if rels.count(n) > 1})
+        raise SystemExit(f"Duplicate files: {dupes}")
+    for t in tools:
+        tokens = set(re.findall(r"\{([^{}]+)\}", t["path"]))
+        param_names = {p["name"] for p in t["parameters"]}
+        missing = tokens - param_names
+        if missing:
+            raise SystemExit(f"{t['name']} path tokens missing parameters: {sorted(missing)}")
+
+
+def write_tools(tools: list[dict]) -> None:
+    for t in tools:
+        dest = OUT_DIR / t["rel"]
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(emit_tool(t))
+
+
+def write_manifest(rels: list[str]) -> None:
+    lines = list(MANIFEST_HEADER)
+    for rel in rels:
+        lines.append(f"  - {rel}")
+    (OUT_DIR / "tools.yml").write_text("\n".join(lines) + "\n")
+
+
+def load_payroll_tools() -> list[dict]:
+    missing = [str(path) for _, path, _, _ in PAYROLL_SPECS if not path.exists()]
+    if missing:
+        raise SystemExit("Missing payroll specs:\n  " + "\n  ".join(missing))
+    tools = []
+    for region, path, folder_prefix, summary_prefix in PAYROLL_SPECS:
+        spec = yaml.safe_load(path.read_text())
+        server = spec["servers"][0]["url"]
+        prefix = server.removeprefix("https://api.xero.com")
+        tools.extend(
+            build_from_spec(
+                spec,
+                prefix=prefix,
+                default_tag="Payroll",
+                region=region,
+                folder_prefix=folder_prefix,
+                summary_prefix=summary_prefix,
+            )
+        )
+    assert_unique(tools)
+    return tools
+
+
+def payroll_only() -> None:
+    tools = load_payroll_tools()
+    for yml in OUT_DIR.rglob("*.yml"):
+        rel = yml.relative_to(OUT_DIR).as_posix()
+        if rel.startswith("payroll-"):
+            yml.unlink()
+    write_tools(tools)
+    existing = []
+    manifest = (OUT_DIR / "tools.yml").read_text().splitlines()
+    for line in manifest:
+        if line.startswith("  - ") and not line[4:].startswith("payroll-"):
+            existing.append(line[4:])
+    write_manifest(existing + [t["rel"] for t in tools])
+    print(f"wrote {len(tools)} payroll tools")
+    by_folder = {}
+    for t in tools:
+        by_folder[t["folder"].split("/")[0]] = by_folder.get(t["folder"].split("/")[0], 0) + 1
+    for folder, count in sorted(by_folder.items()):
+        print(f"  {count:3} {folder}")
+
+
 def main() -> None:
     accounting = yaml.safe_load(ACCOUNTING_SPEC.read_text())
     identity = yaml.safe_load(IDENTITY_SPEC.read_text())
@@ -388,34 +521,14 @@ def main() -> None:
     tools.extend(
         build_from_spec(identity, prefix="", default_tag="identity")
     )
-
-    names = [t["name"] for t in tools]
-    if len(names) != len(set(names)):
-        raise SystemExit(f"Duplicate names: {[n for n in names if names.count(n) > 1]}")
-    rels = [t["rel"] for t in tools]
-    if len(rels) != len(set(rels)):
-        raise SystemExit(f"Duplicate files: {[n for n in rels if rels.count(n) > 1]}")
+    tools.extend(load_payroll_tools())
+    assert_unique(tools)
 
     for yml in OUT_DIR.rglob("*.yml"):
         yml.unlink()
 
-    for t in tools:
-        dest = OUT_DIR / t["rel"]
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(emit_tool(t))
-
-    manifest = [
-        "name: Xero",
-        "description: >-",
-        "  Tools for the Xero Accounting API (api.xro/2.0) and Identity connections.",
-        "  Each tool maps one-to-one to a documented Xero endpoint. Accept and",
-        "  xeroTenantId (header Xero-Tenant-Id) come from connectors/xero.yml",
-        "  request-defaults.",
-        "tools:",
-    ]
-    for t in tools:
-        manifest.append(f"  - {t['rel']}")
-    (OUT_DIR / "tools.yml").write_text("\n".join(manifest) + "\n")
+    write_tools(tools)
+    write_manifest([t["rel"] for t in tools])
 
     print(f"wrote {len(tools)} tools + tools.yml")
     by_folder = {}
@@ -426,4 +539,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "payroll":
+        payroll_only()
+    else:
+        main()

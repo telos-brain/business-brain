@@ -5,26 +5,68 @@ description: >-
   Changes Xero data for the connected organisations. Reads current
   records, then uses Xero read and write tools to do what the request
   asks. The calling tool requires CFO approval before this run starts.
-version: 1
+version: 3
 
 # TOOL: invoked via tools/execution/finances/update-finances.yml as {{input.request}}.
 type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4096, 8192, 16384
+output-tokens: 4000, 8000, 12000
 caching: automatic
 max-turns: 50
 thinking: adaptive
 session-timeout: 30
 
-# Discovery only. Xero reads and writes stay in available-tools and are
-# promoted with activate_tools (BRA212 / BRA217 / BRA415).
+# xero_get_connections is injected. Other Xero reads and writes stay in
+# available-tools and are promoted with activate_tools.
 tools:
   - find_available_tools
   - activate_tools
+  - xero_get_connections
 
 available-tools:
+  - xero_au_approve_leave_application
+  - xero_au_create_employee
+  - xero_au_create_leave_application
+  - xero_au_create_pay_item
+  - xero_au_create_pay_run
+  - xero_au_create_payroll_calendar
+  - xero_au_create_superfund
+  - xero_au_create_timesheet
+  - xero_au_get_employee
+  - xero_au_get_employees
+  - xero_au_get_leave_application
+  - xero_au_get_leave_applications
+  - xero_au_get_leave_applications_v2
+  - xero_au_get_pay_items
+  - xero_au_get_pay_run
+  - xero_au_get_pay_runs
+  - xero_au_get_payroll_calendar
+  - xero_au_get_payroll_calendars
+  - xero_au_get_payslip
+  - xero_au_get_settings
+  - xero_au_get_superfund
+  - xero_au_get_superfund_products
+  - xero_au_get_superfunds
+  - xero_au_get_timesheet
+  - xero_au_get_timesheets
+  - xero_au_reject_leave_application
+  - xero_au_update_employee
+  - xero_au_update_leave_application
+  - xero_au_update_pay_run
+  - xero_au_update_payslip
+  - xero_au_update_superfund
+  - xero_au_update_timesheet
+  - xero_au_v2_approve_timesheet
+  - xero_au_v2_create_timesheet
+  - xero_au_v2_create_timesheet_line
+  - xero_au_v2_delete_timesheet
+  - xero_au_v2_delete_timesheet_line
+  - xero_au_v2_get_timesheet
+  - xero_au_v2_get_timesheets
+  - xero_au_v2_revert_timesheet
+  - xero_au_v2_update_timesheet_line
   - xero_create_account
   - xero_create_account_attachment_by_file_name
   - xero_create_bank_transaction_attachment_by_file_name
@@ -122,7 +164,6 @@ available-tools:
   - xero_get_branding_themes
   - xero_get_budget
   - xero_get_budgets
-  - xero_get_connections
   - xero_get_contact
   - xero_get_contact_attachment_by_file_name
   - xero_get_contact_attachment_by_id
@@ -224,7 +265,147 @@ available-tools:
   - xero_get_tracking_category
   - xero_get_user
   - xero_get_users
+  - xero_nz_approve_timesheet
+  - xero_nz_create_deduction
+  - xero_nz_create_earnings_rate
+  - xero_nz_create_employee
+  - xero_nz_create_employee_earnings_template
+  - xero_nz_create_employee_leave
+  - xero_nz_create_employee_leave_setup
+  - xero_nz_create_employee_leave_type
+  - xero_nz_create_employee_opening_balances
+  - xero_nz_create_employee_payment_method
+  - xero_nz_create_employee_salary_and_wage
+  - xero_nz_create_employee_working_pattern
+  - xero_nz_create_employment
+  - xero_nz_create_leave_type
+  - xero_nz_create_multiple_employee_earnings_template
+  - xero_nz_create_pay_run
+  - xero_nz_create_pay_run_calendar
+  - xero_nz_create_reimbursement
+  - xero_nz_create_superannuation
+  - xero_nz_create_timesheet
+  - xero_nz_create_timesheet_line
+  - xero_nz_delete_employee_earnings_template
+  - xero_nz_delete_employee_leave
+  - xero_nz_delete_employee_salary_and_wage
+  - xero_nz_delete_employee_working_pattern
+  - xero_nz_delete_timesheet
+  - xero_nz_delete_timesheet_line
+  - xero_nz_get_deduction
+  - xero_nz_get_deductions
+  - xero_nz_get_earnings_rate
+  - xero_nz_get_earnings_rates
+  - xero_nz_get_employee
+  - xero_nz_get_employee_leave_balances
+  - xero_nz_get_employee_leave_periods
+  - xero_nz_get_employee_leave_types
+  - xero_nz_get_employee_leaves
+  - xero_nz_get_employee_opening_balances
+  - xero_nz_get_employee_pay_templates
+  - xero_nz_get_employee_payment_method
+  - xero_nz_get_employee_salary_and_wage
+  - xero_nz_get_employee_salary_and_wages
+  - xero_nz_get_employee_tax
+  - xero_nz_get_employee_working_pattern
+  - xero_nz_get_employee_working_patterns
+  - xero_nz_get_employees
+  - xero_nz_get_leave_type
+  - xero_nz_get_leave_types
+  - xero_nz_get_pay_run
+  - xero_nz_get_pay_run_calendar
+  - xero_nz_get_pay_run_calendars
+  - xero_nz_get_pay_runs
+  - xero_nz_get_pay_slip
+  - xero_nz_get_pay_slips
+  - xero_nz_get_reimbursement
+  - xero_nz_get_reimbursements
+  - xero_nz_get_settings
+  - xero_nz_get_statutory_deduction
+  - xero_nz_get_statutory_deductions
+  - xero_nz_get_superannuation
+  - xero_nz_get_superannuations
+  - xero_nz_get_timesheet
+  - xero_nz_get_timesheets
+  - xero_nz_get_tracking_categories
+  - xero_nz_revert_timesheet
+  - xero_nz_update_employee
+  - xero_nz_update_employee_earnings_template
+  - xero_nz_update_employee_leave
+  - xero_nz_update_employee_salary_and_wage
+  - xero_nz_update_employee_tax
+  - xero_nz_update_pay_slip_line_items
+  - xero_nz_update_timesheet_line
   - xero_post_setup
+  - xero_uk_approve_timesheet
+  - xero_uk_create_benefit
+  - xero_uk_create_deduction
+  - xero_uk_create_earnings_rate
+  - xero_uk_create_employee
+  - xero_uk_create_employee_earnings_template
+  - xero_uk_create_employee_leave
+  - xero_uk_create_employee_leave_type
+  - xero_uk_create_employee_opening_balances
+  - xero_uk_create_employee_payment_method
+  - xero_uk_create_employee_salary_and_wage
+  - xero_uk_create_employee_statutory_sick_leave
+  - xero_uk_create_employment
+  - xero_uk_create_leave_type
+  - xero_uk_create_multiple_employee_earnings_template
+  - xero_uk_create_pay_run_calendar
+  - xero_uk_create_reimbursement
+  - xero_uk_create_timesheet
+  - xero_uk_create_timesheet_line
+  - xero_uk_delete_employee_earnings_template
+  - xero_uk_delete_employee_leave
+  - xero_uk_delete_employee_salary_and_wage
+  - xero_uk_delete_timesheet
+  - xero_uk_delete_timesheet_line
+  - xero_uk_get_benefit
+  - xero_uk_get_benefits
+  - xero_uk_get_deduction
+  - xero_uk_get_deductions
+  - xero_uk_get_earnings_order
+  - xero_uk_get_earnings_orders
+  - xero_uk_get_earnings_rate
+  - xero_uk_get_earnings_rates
+  - xero_uk_get_employee
+  - xero_uk_get_employee_leave
+  - xero_uk_get_employee_leave_balances
+  - xero_uk_get_employee_leave_periods
+  - xero_uk_get_employee_leave_types
+  - xero_uk_get_employee_leaves
+  - xero_uk_get_employee_opening_balances
+  - xero_uk_get_employee_pay_template
+  - xero_uk_get_employee_payment_method
+  - xero_uk_get_employee_salary_and_wage
+  - xero_uk_get_employee_salary_and_wages
+  - xero_uk_get_employee_statutory_leave_balances
+  - xero_uk_get_employee_statutory_sick_leave
+  - xero_uk_get_employee_tax
+  - xero_uk_get_employees
+  - xero_uk_get_leave_type
+  - xero_uk_get_leave_types
+  - xero_uk_get_pay_run
+  - xero_uk_get_pay_run_calendar
+  - xero_uk_get_pay_run_calendars
+  - xero_uk_get_pay_runs
+  - xero_uk_get_pay_slip
+  - xero_uk_get_pay_slips
+  - xero_uk_get_reimbursement
+  - xero_uk_get_reimbursements
+  - xero_uk_get_settings
+  - xero_uk_get_statutory_leave_summary
+  - xero_uk_get_timesheet
+  - xero_uk_get_timesheets
+  - xero_uk_get_tracking_categories
+  - xero_uk_revert_timesheet
+  - xero_uk_update_employee
+  - xero_uk_update_employee_earnings_template
+  - xero_uk_update_employee_leave
+  - xero_uk_update_employee_opening_balances
+  - xero_uk_update_employee_salary_and_wage
+  - xero_uk_update_timesheet_line
   - xero_update_account
   - xero_update_account_attachment_by_file_name
   - xero_update_bank_transaction
@@ -284,21 +465,22 @@ email a customer unless the request explicitly says to.
 A Xero connection can cover more than one organisation. Each connection
 is an entity you can read or change.
 
-1. `find_available_tools` for the connections tool (`xero_get_connections`).
-   Then `activate_tools` with the names you will call. A search result is
-   not callable. The tools are available on the **next** step.
-2. Call `xero_get_connections`. Omit `xeroTenantId` on that call. Each
-   result has `tenantId` and `tenantName`.
-3. Use the organisation the request names. If there is one connection,
+1. Call `xero_get_connections`. It is already available. Omit
+   `xeroTenantId` on that call. Each result has `tenantId` and
+   `tenantName`.
+2. Use the organisation the request names. If there is one connection,
    use it. If there are several and the request does not say which, do
    not guess — report the `tenantName` / `tenantId` pairs and stop.
-4. Later Accounting calls take `xeroTenantId` set to that `tenantId`.
+3. Later Accounting calls take `xeroTenantId` set to that `tenantId`.
 
 ## Doing the work
 
 1. `find_available_tools` with tight queries for the read tools that show
-   the current state, then the write tools the change needs. Call
-   `activate_tools` with those names. They are callable on the next step.
+   the current state, then the write tools the change needs. Payroll
+   tools are regional: `xero_au_` (Australia), `xero_au_v2_` (Australia
+   timesheets), `xero_nz_` (New Zealand), `xero_uk_` (United Kingdom).
+   Call `activate_tools` with those names. They are callable on the next
+   step.
 2. Read first. Confirm contact ids, invoice ids, account codes, and
    amounts from tool results. Never guess them.
 3. Call the write tool that matches the request. If Xero rejects the

@@ -1,0 +1,23 @@
+name: xero_uk_create_employee_payment_method
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates an employee payment method. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/PaymentMethods.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/PaymentMethods
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: paymentMethod
+    description: >-
+      The payment method code. One of: Cheque, Electronically, Manual.
+    type: string
+    required: true
+  - name: bankAccounts
+    description: >-
+      Pass as a JSON array. Each item may include: accountName (string): Bank account name (max length = 32); accountNumber (string): Bank account number (digits only; max length = 8); sortCode (string): Bank account sort code (6 digits).
+    type: json

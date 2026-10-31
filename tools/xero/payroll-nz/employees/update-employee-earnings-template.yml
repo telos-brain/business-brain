@@ -1,0 +1,43 @@
+name: xero_nz_update_employee_earnings_template
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Updates an earnings template records for an employee. Xero API PUT /payroll.xro/2.0/Employees/{EmployeeID}/PayTemplates/Earnings/{PayTemplateEarningID}.
+api:
+  method: PUT
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/PayTemplates/Earnings/{PayTemplateEarningID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: PayTemplateEarningID
+    description: >-
+      Id for single pay template earnings object.
+    type: string
+    required: true
+  - name: payTemplateEarningID
+    description: >-
+      The Xero identifier for the earnings template.
+    type: string
+  - name: ratePerUnit
+    description: >-
+      The rate per unit.
+    type: decimal
+  - name: numberOfUnits
+    description: >-
+      The rate per unit.
+    type: decimal
+  - name: fixedAmount
+    description: >-
+      The fixed amount per period.
+    type: decimal
+  - name: earningsRateID
+    description: >-
+      The corresponding earnings rate identifier.
+    type: string
+  - name: name
+    description: >-
+      The read-only name of the Earning Template.
+    type: string

@@ -1,0 +1,14 @@
+name: xero_uk_get_pay_slip
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific payslip by using a unique payslip ID. Xero API GET /payroll.xro/2.0/Payslips/{PayslipID}.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Payslips/{PayslipID}
+  connector: xero
+parameters:
+  - name: PayslipID
+    description: >-
+      Identifier for the payslip.
+    type: string
+    required: true

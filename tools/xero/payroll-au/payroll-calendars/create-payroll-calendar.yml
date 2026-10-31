@@ -1,0 +1,14 @@
+name: xero_au_create_payroll_calendar
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Creates a Payroll Calendar. Xero API POST /payroll.xro/1.0/PayrollCalendars.
+api:
+  method: POST
+  path: /payroll.xro/1.0/PayrollCalendars
+  connector: xero
+parameters:
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): Name of the Payroll Calendar; CalendarType (string) [WEEKLY, FORTNIGHTLY, FOURWEEKLY, MONTHLY, TWICEMONTHLY, QUARTERLY]; StartDate (string): The start date of the upcoming pay period. The end date will be calculated based upon this date, and the calendar type selected (YYYY-MM-DD); PaymentDate (string): The date on which employees will be paid for the upcoming pay period (YYYY-MM-DD); PayrollCalendarID (string): Xero identifier; ReferenceDate (string): Reference Date (YYYY-MM-DD).
+    type: json
+    required: true

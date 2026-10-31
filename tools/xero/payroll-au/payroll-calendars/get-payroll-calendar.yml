@@ -1,0 +1,14 @@
+name: xero_au_get_payroll_calendar
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Retrieves payroll calendar by using a unique payroll calendar ID. Xero API GET /payroll.xro/1.0/PayrollCalendars/{PayrollCalendarID}.
+api:
+  method: GET
+  path: /payroll.xro/1.0/PayrollCalendars/{PayrollCalendarID}
+  connector: xero
+parameters:
+  - name: PayrollCalendarID
+    description: >-
+      Payroll Calendar id for single object.
+    type: string
+    required: true

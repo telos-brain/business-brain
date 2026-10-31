@@ -1,0 +1,13 @@
+name: xero_nz_get_reimbursements
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves reimbursements. Xero API GET /payroll.xro/2.0/Reimbursements.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Reimbursements
+  connector: xero
+parameters:
+  - name: page
+    description: >-
+      Page number which specifies the set of records to retrieve. By default the number of the records per set is 100.
+    type: int

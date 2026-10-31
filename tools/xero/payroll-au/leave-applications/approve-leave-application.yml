@@ -1,0 +1,14 @@
+name: xero_au_approve_leave_application
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Approve a requested leave application by a unique leave application id. Xero API POST /payroll.xro/1.0/LeaveApplications/{LeaveApplicationID}/approve.
+api:
+  method: POST
+  path: /payroll.xro/1.0/LeaveApplications/{LeaveApplicationID}/approve
+  connector: xero
+parameters:
+  - name: LeaveApplicationID
+    description: >-
+      Leave Application id for single object.
+    type: string
+    required: true

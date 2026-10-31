@@ -1,0 +1,24 @@
+name: xero_nz_create_employee_working_pattern
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates an employee working pattern. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/Working-Patterns.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/Working-Patterns
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: effectiveFrom
+    description: >-
+      The effective date of the corresponding salary and wages.
+    type: date
+    required: true
+  - name: workingWeeks
+    description: >-
+      Pass as a JSON array. Each item may include: monday (number): The number of hours worked on a Monday; tuesday (number): The number of hours worked on a Tuesday; wednesday (number): The number of hours worked on a Wednesday; thursday (number): The number of hours worked on a Thursday; friday (number): The number of hours worked on a Friday; saturday (number): The number of hours worked on a Saturday; sunday (number): The number of hours worked on a Sunday.
+    type: json
+    required: true

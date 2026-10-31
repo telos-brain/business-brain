@@ -1,0 +1,13 @@
+name: xero_nz_get_superannuations
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Retrieves superannuations. Xero API GET /payroll.xro/2.0/Superannuations.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Superannuations
+  connector: xero
+parameters:
+  - name: page
+    description: >-
+      Page number which specifies the set of records to retrieve. By default the number of the records per set is 100.
+    type: int

@@ -1,0 +1,81 @@
+name: xero_nz_create_employee
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates an employees. Xero API POST /payroll.xro/2.0/Employees.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees
+  connector: xero
+parameters:
+  - name: employeeID
+    description: >-
+      Xero unique identifier for the employee.
+    type: string
+  - name: title
+    description: >-
+      Title of the employee.
+    type: string
+  - name: firstName
+    description: >-
+      First name of employee.
+    type: string
+    required: true
+  - name: lastName
+    description: >-
+      Last name of employee.
+    type: string
+    required: true
+  - name: dateOfBirth
+    description: >-
+      Date of birth of the employee (YYYY-MM-DD).
+    type: date
+    required: true
+  - name: address
+    description: >-
+      Pass as a JSON object. Fields: addressLine1 (string): Address line 1 for employee home address; addressLine2 (string): Address line 2 for employee home address; city (string): Suburb for employee home address; suburb (string): Suburb for employee home address; postCode (string): PostCode for employee home address; countryName (string): Country of HomeAddress.
+    type: json
+    required: true
+  - name: email
+    description: >-
+      The email address for the employee.
+    type: string
+  - name: gender
+    description: >-
+      The employee’s gender. One of: M, F.
+    type: string
+  - name: phoneNumber
+    description: >-
+      Employee phone number.
+    type: string
+  - name: startDate
+    description: >-
+      Employment start date of the employee at the time it was requested.
+    type: date
+  - name: endDate
+    description: >-
+      Employment end date of the employee at the time it was requested.
+    type: date
+  - name: payrollCalendarID
+    description: >-
+      Xero unique identifier for the payroll calendar of the employee.
+    type: string
+  - name: updatedDateUTC
+    description: >-
+      UTC timestamp of last update to the employee.
+    type: datetime
+  - name: createdDateUTC
+    description: >-
+      UTC timestamp when the employee was created in Xero.
+    type: datetime
+  - name: jobTitle
+    description: >-
+      Employee's job title.
+    type: string
+  - name: engagementType
+    description: >-
+      Engagement type of the employee.
+    type: string
+  - name: fixedTermEndDate
+    description: >-
+      End date for an employee with a fixed-term engagement type.
+    type: date

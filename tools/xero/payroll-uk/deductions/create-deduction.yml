@@ -1,0 +1,75 @@
+name: xero_uk_create_deduction
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Creates a new deduction. Xero API POST /payroll.xro/2.0/Deductions.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Deductions
+  connector: xero
+parameters:
+  - name: deductionId
+    description: >-
+      The Xero identifier for Deduction.
+    type: string
+  - name: deductionName
+    description: >-
+      Name of the deduction.
+    type: string
+    required: true
+  - name: deductionCategory
+    description: >-
+      Deduction Category type. One of: CapitalContributions, ChildCareVoucher, MakingGood, PostgraduateLoanDeductions, PrivateUsePayments, SalarySacrifice, StakeholderPension, StakeholderPensionPostTax, StudentLoanDeductions, UkOther.
+    type: string
+  - name: liabilityAccountId
+    description: >-
+      Xero identifier for Liability Account.
+    type: string
+    required: true
+  - name: currentRecord
+    description: >-
+      Identifier of a record is active or not. Use true or false.
+    type: string
+  - name: standardAmount
+    description: >-
+      Standard amount of the deduction.
+    type: decimal
+  - name: reducesSuperLiability
+    description: >-
+      Identifier of reduces super liability. Use true or false.
+    type: string
+  - name: reducesTaxLiability
+    description: >-
+      Identifier of reduces tax liability. Use true or false.
+    type: string
+  - name: calculationType
+    description: >-
+      determine the calculation type whether fixed amount or percentage of gross. One of: FixedAmount, PercentageOfGross.
+    type: string
+  - name: percentage
+    description: >-
+      Percentage of gross.
+    type: decimal
+  - name: subjectToNIC
+    description: >-
+      Identifier of subject To NIC. Use true or false.
+    type: string
+  - name: subjectToTax
+    description: >-
+      Identifier of subject To Tax. Use true or false.
+    type: string
+  - name: isReducedByBasicRate
+    description: >-
+      Identifier of reduced by basic rate applicable or not. Use true or false.
+    type: string
+  - name: applyToPensionCalculations
+    description: >-
+      Identifier for apply to pension calculations. Use true or false.
+    type: string
+  - name: isCalculatingOnQualifyingEarnings
+    description: >-
+      Identifier of calculating on qualifying earnings. Use true or false.
+    type: string
+  - name: isPension
+    description: >-
+      Identifier of applicable for pension or not. Use true or false.
+    type: string

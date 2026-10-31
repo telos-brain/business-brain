@@ -1,0 +1,66 @@
+name: xero_nz_create_employee_leave_type
+version: 1
+description: >-
+  Xero Payroll New Zealand (payroll.xro/2.0). Use only for a New Zealand organisation. Creates leave type records for a specific employee. Xero API POST /payroll.xro/2.0/Employees/{EmployeeID}/LeaveTypes.
+api:
+  method: POST
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/LeaveTypes
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: leaveTypeID
+    description: >-
+      The Xero identifier for leave type.
+    type: string
+  - name: scheduleOfAccrual
+    description: >-
+      The schedule of accrual. One of: AnnuallyAfter6Months, OnAnniversaryDate, PercentageOfGrossEarnings, NoAccruals.
+    type: string
+  - name: unitsAccruedAnnually
+    description: >-
+      The number of units accrued for the leave annually. This is 0 when the ScheduleOfAccrual chosen is "NoAccruals".
+    type: decimal
+  - name: typeOfUnitsToAccrue
+    description: >-
+      The type of units accrued for the leave annually.
+    type: string
+  - name: maximumToAccrue
+    description: >-
+      The maximum number of units that can be accrued for the leave.
+    type: decimal
+  - name: openingBalance
+    description: >-
+      The initial number of units assigned when the leave was added to the employee.
+    type: decimal
+  - name: openingBalanceTypeOfUnits
+    description: >-
+      The type of units for the opening balance.
+    type: string
+  - name: rateAccruedHourly
+    description: >-
+      not supported in Payroll NZ.
+    type: decimal
+  - name: percentageOfGrossEarnings
+    description: >-
+      Specific for scheduleOfAccrual having percentage of gross earnings. Identifies how much percentage of gross earnings is accrued per pay period.
+    type: decimal
+  - name: includeHolidayPayEveryPay
+    description: >-
+      Specific to Holiday pay. Flag determining if pay for leave type is added on each pay run. Use true or false.
+    type: string
+  - name: showAnnualLeaveInAdvance
+    description: >-
+      Specific to Annual Leave. Flag to include leave available to take in advance in the balance in the payslip. Use true or false.
+    type: string
+  - name: annualLeaveTotalAmountPaid
+    description: >-
+      Specific to Annual Leave. Annual leave balance in dollars.
+    type: decimal
+  - name: scheduleOfAccrualDate
+    description: >-
+      The date when an employee becomes entitled to their accrual.
+    type: date

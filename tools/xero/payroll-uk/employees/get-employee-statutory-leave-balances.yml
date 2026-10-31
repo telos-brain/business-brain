@@ -1,0 +1,22 @@
+name: xero_uk_get_employee_statutory_leave_balances
+version: 1
+description: >-
+  Xero Payroll United Kingdom (payroll.xro/2.0). Use only for a United Kingdom organisation. Retrieves a specific employee's leave balances using a unique employee ID. Xero API GET /payroll.xro/2.0/Employees/{EmployeeID}/StatutoryLeaveBalance.
+api:
+  method: GET
+  path: /payroll.xro/2.0/Employees/{EmployeeID}/StatutoryLeaveBalance
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true
+  - name: LeaveType
+    description: >-
+      Filter by the type of statutory leave.
+    type: string
+  - name: AsOfDate
+    description: >-
+      The date from which to calculate balance remaining. If not specified, current date UTC is used.
+    type: date

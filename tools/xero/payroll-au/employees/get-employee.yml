@@ -1,0 +1,14 @@
+name: xero_au_get_employee
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Retrieves an employee's detail by unique employee id. Xero API GET /payroll.xro/1.0/Employees/{EmployeeID}.
+api:
+  method: GET
+  path: /payroll.xro/1.0/Employees/{EmployeeID}
+  connector: xero
+parameters:
+  - name: EmployeeID
+    description: >-
+      Employee id for single object.
+    type: string
+    required: true

@@ -1,0 +1,14 @@
+name: xero_au_create_superfund
+version: 1
+description: >-
+  Xero Payroll Australia (payroll.xro/1.0). Use only for an Australian organisation. Creates a superfund. Xero API POST /payroll.xro/1.0/Superfunds.
+api:
+  method: POST
+  path: /payroll.xro/1.0/Superfunds
+  connector: xero
+parameters:
+  - name: body
+    description: >-
+      Pass as a JSON array. Each item may include: SuperFundID (string): Xero identifier for a super fund; Type (string) [REGULATED, SMSF]; Name (string): Name of the super fund; ABN (string): ABN of the self managed super fund; BSB (string): BSB of the self managed super fund; AccountNumber (string): The account number for the self managed super fund; AccountName (string): The account name for the self managed super fund; ElectronicServiceAddress (string): The electronic service address for the self managed super fund; EmployerNumber (string): Some funds assign a unique number to each employer; SPIN (string): The SPIN of the Regulated SuperFund. This field has been deprecated. It will only be present for legacy superfunds. New superfunds will not have a SPIN value. The USI field should be used instead of SPIN; USI (string): The USI of the Regulated SuperFund.
+    type: json
+    required: true
