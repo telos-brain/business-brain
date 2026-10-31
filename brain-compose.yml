@@ -16,11 +16,10 @@ embedding-model: voyage-3-lite
 # Apply workflows also require inbox weight 5 (`inbox:…:high:5`).
 learning-mode: high
 
-# Default LLM for every workflow that omits `model`. Telos-hosted Grok —
-# no brain API key. Token cost is billed to organisation brain credit at
-# 2× the official xAI grok-4.6 API rate. Override with DEFAULT_LLM_MODEL
-# or Settings after adding your own provider key (compose wins at deploy).
-llm-model: telosbrain/xai/grok-4.6
+# Default LLM for every workflow that omits `model`. Inbox triage sets its
+# own model (anthropic/claude-haiku-5-5). This default uses ANTHROPIC_API_KEY.
+# Compose wins over DEFAULT_LLM_MODEL and Settings at deploy.
+llm-model: anthropic/claude-sonnet-5-5
 
 # Checkpoints: weekly schedule plus a snapshot before each deploy.
 checkpoint-strategy: Daily,BeforeDeploy

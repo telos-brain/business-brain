@@ -191,14 +191,14 @@ Sign the user up through the public Management API.
 
 Cloud deploy talks to `https://go.telosbrain.com` by default (`TELOS_BRAIN_API_URL` in `.env.example`).
 
-### 2. LLM (optional — recommended)
+### 2. LLM
 
-This brain defaults to Telos-hosted Grok (`llm-model: telosbrain/xai/grok-4.6` in `brain-compose.yml`). Runs use Telos Brain LLM credits and are charged at **double** the provider API rate. Recommend the user add their own LLM API key so they pay list price instead.
+This brain defaults to Claude Sonnet 5.5 (`llm-model: anthropic/claude-sonnet-5-5` in `brain-compose.yml`). Inbox triage uses Claude Haiku 5.5. Runs need `ANTHROPIC_API_KEY`.
 
 | Provider | Where to get a key | `.env` variable | Then set in `brain-compose.yml` |
 |---|---|---|---|
 | Grok (xAI) | https://console.x.ai | `XAI_API_KEY` | `llm-model: xai/grok-4.6` |
-| Claude (Anthropic) | https://console.anthropic.com | `ANTHROPIC_API_KEY` | `llm-model: anthropic/claude-sonnet-4-6` |
+| Claude (Anthropic) | https://console.anthropic.com | `ANTHROPIC_API_KEY` | `llm-model: anthropic/claude-sonnet-5-5` |
 
 Optional later:
 
@@ -226,7 +226,7 @@ Work from the `brain/` directory.
    TELOS_BRAIN_API_URL=https://go.telosbrain.com
    ```
 
-   If they supplied their own LLM key, add that variable and change `llm-model` in `brain-compose.yml` as above. Leave unused key lines blank. Deploy works without a provider key — runs then use Telos Brain LLM credits.
+   Add `ANTHROPIC_API_KEY`. Leave unused key lines blank. Runs that use the default model fail without it.
 
 4. Deploy. `--instance` is the company name as a DNS slug: lowercase letters, digits, and internal hyphens only, 3–63 characters, no leading or trailing hyphen. It must match the company whose name you set in `brain-compose.yml`. Example for a company called Northwind: `--instance northwind`.
 
@@ -300,7 +300,7 @@ brain start
 
 `brain start` writes `.env.local` (if missing), starts SQL Server and the Brain server in Docker, and opens the admin UI at **http://127.0.0.1:60061** (no sign-in). It uses a well-known local organisation key that **must not** be used in production.
 
-Telos-hosted Grok is unavailable on the local stack. Put a Claude or Grok key in `.env.local` and change `llm-model` in `brain-compose.yml` (same values as cloud). Then:
+Put `ANTHROPIC_API_KEY` in `.env.local`. The default model is already `anthropic/claude-sonnet-5-5`. Then:
 
 ```bash
 brain deploy --env local --instance <company-name>

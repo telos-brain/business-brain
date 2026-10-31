@@ -1,9 +1,10 @@
 name: update_finances
-version: 1
+version: 2
 description: >-
   Creates or changes Xero data for the connected organisations. Reads the
   current records, then uses Xero read and write tools to do what the
   request asks. Requires CFO approval before it runs.
+roles: Finance
 audit:
   title: Update Xero — CFO approval
   body: |

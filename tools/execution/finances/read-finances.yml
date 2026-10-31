@@ -1,11 +1,12 @@
 name: read_finances
-version: 2
+version: 3
 description: >-
   Reads Xero for the connected organisations. Looks up which organisations
   the Xero connection covers, then uses Xero read tools to answer the
   request. Does not create, update, delete, or email anything. Use for
   balances, invoices, contacts, bills, payments, and reports. The call is
   recorded on the audit log and does not wait for approval.
+roles: Finance
 audit:
   title: Read Xero
   body: |
