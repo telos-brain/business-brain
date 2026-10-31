@@ -1,0 +1,21 @@
+name: xero_get_receipts
+version: 1
+description: >-
+  Retrieves draft expense claim receipts for any user. Xero API GET /api.xro/2.0/Receipts.
+api:
+  method: GET
+  path: /api.xro/2.0/Receipts
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int

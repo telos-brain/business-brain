@@ -1,0 +1,27 @@
+name: xero_update_tracking_options
+version: 1
+description: >-
+  Updates a specific option for a specific tracking category. Xero API POST /api.xro/2.0/TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}.
+api:
+  method: POST
+  path: /api.xro/2.0/TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}
+  connector: xero
+parameters:
+  - name: TrackingCategoryID
+    description: >-
+      Unique identifier for a TrackingCategory.
+    type: string
+    required: true
+  - name: TrackingOptionID
+    description: >-
+      Unique identifier for a Tracking Option.
+    type: string
+    required: true
+  - name: Name
+    description: >-
+      The name of the tracking option e.g. Marketing, East (max length = 100).
+    type: string
+  - name: Status
+    description: >-
+      The status of a tracking option. One of: ACTIVE, ARCHIVED, DELETED.
+    type: string

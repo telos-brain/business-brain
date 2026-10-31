@@ -1,0 +1,21 @@
+name: xero_get_bank_transfers
+version: 1
+description: >-
+  Retrieves all bank transfers. Xero API GET /api.xro/2.0/BankTransfers.
+api:
+  method: GET
+  path: /api.xro/2.0/BankTransfers
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: includeDeleted
+    description: >-
+      e.g. includeDeleted=true - Bank transfers with a status of DELETED will be included in the response. Use true or false.
+    type: string

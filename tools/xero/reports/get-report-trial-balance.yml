@@ -1,0 +1,17 @@
+name: xero_get_report_trial_balance
+version: 1
+description: >-
+  Retrieves report for trial balance. Xero API GET /api.xro/2.0/Reports/TrialBalance.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/TrialBalance
+  connector: xero
+parameters:
+  - name: date
+    description: >-
+      The date for the Trial Balance report e.g. 2018-03-31.
+    type: date
+  - name: paymentsOnly
+    description: >-
+      Return cash only basis for the Trial Balance report. Use true or false.
+    type: string

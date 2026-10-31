@@ -1,0 +1,17 @@
+name: xero_get_accounts
+version: 1
+description: >-
+  Retrieves the full chart of accounts. Xero API GET /api.xro/2.0/Accounts.
+api:
+  method: GET
+  path: /api.xro/2.0/Accounts
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string

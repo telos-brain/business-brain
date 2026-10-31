@@ -1,0 +1,21 @@
+name: xero_get_report_budget_summary
+version: 1
+description: >-
+  Retrieves report for budget summary. Xero API GET /api.xro/2.0/Reports/BudgetSummary.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/BudgetSummary
+  connector: xero
+parameters:
+  - name: date
+    description: >-
+      The date for the Bank Summary report e.g. 2018-03-31.
+    type: date
+  - name: periods
+    description: >-
+      The number of periods to compare (integer between 1 and 12).
+    type: int
+  - name: timeframe
+    description: >-
+      The period size to compare to (1=month, 3=quarter, 12=year).
+    type: int

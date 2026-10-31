@@ -1,0 +1,21 @@
+name: xero_post_setup
+version: 1
+description: >-
+  Sets the chart of accounts, the conversion date and conversion balances. Xero API POST /api.xro/2.0/Setup.
+api:
+  method: POST
+  path: /api.xro/2.0/Setup
+  connector: xero
+parameters:
+  - name: ConversionDate
+    description: >-
+      The date when the organisation starts using Xero. Pass as a JSON object. Fields: Month (integer): The month the organisation starts using Xero. Value is an integer between 1 and 12; Year (integer): The year the organisation starts using Xero. Value is an integer greater than 2006.
+    type: json
+  - name: ConversionBalances
+    description: >-
+      Balance supplied for each account that has a value as at the conversion date. Pass as a JSON array. Each item may include: AccountCode (string): The account code for a account; Balance (number): The opening balances of the account. Debits are positive, credits are negative values; BalanceDetails (array).
+    type: json
+  - name: Accounts
+    description: >-
+      Pass as a JSON array. Each item may include: Code (string): Customer defined alpha numeric account code e.g 200 or SALES (max length = 10); Name (string): Name of account (max length = 150); AccountID (string): The Xero identifier for an account – specified as a string following the endpoint name e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9; Type (string) [BANK, CURRENT, CURRLIAB, DEPRECIATN, DIRECTCOSTS, EQUITY, EXPENSE, FIXED]; BankAccountNumber (string): For bank accounts only (Account Type BANK); Status (string) [ACTIVE, ARCHIVED, DELETED]; Description (string): Description of the Account. Valid for all types of accounts except bank accounts (max length = 4000); BankAccountType (string) [BANK, CREDITCARD, PAYPAL, NONE, ]; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; TaxType (string): The tax type from taxRates; EnablePaymentsToAccount (boolean): Boolean – describes whether account can have payments applied to it; ShowInExpenseClaims (boolean): Boolean – describes whether account code is available for use with expense claims; Class (string) [ASSET, EQUITY, EXPENSE, LIABILITY, REVENUE]; ReportingCode (string): Shown if set and 2 more.
+    type: json

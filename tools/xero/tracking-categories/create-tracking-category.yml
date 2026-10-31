@@ -1,0 +1,33 @@
+name: xero_create_tracking_category
+version: 1
+description: >-
+  Create tracking categories. Xero API PUT /api.xro/2.0/TrackingCategories.
+api:
+  method: PUT
+  path: /api.xro/2.0/TrackingCategories
+  connector: xero
+parameters:
+  - name: TrackingCategoryID
+    description: >-
+      The Xero identifier for a tracking category e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9.
+    type: string
+  - name: TrackingOptionID
+    description: >-
+      The Xero identifier for a tracking option e.g. dc54c220-0140-495a-b925-3246adc0075f.
+    type: string
+  - name: Name
+    description: >-
+      The name of the tracking category e.g. Department, Region (max length = 100).
+    type: string
+  - name: Option
+    description: >-
+      The option name of the tracking option e.g. East, West (max length = 100).
+    type: string
+  - name: Status
+    description: >-
+      The status of a tracking category. One of: ACTIVE, ARCHIVED, DELETED.
+    type: string
+  - name: Options
+    description: >-
+      See Tracking Options. Pass as a JSON array. Each item may include: TrackingOptionID (string): The Xero identifier for a tracking option e.g. ae777a87-5ef3-4fa0-a4f0-d10e1f13073a; Name (string): The name of the tracking option e.g. Marketing, East (max length = 100); Status (string) [ACTIVE, ARCHIVED, DELETED]; TrackingCategoryID (string): Filter by a tracking category e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9.
+    type: json

@@ -1,0 +1,18 @@
+name: xero_update_account
+version: 1
+description: >-
+  Updates a chart of accounts. Xero API POST /api.xro/2.0/Accounts/{AccountID}.
+api:
+  method: POST
+  path: /api.xro/2.0/Accounts/{AccountID}
+  connector: xero
+parameters:
+  - name: AccountID
+    description: >-
+      Unique identifier for Account object.
+    type: string
+    required: true
+  - name: Accounts
+    description: >-
+      Pass as a JSON array. Each item may include: Code (string): Customer defined alpha numeric account code e.g 200 or SALES (max length = 10); Name (string): Name of account (max length = 150); AccountID (string): The Xero identifier for an account – specified as a string following the endpoint name e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9; Type (string) [BANK, CURRENT, CURRLIAB, DEPRECIATN, DIRECTCOSTS, EQUITY, EXPENSE, FIXED]; BankAccountNumber (string): For bank accounts only (Account Type BANK); Status (string) [ACTIVE, ARCHIVED, DELETED]; Description (string): Description of the Account. Valid for all types of accounts except bank accounts (max length = 4000); BankAccountType (string) [BANK, CREDITCARD, PAYPAL, NONE, ]; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; TaxType (string): The tax type from taxRates; EnablePaymentsToAccount (boolean): Boolean – describes whether account can have payments applied to it; ShowInExpenseClaims (boolean): Boolean – describes whether account code is available for use with expense claims; Class (string) [ASSET, EQUITY, EXPENSE, LIABILITY, REVENUE]; ReportingCode (string): Shown if set and 2 more.
+    type: json

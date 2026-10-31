@@ -1,0 +1,8 @@
+name: xero_get_organisations
+version: 1
+description: >-
+  Retrieves Xero organisation details. Xero API GET /api.xro/2.0/Organisation.
+api:
+  method: GET
+  path: /api.xro/2.0/Organisation
+  connector: xero

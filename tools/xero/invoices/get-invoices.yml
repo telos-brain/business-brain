@@ -1,0 +1,61 @@
+name: xero_get_invoices
+version: 1
+description: >-
+  Retrieves sales invoices or purchase bills. Xero API GET /api.xro/2.0/Invoices.
+api:
+  method: GET
+  path: /api.xro/2.0/Invoices
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: IDs
+    description: >-
+      Filter by a comma-separated list of InvoicesIDs.
+    type: string
+  - name: InvoiceNumbers
+    description: >-
+      Filter by a comma-separated list of InvoiceNumbers.
+    type: string
+  - name: ContactIDs
+    description: >-
+      Filter by a comma-separated list of ContactIDs.
+    type: string
+  - name: Statuses
+    description: >-
+      Filter by a comma-separated list Statuses. For faster response times we recommend using these explicit parameters instead of passing OR conditions into the Where filter.
+    type: string
+  - name: page
+    description: >-
+      e.g. page=1 – Up to 100 invoices will be returned in a single API call with line items shown for each invoice.
+    type: int
+  - name: includeArchived
+    description: >-
+      e.g. includeArchived=true - Invoices with a status of ARCHIVED will be included in the response. Use true or false.
+    type: string
+  - name: createdByMyApp
+    description: >-
+      When set to true you'll only retrieve Invoices created by your app. Use true or false.
+    type: string
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int
+  - name: summaryOnly
+    description: >-
+      Use summaryOnly=true in GET Contacts and Invoices endpoint to retrieve a smaller version of the response object. This returns only lightweight fields, excluding computation-heavy fields from the response, making the API calls quick and efficient. Use true or false.
+    type: string
+  - name: pageSize
+    description: >-
+      Number of records to retrieve per page.
+    type: int
+  - name: searchTerm
+    description: >-
+      Search parameter that performs a case-insensitive text search across the fields e.g. InvoiceNumber, Reference.
+    type: string

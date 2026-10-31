@@ -1,0 +1,26 @@
+name: xero_update_invoice
+version: 1
+description: >-
+  Updates a specific sales invoices or purchase bills. Xero API POST /api.xro/2.0/Invoices/{InvoiceID}.
+api:
+  method: POST
+  path: /api.xro/2.0/Invoices/{InvoiceID}
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int
+  - name: allowBackorders
+    description: >-
+      Allows an invoice to be created even when one or more line items contain tracked inventory where the invoice quantity would cause the available quantity to go negative. Use true or false.
+    type: string
+  - name: Invoices
+    description: >-
+      Pass as a JSON array. Each item may include: Type (string) [ACCPAY, ACCPAYCREDIT, APOVERPAYMENT, APPREPAYMENT, ACCREC, ACCRECCREDIT, AROVERPAYMENT, ARPREPAYMENT]; Contact (object); LineItems (array): See LineItems; Date (string): Date invoice was issued – YYYY-MM-DD. If the Date element is not specified it will default to the current date based on the timezone setting of the organisation; DueDate (string): Date invoice is due – YYYY-MM-DD; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; InvoiceNumber (string): ACCREC – Unique alpha numeric code identifying invoice (when missing will auto-generate from your Organisation Invoice Settings) (max length = 255); Reference (string): ACCREC only – additional reference number; BrandingThemeID (string): See BrandingThemes; Url (string): URL link to a source document – shown as “Go to [appName]” in the Xero app; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; CurrencyRate (number): The currency rate for a multicurrency invoice. If no rate is specified, the XE.com day rate is used. (max length = [18].[6]); Status (string) [DRAFT, SUBMITTED, DELETED, AUTHORISED, PAID, VOIDED]; SentToContact (boolean): Boolean to set whether the invoice in the Xero app should be marked as “sent”. This can be set only on invoices that have been approved; ExpectedPaymentDate (string): Shown on sales invoices (Accounts Receivable) when this has been set; PlannedPaymentDate (string): Shown on bills (Accounts Payable) when this has been set; CISDeduction (number): CIS deduction for UK contractors; CISRate (number): CIS Deduction rate for the organisation and 26 more.
+    type: json

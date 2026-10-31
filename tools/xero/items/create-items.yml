@@ -1,0 +1,21 @@
+name: xero_create_items
+version: 1
+description: >-
+  Creates one or more items. Xero API PUT /api.xro/2.0/Items.
+api:
+  method: PUT
+  path: /api.xro/2.0/Items
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int
+  - name: Items
+    description: >-
+      Pass as a JSON array. Each item may include: Code (string): User defined item code (max length = 30); InventoryAssetAccountCode (string): The inventory asset account for the item. The account must be of type INVENTORY. The COGSAccountCode in PurchaseDetails is also required to create a tracked item; Name (string): The name of the item (max length = 50); IsSold (boolean): Boolean value, defaults to true. When IsSold is true the item will be available on sales transactions in the Xero UI. If IsSold is updated to false then Description and SalesDetails values will be nulled; IsPurchased (boolean): Boolean value, defaults to true. When IsPurchased is true the item is available for purchase transactions in the Xero UI. If IsPurchased is updated to false then PurchaseDescription and PurchaseDetails values will be nulled; Description (string): The sales description of the item (max length = 4000); PurchaseDescription (string): The purchase description of the item (max length = 4000); PurchaseDetails (object); SalesDetails (object); IsTrackedAsInventory (boolean): True for items that are tracked as inventory. An item will be tracked as inventory if the InventoryAssetAccountCode and COGSAccountCode are set; TotalCostPool (number): The value of the item on hand. Calculated using average cost accounting; QuantityOnHand (number): The quantity of the item on hand. This will be 0 if `QuantityOnBackOrder` is greater than 0; QuantityAvailable (number): The quantity of the item available. This is equal to `QuantityOnHand` - `QuantityOnBackOrder`. This value will be negative if `QuantityOnBackOrder` is greater than 0; QuantityOnBackOrder (number): The quantity of the item on backorder. This will be 0 if `QuantityOnHand` is greater than 0; ItemID (string): The Xero identifier for an Item; StatusAttributeString (string): Status of object.
+    type: json

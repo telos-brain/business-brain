@@ -1,0 +1,14 @@
+name: xero_get_credit_note_history
+version: 1
+description: >-
+  Retrieves history records of a specific credit note. Xero API GET /api.xro/2.0/CreditNotes/{CreditNoteID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/CreditNotes/{CreditNoteID}/History
+  connector: xero
+parameters:
+  - name: CreditNoteID
+    description: >-
+      Unique identifier for a Credit Note.
+    type: string
+    required: true

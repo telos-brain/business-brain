@@ -1,0 +1,14 @@
+name: xero_get_manual_journal_attachments
+version: 1
+description: >-
+  Retrieves attachment for a specific manual journal. Xero API GET /api.xro/2.0/ManualJournals/{ManualJournalID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/ManualJournals/{ManualJournalID}/Attachments
+  connector: xero
+parameters:
+  - name: ManualJournalID
+    description: >-
+      Unique identifier for a ManualJournal.
+    type: string
+    required: true

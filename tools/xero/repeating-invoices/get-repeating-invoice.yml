@@ -1,0 +1,14 @@
+name: xero_get_repeating_invoice
+version: 1
+description: >-
+  Retrieves a specific repeating invoice by using a unique repeating invoice Id. Xero API GET /api.xro/2.0/RepeatingInvoices/{RepeatingInvoiceID}.
+api:
+  method: GET
+  path: /api.xro/2.0/RepeatingInvoices/{RepeatingInvoiceID}
+  connector: xero
+parameters:
+  - name: RepeatingInvoiceID
+    description: >-
+      Unique identifier for a Repeating Invoice.
+    type: string
+    required: true

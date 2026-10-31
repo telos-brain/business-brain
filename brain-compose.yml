@@ -4,7 +4,8 @@ description: >-
   memory. Triage keeps inbox intake to durable memory or repeatable practice.
   Skills hold how
   this company works. The schema is configured from the README before deploy.
-  The Business MCP exposes briefing, Ask Sol, memory questions and skill lookup.
+  The Sol MCP exposes briefing, Ask Sol, memory questions, skill lookup,
+  and Xero read and update.
 
 # Embedding model for semantic search (find_available_skills, blueprint search).
 # The API key comes from this brain's own .env (VOYAGE_API_KEY for voyage-*).
@@ -32,6 +33,7 @@ allowed-callback-domains:
   - host.docker.internal
   - localhost
   - 127.0.0.1
+  - api.xero.com
 
 # Entities: top-level things the brain reasons about (multi-tenancy anchor).
 entities:
@@ -52,6 +54,7 @@ unitsofwork:
 # (BRA202 / BRA209). Unlisted connector files are not deployed.
 connectors:
   - connectors/my-app.yml
+  - connectors/xero.yml
 
 # Tools are split into execution (runtime) and management (brain maintenance).
 tools:
@@ -64,6 +67,8 @@ tools:
   - tools/execution/uow/tools.yml
   - tools/execution/simulation/tools.yml
   - tools/execution/my-app/tools.yml
+  - tools/execution/finances/tools.yml
+  - tools/xero/tools.yml
   - tools/management/schema/tools.yml
 
 skills:
@@ -81,7 +86,9 @@ blueprints:
 
 workflows:
   - workflows/system-prompt.md
-  - workflows/business.md
+  - workflows/solMCP.md
+  - workflows/read-finances.md
+  - workflows/update-finances.md
   - workflows/chat.md
   - workflows/briefing.md
   - workflows/sol-research.md

@@ -1,0 +1,14 @@
+name: xero_get_linked_transaction
+version: 1
+description: >-
+  Retrieves a specific linked transaction (billable expenses) using a unique linked transaction Id. Xero API GET /api.xro/2.0/LinkedTransactions/{LinkedTransactionID}.
+api:
+  method: GET
+  path: /api.xro/2.0/LinkedTransactions/{LinkedTransactionID}
+  connector: xero
+parameters:
+  - name: LinkedTransactionID
+    description: >-
+      Unique identifier for a LinkedTransaction.
+    type: string
+    required: true

@@ -1,0 +1,14 @@
+name: xero_get_tracking_category
+version: 1
+description: >-
+  Retrieves specific tracking categories and options using a unique tracking category Id. Xero API GET /api.xro/2.0/TrackingCategories/{TrackingCategoryID}.
+api:
+  method: GET
+  path: /api.xro/2.0/TrackingCategories/{TrackingCategoryID}
+  connector: xero
+parameters:
+  - name: TrackingCategoryID
+    description: >-
+      Unique identifier for a TrackingCategory.
+    type: string
+    required: true

@@ -1,0 +1,13 @@
+name: xero_get_report_executive_summary
+version: 1
+description: >-
+  Retrieves report for executive summary. Xero API GET /api.xro/2.0/Reports/ExecutiveSummary.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/ExecutiveSummary
+  connector: xero
+parameters:
+  - name: date
+    description: >-
+      The date for the Bank Summary report e.g. 2018-03-31.
+    type: date

@@ -1,0 +1,14 @@
+name: xero_get_journal
+version: 1
+description: >-
+  Retrieves a specific journal using a unique journal Id. Xero API GET /api.xro/2.0/Journals/{JournalID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Journals/{JournalID}
+  connector: xero
+parameters:
+  - name: JournalID
+    description: >-
+      Unique identifier for a Journal.
+    type: string
+    required: true

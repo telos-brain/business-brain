@@ -1,7 +1,7 @@
 ---
 name: Managing LLM Costs
 code: BRA212
-version: 6
+version: 7
 description: How to keep LLM spend down in a Telos Brain — aim for 80% cache
   reads (or turn on automatic caching), convert JSON tool data to markdown or
   CSV, treat tool definitions as mini-skills to cut retries, compact older
@@ -255,14 +255,17 @@ name: Compact Context
 code: WF-COMPACT
 type: COMPACTION
 model: anthropic/claude-haiku-4-5   # or xai/grok-4.3 — keep this cheap
-output-tokens: 2048
+output-tokens: 4096
 max-turns: 1
 caching: none
 ```
 
 Instructions should preserve goals, decisions, identifiers, tool outcomes
 that changed state, and open questions — and return **plain text**, not
-fenced markdown. No tools.
+fenced markdown. No tools. `4096` leaves room for a local reasoning model,
+where thinking shares the cap. A Qwen summary of a large span used 2,370
+tokens and returned nothing at 2,048. Haiku still stops when the summary
+is finished.
 
 Without this workflow, OpenAI / xAI auto-compaction and `compact_context`
 have nothing to call.
@@ -306,14 +309,17 @@ with `XAI_API_KEY`, or a `local_N/…` runner (**BRA106**).
 Match the model to the workflow, not the brain:
 
 - Chat / general agent: `telosbrain/xai/grok-4.6` on Telos Cloud, or
-  `xai/grok-4.5` / `xai/grok-4.6` with your own key, unless you have a
-  Claude-specific reason (native `web_search` / `web_fetch`, thinking modes).
+  `xai/grok-4.5` / `xai/grok-4.6` with your own key. Native `web_search` and
+  `web_fetch` work on that Grok path and on Claude.
 - Compaction, ask-question, routing: Haiku or `xai/grok-4.3`.
 - Do not put Opus on a heartbeat or eval loop.
 
-Native tools (`web_search`, `web_fetch`) are Anthropic-shaped and are
-skipped on OpenAI / xAI / Telos Brain (**BRA210** §6). If a workflow needs them, keep
-Claude for that workflow only.
+Native `web_search` and `web_fetch` run on Claude as server tools. On Grok
+(`xai/…` and `telosbrain/…`) they run as the server-side `web_search` Agent
+Tool, for any workflow that lists them. A Grok run that does not list them
+does not send that tool. OpenAI sends `web_search_options` only on a search
+model. OpenRouter, Azure, and local runners skip them. If a workflow needs
+the web on a provider that skips it, keep Claude for that workflow (**BRA210** §7).
 
 Organisation `LlmPrices` must include the model you pick. A missing price
 row leaves `CostCents` null — telemetry still shows tokens, but daily /
@@ -429,28 +435,34 @@ and no `available-tools` injects **every** listed tool on every turn
 | `tools` | Full tool schema (name, description, parameters) every turn | High — inject only discovery tools plus tools used on most turns |
 | `available-tools` | Permission envelope only — not in the prompt until surfaced | Low until discovered or promoted |
 
-How an available tool becomes callable (**BRA215**):
+How an available tool becomes callable (**BRA215**, **BRA415**):
 
 1. **`find_available_tools`** — semantic search over the workflow's
    `available-tools` pool (`query` → names and descriptions). Inject this
-   tool.
-2. **`get_skill` promotion** — if the loaded skill lists the tool under
+   tool. The result does not make a tool callable.
+2. **`activate_tools`** — comma-separated names from that search. Matching
+   names in `available-tools` are promoted for the rest of **this run
+   only**, and the definitions arrive on the next step. Inject this next
+   to `find_available_tools`.
+3. **`get_skill` promotion** — if the loaded skill lists the tool under
    its own `tools:` **and** the workflow lists it under `available-tools:`,
    it is promoted for the rest of **this run only**. The workflow still
    owns the permission envelope: a skill cannot grant a tool the workflow
    did not list.
-3. A tool in the skill but missing from `available-tools` is silently
-   skipped.
+4. A tool in the skill but missing from `available-tools` is silently
+   skipped. `activate_tools` reports a name it cannot promote.
 
 Canonical pattern: `WF-SKILL-UPDATE` injects `find_available_skills`,
-`get_skill`, and `find_available_tools`; schema edit tools stay under
-`available-tools` until `BRA203` is loaded.
+`get_skill`, `find_available_tools`, and `activate_tools`; schema edit
+tools stay under `available-tools` until `BRA203` is loaded or you
+activate them.
 
 ```yaml
 tools:
   - find_available_skills
   - get_skill
   - find_available_tools
+  - activate_tools
 available-tools:
   - list_schema_files
   - get_schema_file
@@ -499,6 +511,7 @@ tools:
   - find_available_skills
   - get_skill
   - find_available_tools
+  - activate_tools
   - compact_context
 available-tools:
   - list_schema_files
@@ -530,8 +543,8 @@ Checklist when reviewing a brain for cost:
 - [ ] `daily-limit-usd` / `monthly-limit-usd` are set on the compose file
 - [ ] Organisation `LlmPrices` includes every BYO model the brain calls (OpenRouter: provider `openrouter`, catalogue id as the model). Skip `telosbrain` — platform prices at 2× xAI list.
 - [ ] Conversational workflows inject discovery tools (`find_available_skills`,
-      `get_skill`, `find_available_tools`) and keep domain skills/tools in
-      `available-skills` / `available-tools`
+      `get_skill`, `find_available_tools`, `activate_tools`) and keep domain
+      skills/tools in `available-skills` / `available-tools`
 
 ---
 
@@ -541,6 +554,7 @@ Checklist when reviewing a brain for cost:
 - **BRA105** — budget principle and “keep each skill short” (always inject when editing the brain)
 - **BRA214** — tool YAML
 - **BRA215** — skill-declared tool promotion
+- **BRA415** — `activate_tools`
 - **BRA217** — workflow `tools` / `available-tools`, `input-tools`, LLM execution settings
 - **BRA202** — `XAI_API_KEY` / `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` (`telosbrain/…` needs none of these)
 - **BRA203** — schema tools (`update_schema_file` to apply these fields)

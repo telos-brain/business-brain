@@ -1,0 +1,14 @@
+name: xero_get_contact_group
+version: 1
+description: >-
+  Retrieves a specific contact group by using a unique contact group Id. Xero API GET /api.xro/2.0/ContactGroups/{ContactGroupID}.
+api:
+  method: GET
+  path: /api.xro/2.0/ContactGroups/{ContactGroupID}
+  connector: xero
+parameters:
+  - name: ContactGroupID
+    description: >-
+      Unique identifier for a Contact Group.
+    type: string
+    required: true

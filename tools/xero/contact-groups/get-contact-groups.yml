@@ -1,0 +1,17 @@
+name: xero_get_contact_groups
+version: 1
+description: >-
+  Retrieves the contact Id and name of each contact group. Xero API GET /api.xro/2.0/ContactGroups.
+api:
+  method: GET
+  path: /api.xro/2.0/ContactGroups
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string

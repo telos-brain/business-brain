@@ -1,0 +1,17 @@
+name: xero_delete_bank_transfers
+version: 1
+description: >-
+  Deletes one or more bank transfers. Xero API POST /api.xro/2.0/BankTransfers.
+api:
+  method: POST
+  path: /api.xro/2.0/BankTransfers
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: BankTransfers
+    description: >-
+      Pass as a JSON array. Each item may include: BankTransferID (string): The Xero identifier for a bank transfer; Status (string): The status of the bank transfer.
+    type: json

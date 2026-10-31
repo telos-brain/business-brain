@@ -1,0 +1,17 @@
+name: xero_create_batch_payment
+version: 1
+description: >-
+  Creates one or many batch payments for invoices. Xero API PUT /api.xro/2.0/BatchPayments.
+api:
+  method: PUT
+  path: /api.xro/2.0/BatchPayments
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: BatchPayments
+    description: >-
+      Pass as a JSON array. Each item may include: Account (object); Reference (string): (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero; Particulars (string): (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero; Code (string): (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero; Details (string): (Non-NZ Only) These details are sent to the org’s bank as a reference for the batch payment transaction. They will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement imported into Xero. Maximum field length = 18; Narrative (string): (UK Only) Only shows on the statement line in Xero. Max length =18; BatchPaymentID (string): The Xero generated unique identifier for the bank transaction (read-only); DateString (string): Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06; Date (string): Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06; Amount (number): The amount of the payment. Must be less than or equal to the outstanding amount owing on the invoice e.g. 200.00; Payments (array): An array of payments; Type (string) [PAYBATCH, RECBATCH]; Status (string) [AUTHORISED, DELETED]; TotalAmount (number): The total of the payments that make up the batch (read-only); IsReconciled (boolean): Booelan that tells you if the batch payment has been reconciled (read-only).
+    type: json

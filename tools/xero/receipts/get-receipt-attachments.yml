@@ -1,0 +1,14 @@
+name: xero_get_receipt_attachments
+version: 1
+description: >-
+  Retrieves attachments for a specific expense claim receipt. Xero API GET /api.xro/2.0/Receipts/{ReceiptID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/Receipts/{ReceiptID}/Attachments
+  connector: xero
+parameters:
+  - name: ReceiptID
+    description: >-
+      Unique identifier for a Receipt.
+    type: string
+    required: true

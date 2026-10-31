@@ -1,0 +1,25 @@
+name: xero_get_payments
+version: 1
+description: >-
+  Retrieves payments for invoices and credit notes. Xero API GET /api.xro/2.0/Payments.
+api:
+  method: GET
+  path: /api.xro/2.0/Payments
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: page
+    description: >-
+      Up to 100 payments will be returned in a single API call.
+    type: int
+  - name: pageSize
+    description: >-
+      Number of records to retrieve per page.
+    type: int

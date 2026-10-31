@@ -1,0 +1,19 @@
+name: xero_delete_batch_payment
+version: 1
+description: >-
+  Updates a specific batch payment for invoices and credit notes. Xero API POST /api.xro/2.0/BatchPayments.
+api:
+  method: POST
+  path: /api.xro/2.0/BatchPayments
+  connector: xero
+parameters:
+  - name: BatchPaymentID
+    description: >-
+      The Xero generated unique identifier for the bank transaction (read-only).
+    type: string
+    required: true
+  - name: Status
+    description: >-
+      The status of the batch payment.
+    type: string
+    required: true

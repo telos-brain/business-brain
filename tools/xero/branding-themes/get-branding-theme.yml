@@ -1,0 +1,14 @@
+name: xero_get_branding_theme
+version: 1
+description: >-
+  Retrieves a specific branding theme using a unique branding theme Id. Xero API GET /api.xro/2.0/BrandingThemes/{BrandingThemeID}.
+api:
+  method: GET
+  path: /api.xro/2.0/BrandingThemes/{BrandingThemeID}
+  connector: xero
+parameters:
+  - name: BrandingThemeID
+    description: >-
+      Unique identifier for a Branding Theme.
+    type: string
+    required: true

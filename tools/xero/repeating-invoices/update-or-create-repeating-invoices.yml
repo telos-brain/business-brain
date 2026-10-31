@@ -1,0 +1,17 @@
+name: xero_update_or_create_repeating_invoices
+version: 1
+description: >-
+  Creates or deletes one or more repeating invoice templates. Xero API POST /api.xro/2.0/RepeatingInvoices.
+api:
+  method: POST
+  path: /api.xro/2.0/RepeatingInvoices
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: RepeatingInvoices
+    description: >-
+      Pass as a JSON array. Each item may include: Type (string) [ACCPAY, ACCREC]; Contact (object); Schedule (object); LineItems (array): See LineItems; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; Reference (string): ACCREC only – additional reference number; BrandingThemeID (string): See BrandingThemes; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; Status (string) [DRAFT, AUTHORISED, DELETED]; SubTotal (number): Total of invoice excluding taxes; TotalTax (number): Total tax on invoice; Total (number): Total of Invoice tax inclusive (i.e. SubTotal + TotalTax); RepeatingInvoiceID (string): Xero generated unique identifier for repeating invoice template; ID (string): Xero generated unique identifier for repeating invoice template; Attachments (array): Displays array of attachments from the API; ApprovedForSending (boolean): Boolean to indicate whether the invoice has been approved for sending; SendCopy (boolean): Boolean to indicate whether a copy is sent to sender's email and 2 more.
+    type: json

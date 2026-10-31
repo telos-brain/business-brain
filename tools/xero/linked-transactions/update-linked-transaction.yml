@@ -1,0 +1,18 @@
+name: xero_update_linked_transaction
+version: 1
+description: >-
+  Updates a specific linked transactions (billable expenses). Xero API POST /api.xro/2.0/LinkedTransactions/{LinkedTransactionID}.
+api:
+  method: POST
+  path: /api.xro/2.0/LinkedTransactions/{LinkedTransactionID}
+  connector: xero
+parameters:
+  - name: LinkedTransactionID
+    description: >-
+      Unique identifier for a LinkedTransaction.
+    type: string
+    required: true
+  - name: LinkedTransactions
+    description: >-
+      Pass as a JSON array. Each item may include: SourceTransactionID (string): Filter by the SourceTransactionID. Get all the linked transactions created from a particular ACCPAY invoice; SourceLineItemID (string): The line item identifier from the source transaction; ContactID (string): Filter by the combination of ContactID and Status. Get all the linked transactions that have been assigned to a particular customer and have a particular status e.g. GET /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED; TargetTransactionID (string): Filter by the TargetTransactionID. Get all the linked transactions allocated to a particular ACCREC invoice; TargetLineItemID (string): The line item identifier from the target transaction. It is possible to link multiple billable expenses to the same TargetLineItemID; LinkedTransactionID (string): The Xero identifier for an Linked Transaction e.g./LinkedTransactions/297c2dc5-cc47-4afd-8ec8-74990b8761e9; Status (string) [APPROVED, DRAFT, ONDRAFT, BILLED, VOIDED]; Type (string) [BILLABLEEXPENSE]; SourceTransactionTypeCode (string) [ACCPAY, SPEND].
+    type: json

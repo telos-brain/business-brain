@@ -1,0 +1,17 @@
+name: xero_get_expense_claims
+version: 1
+description: >-
+  Retrieves expense claims. Xero API GET /api.xro/2.0/ExpenseClaims.
+api:
+  method: GET
+  path: /api.xro/2.0/ExpenseClaims
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string

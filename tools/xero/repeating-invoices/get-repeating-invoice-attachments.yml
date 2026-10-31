@@ -1,0 +1,14 @@
+name: xero_get_repeating_invoice_attachments
+version: 1
+description: >-
+  Retrieves attachments from a specific repeating invoice. Xero API GET /api.xro/2.0/RepeatingInvoices/{RepeatingInvoiceID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/RepeatingInvoices/{RepeatingInvoiceID}/Attachments
+  connector: xero
+parameters:
+  - name: RepeatingInvoiceID
+    description: >-
+      Unique identifier for a Repeating Invoice.
+    type: string
+    required: true

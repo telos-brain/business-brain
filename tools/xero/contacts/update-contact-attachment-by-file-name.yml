@@ -1,0 +1,24 @@
+name: xero_update_contact_attachment_by_file_name
+version: 1
+description: >-
+  updateContactAttachmentByFileName. Xero API POST /api.xro/2.0/Contacts/{ContactID}/Attachments/{FileName}.
+api:
+  method: POST
+  path: /api.xro/2.0/Contacts/{ContactID}/Attachments/{FileName}
+  connector: xero
+parameters:
+  - name: ContactID
+    description: >-
+      Unique identifier for a Contact.
+    type: string
+    required: true
+  - name: FileName
+    description: >-
+      Name of the attachment.
+    type: string
+    required: true
+  - name: file
+    description: >-
+      Raw file bytes. The Xero API expects application/octet-stream. Include the file name in the path.
+    type: string
+    required: true

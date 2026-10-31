@@ -1,0 +1,14 @@
+name: xero_get_invoice_history
+version: 1
+description: >-
+  Retrieves history records for a specific invoice. Xero API GET /api.xro/2.0/Invoices/{InvoiceID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Invoices/{InvoiceID}/History
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true

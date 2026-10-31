@@ -1,0 +1,14 @@
+name: xero_get_quote
+version: 1
+description: >-
+  Retrieves a specific quote using a unique quote Id. Xero API GET /api.xro/2.0/Quotes/{QuoteID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Quotes/{QuoteID}
+  connector: xero
+parameters:
+  - name: QuoteID
+    description: >-
+      Unique identifier for an Quote.
+    type: string
+    required: true

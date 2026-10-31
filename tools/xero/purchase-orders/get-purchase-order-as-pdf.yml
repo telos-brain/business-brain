@@ -1,0 +1,14 @@
+name: xero_get_purchase_order_as_pdf
+version: 1
+description: >-
+  Retrieves specific purchase order as PDF files using a unique purchase order Id. Xero API GET /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}/pdf.
+api:
+  method: GET
+  path: /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}/pdf
+  connector: xero
+parameters:
+  - name: PurchaseOrderID
+    description: >-
+      Unique identifier for an Purchase Order.
+    type: string
+    required: true

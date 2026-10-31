@@ -1,0 +1,8 @@
+name: xero_get_reports_list
+version: 1
+description: >-
+  Retrieves a list of the organisations unique reports that require a uuid to fetch. Xero API GET /api.xro/2.0/Reports.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports
+  connector: xero

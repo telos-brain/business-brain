@@ -1,0 +1,42 @@
+# Xero Accounting + Identity API — https://developer.xero.com/documentation/api/accounting/overview
+# Accounting base: https://api.xero.com/api.xro/2.0
+# Connections:     https://api.xero.com/connections
+#
+# Brain-scoped OAuth connection. A token may cover several organisations.
+# xeroTenantId is a shown request-default (BRA209): the model supplies it
+# and it is sent as Xero-Tenant-Id. Find tenantId with xero_get_connections.
+# Accept is a hidden request-default — do not repeat it on tools.
+name: xero
+url: https://api.xero.com
+auth-type: oauth2
+scope: brain
+authorization-url: https://login.xero.com/identity/connect/authorize
+token-url: https://identity.xero.com/connect/token
+# Granular Accounting scopes (required for apps created on/after 2 March 2026).
+# Broad accounting.transactions and accounting.reports.read return invalid_scope.
+# Write scopes (no .read suffix) include read. Enable the same list on the
+# Xero app, then reconnect.
+#
+# Do not request: accounting.journals.read (Advanced + certification),
+# accounting.classicexpenses (not a valid OAuth scope; Classic Expenses is
+# deprecated), accounting.reports.budgetsummary.read (not accepted — causes
+# invalid_scope), payroll/files/assets/projects (no tools here).
+# https://developer.xero.com/documentation/guides/oauth2/scopes
+# https://developer.xero.com/faq/granular-scopes
+oauth-scope: offline_access openid profile email accounting.contacts accounting.settings accounting.attachments accounting.budgets.read accounting.invoices accounting.payments accounting.banktransactions accounting.manualjournals accounting.reports.aged.read accounting.reports.balancesheet.read accounting.reports.banksummary.read accounting.reports.executivesummary.read accounting.reports.profitandloss.read accounting.reports.trialbalance.read accounting.reports.taxreports.read accounting.reports.tenninetynine.read
+parameters:
+  - name: client-id
+    description: Xero OAuth 2 client ID from the Xero developer portal.
+    secret: XERO_CLIENT_ID
+  - name: client-secret
+    description: Xero OAuth 2 client secret. Store in .env — never commit the value here.
+    secret: XERO_CLIENT_SECRET
+request-defaults:
+  - name: accept
+    header: Accept
+    value: application/json
+  - name: xeroTenantId
+    description: >-
+      Xero organisation tenant id. Find it with xero_get_connections
+      (the tenantId field). Omit when calling xero_get_connections.
+    header: Xero-Tenant-Id

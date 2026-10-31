@@ -1,0 +1,14 @@
+name: xero_get_purchase_order
+version: 1
+description: >-
+  Retrieves a specific purchase order using a unique purchase order Id. Xero API GET /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}.
+api:
+  method: GET
+  path: /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}
+  connector: xero
+parameters:
+  - name: PurchaseOrderID
+    description: >-
+      Unique identifier for an Purchase Order.
+    type: string
+    required: true

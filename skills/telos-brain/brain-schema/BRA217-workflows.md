@@ -1,7 +1,7 @@
 ---
 name: Workflows
 code: BRA217
-version: 6
+version: 11
 description: How to author workflow markdown — frontmatter, types, triggers,
   tools / available-tools, input-tools, LLM execution settings, session
   timeout, and external agent deployment. Load this when creating or editing a
@@ -36,6 +36,7 @@ type: RUNNABLE                         # optional; one of TOOL | RUNNABLE | TRIG
 #   - inbox:SKILL_UPDATE
 #   - inbox:WORKFLOW_UPDATE:medium
 # model: anthropic/claude-sonnet-4-6   # optional; provider/model (see BRA210)
+# failover-workflow: WF-BACKUP         # optional; other workflow code in this brain (BRA455)
 # model: openai/gpt-4o                 # OpenAI
 # model: telosbrain/xai/grok-4.6       # Telos-hosted Grok (brain credit, 2× xAI list)
 # model: xai/grok-4.5                  # xAI / Grok (your key)
@@ -48,11 +49,13 @@ tools:
   - find_available_skills
   - get_skill
   - find_available_tools
+  - activate_tools
   - add_ticket_comment
 
 # Available tools — in the workflow's searchable permission envelope only.
-# Surfaced via find_available_tools, or promoted mid-run when get_skill loads a
-# skill that lists them under its own tools: field (see **BRA215**). Not injected by
+# Surfaced via find_available_tools. Promoted for this run when activate_tools
+# is called with their names, or when get_skill loads a skill that lists them
+# under its own tools: field (see **BRA215** and **BRA415**). Not injected by
 # default. Omit the key entirely when unused (existing workflows stay valid).
 available-tools:
   - list_schema_files
@@ -216,13 +219,28 @@ before its first turn, with no extra LLM tool call required to fetch the widget.
 
 ## 2. Choosing a model (`model`, see **BRA210**)
 
-Set `model` to a `provider/model-name` string (e.g. `anthropic/claude-sonnet-4-6`,
-`openai/gpt-4o`, `telosbrain/xai/grok-4.6`, `xai/grok-4.5`). Supported providers, example model codes, and
-credential mapping are listed in **BRA210**. Bare model names (no prefix)
-default to Anthropic. A set `model:` overrides the brain default when that
-model's credential exists. Omit `model` to use the brain default (`llm-model` /
-`DEFAULT_LLM_MODEL` / Settings). If that is also unset, the run fails — leftover
-cloud keys are not used as a silent default.
+Set `model` to one `provider/model-name`, or an ordered comma-separated list
+of interchangeable models (e.g.
+`local_1/Qwen/Qwen3.6-35B-A3B, openrouter/qwen/qwen3.6-35b-a3b`).
+A single id is a list of one. Providers, codes, credentials, and stepping
+are in **BRA210**. Bare names (no prefix) default to Anthropic.
+When `model:` is set, that list is the whole run — a missing credential
+skips that entry; the brain default is not appended.
+Omit `model` to use the brain default list (`llm-model` /
+`DEFAULT_LLM_MODEL` / Settings). If that is also unset, the run fails —
+leftover cloud keys are not a silent default.
+
+## 2a. Fail over to another workflow (`failover-workflow`)
+
+`failover-workflow` names another workflow **code** in the same brain. It is not a model, and it is not a second run.
+
+Use it when the backup work needs a different prompt, tools, or instructions. Interchangeable models belong on `model:` as a comma-separated list (**BRA210**). A single model is a list of one.
+
+The rewrite runs only after that list is exhausted on the **first** LLM attempt, and only when no assistant turn with tokens has been stored. The same `runId` is kept. The original input message, variables, entity, unit of work, caller JWT, initiation method, and callback URL stay. Messages from the failed attempt are deleted. The failover workflow then starts from scratch, including its own `input-tools`. Side effects those original input-tools already had are not rolled back.
+
+One hop. If the failover workflow's list is also exhausted, the run fails. A missing code, or a code that names this same workflow, fails the run. There is no fall-through to `DEFAULT_LLM_MODEL` or a leftover provider key.
+
+Omit the key when unused. Extract never writes `null`.
 
 ## 3. LLM execution settings (optional)
 
@@ -236,9 +254,13 @@ applies on providers that support prompt caching (Anthropic, xAI); OpenAI
 ignores it. `thinking` and `thinking-effort` apply on every provider (see
 **BRA210** §6). `thinking-budget` applies on Anthropic and on OpenRouter
 `extended`; other providers have no thinking token budget. All three are
-validated on deploy. `auto-compaction` applies on every
-provider: Claude uses server-side `compact_20260112`; OpenAI / xAI run the
-brain's `COMPACTION` workflow client-side when the prompt-token threshold is
+validated on deploy. `temperature` applies on every provider: omit it to keep
+that provider's own default (the field is not sent). `top-p`, `top-k`, `min-p`,
+and `presence-penalty` are the same kind of optional sampling control: omit a
+field to leave it off the request. A set value is sent only to providers whose
+API has that parameter (**BRA210** §6). `auto-compaction` applies
+on every provider: Claude uses server-side `compact_20260112`; OpenAI / xAI run
+the brain's `COMPACTION` workflow client-side when the prompt-token threshold is
 reached.
 
 ```markdown
@@ -255,6 +277,11 @@ max-turns: 50                  # 10 (default) | tool-use loop cap in turns
 thinking: adaptive             # none (default) | adaptive (model decides) | extended (manual budget) | effort (adaptive + explicit effort)
 thinking-budget: 24000         # per-mode default | thinking token budget (extended budget_tokens, or adaptive/effort headroom over the output cap)
 thinking-effort: low           # low (default for effort mode) | medium | high | xhigh | max | adaptive-thinking effort (cost lever)
+temperature: 0.2               # omit to keep the provider default | number from 0 to 2 inclusive
+top-p: 0.9                     # omit | number from 0 to 1 inclusive (sent on every provider)
+top-k: 40                      # omit | whole number from 0 to 10000 (Claude, OpenRouter, local)
+min-p: 0.05                    # omit | number from 0 to 1 inclusive (OpenRouter, local)
+presence-penalty: -0.5         # omit | number from -2 to 2 inclusive (OpenAI, Azure, OpenRouter, local)
 max-recursion-depth: 5         # 5 (default) | max nesting depth for recursive workflow invocations
 max-runs-per-hour: 50          # 50 (default) | max executions of this workflow per rolling hour
 ---
@@ -269,6 +296,11 @@ max-runs-per-hour: 50          # 50 (default) | max executions of this workflow 
 | `thinking` | `none` | `none` \| `adaptive` \| `extended` \| `effort` |
 | `thinking-budget` | per-mode default (extended `10000`; adaptive/effort `0`, i.e. no headroom) | a positive integer of at least `1024` (tokens) |
 | `thinking-effort` | `low` for `effort` mode; `adaptive` omits it (API default `high`) | `low` \| `medium` \| `high` \| `xhigh` \| `max` |
+| `temperature` | omit the field; each provider keeps its own default | a number from `0` to `2` inclusive (for example `0.2` or `1`) |
+| `top-p` | omit the field | a number from `0` to `1` inclusive, at most three decimal places |
+| `top-k` | omit the field | a whole number from `0` to `10000` inclusive |
+| `min-p` | omit the field | a number from `0` to `1` inclusive, at most three decimal places |
+| `presence-penalty` | omit the field | a number from `-2` to `2` inclusive, at most two decimal places |
 | `max-recursion-depth` | `5` | a positive integer |
 | `max-runs-per-hour` | `50` | a positive integer |
 
@@ -302,8 +334,24 @@ Notes:
   on newer models, where a manual `budget_tokens` is rejected. Only Anthropic and
   OpenRouter `extended` send `thinking-budget`. Elsewhere `extended` maps to
   effort `high`.
-- `caching` / `thinking` / `thinking-budget` / `thinking-effort` are validated on
-  deploy; an invalid value is a hard error.
+- `caching` / `thinking` / `thinking-budget` / `thinking-effort` / `temperature` /
+  `top-p` / `top-k` / `min-p` / `presence-penalty` are validated on deploy; an
+  invalid value is a hard error.
+- `temperature` is sent on every model call for that workflow when set, and
+  omitted entirely when unset. Do not rely on a platform default being written
+  into the request. Nested `run_workflow` children use their own workflow and
+  do not inherit the parent's temperature. Claude accepts `0`–`1` and may
+  reject a higher value at the API. Claude thinking has historically required
+  temperature to be omitted or set to `1`; combining another value with
+  `thinking` may fail at Anthropic. The field is still sent.
+- `top-p`, `top-k`, `min-p`, and `presence-penalty` follow the same omit-when-unset
+  rule, and `0` is a real value that is sent. They are not inherited by nested
+  `run_workflow` children. A set value is included on a provider request only
+  when that API has the parameter; otherwise it is left off that call and still
+  stored, shown, and reported in telemetry. See **BRA210** §6. Claude 4.7 and
+  later may reject non-default `top_p` / `top_k` at the API; the fields are
+  still sent. A local runner that rejects an unknown sampling field may fail
+  the call.
 - `max-recursion-depth` caps how deep workflows may nest via `run_workflow` or
   workflow-typed tools. Depth starts at `1` for a top-level run and increments by
   `1` for each nested invocation. An invocation that would exceed the cap is
@@ -315,14 +363,10 @@ Notes:
 
 ## 3a. Entity and unit-of-work scope (`entity`, `unit-of-work`)
 
-Optional. Omitted settings keep today's behaviour: Execution API `entity_id` /
-`unit_of_work_id` are stored as supplied, and an MCP `tools/call` stays unscoped.
-
-When set, a top-level run reads the named parameter and writes the matched id
-onto the run before the instructions are rendered. Execution API runs read
-`variables`. MCP runs read the tool-call arguments (those arguments are not
-copied into the run's variables). Nested `run_workflow` children and heartbeat
-successors inherit the parent's ids and do not match again.
+Optional. These fields choose the client and job for the run from an incoming
+value, before the instructions are rendered. Omit both and an Execution API
+run stores `entity_id` / `unit_of_work_id` as supplied. An MCP `tools/call`
+with neither field stays unscoped.
 
 ```yaml
 entity: clients:slug:slug
@@ -332,18 +376,104 @@ unit-of-work: jobs:reference:reference
 Each value is `type-code:parameter-name:match-key`. Two parts are allowed
 (`clients:entityId`); the match key then defaults to `id`.
 
-- `type-code` is the entity type or unit-of-work type code on this brain.
-- `parameter-name` is the incoming key. The match is case-sensitive. A missing
-  or blank value leaves that id unset.
-- `id` matches `Entities.Id` or `UnitsOfWork.Id`. Any other match key, including
-  `reference`, is an entity variable or unit-of-work variable key. The built-in
-  8-character Reference column is not used. Names are not used.
-- The first match wins (`CreatedAt`, then `Id`). A miss does not fail the run
-  and does not fall back to a caller-supplied id.
-- Unit of work is resolved only after an entity is in scope, and only among
-  that entity's units of work.
-- A malformed value fails deploy. An unknown type code does not: it matches
-  nothing at run time.
+| Part | Meaning |
+| ---- | ------- |
+| `type-code` | Entity type or unit-of-work type code on this brain |
+| `parameter-name` | Incoming key. The match is case-sensitive |
+| `match-key` | `id` matches `Entities.Id` or `UnitsOfWork.Id`. Any other key, including `reference`, is an entity variable or unit-of-work variable. The built-in 8-character Reference column is not used. Names are not used |
+
+`entity: clients:slug:slug` reads a parameter named `slug` and selects the
+`clients` entity whose variable `slug` equals that value.
+
+**Where the parameter is read**
+
+| Start | Parameter source |
+| ----- | ---------------- |
+| Execution API | `variables` |
+| MCP `tools/call` | Tool-call arguments. They are not copied into the run's variables |
+| `run_workflow` | Tool arguments overlaid on the parent run's variables. The same key uses the tool argument |
+| `workflow:` tool | The tool call's arguments, keyed by parameter `name`. A resolved parameter fills a key the caller did not send. When the caller sent the key, that argument is the value |
+| Heartbeat successor | The completed run's client and job. These fields are not read |
+
+The client is resolved first. The job is then resolved only among that
+client's jobs. The first match wins (`CreatedAt`, then `Id`). A malformed
+value fails deploy. An unknown type code matches nothing at run time. A miss
+does not fail the run.
+
+On an Execution API or MCP start, a missing, blank, or unmatched value leaves
+that id unset. A caller-supplied id is not used for a side that has YAML.
+
+On `run_workflow` or a `workflow:` tool, the child starts from the parent's
+client and job. A match replaces the client, then the job. A missing, blank,
+or unmatched value keeps the parent's id. If the client misses, the job YAML
+is not read and the parent's job stays. If the client matches and the job
+misses, the parent's job stays only when it belongs to that client.
+
+These keys do not read an inbox entry. An inbox task that should keep the
+entry's entity uses `scope` below, not `entity`.
+
+## 3b. Inbox task scope (`scope`)
+
+An inbox task run is brain-scoped unless its workflow opts in. Set this on the
+one workflow that should see the entity blueprint. That is usually
+`WF-REVIEW-BLUEPRINT`. Leave it off every other task on the same entry.
+
+```yaml
+scope: inherit-entry
+```
+
+The only accepted value is `inherit-entry`. Anything else fails deploy. Omit
+the key and the task stays brain-scoped, which is what existing workflows do.
+
+What the engine does:
+
+1. `create_inbox_entry` stores the entity id and unit-of-work id already on the
+   run that calls it. `entity_name` and `unit_of_work_name` stay labels. A name
+   is never looked up, so two entities with the same name cannot be mixed up.
+2. When the task runs, a workflow with `scope: inherit-entry` copies those ids
+   onto the run. Blueprint tools then use the same tiers as any other scoped
+   run. A unit-of-work blueprint for that type wins if one exists. Otherwise an
+   entity blueprint for the entity's type. Otherwise the brain blueprints.
+3. If the workflow opts in and the entry has no entity id, the task stays
+   brain-scoped. That covers an older entry, and a creating run that was itself
+   brain-scoped. The server logs a warning that names the entry and the task.
+4. The run records where the scope came from. `inherited-entry` means the ids
+   were copied. `none` means the task stayed brain-scoped. On the run page this
+   shows as "Inherited from the inbox entry" or "Brain-scoped". Other runs leave
+   the field empty.
+5. Opting in does not write a blueprint entry. If that tier has more than one
+   blueprint, `add_blueprint_entry` still needs `blueprint` (a code or a title).
+
+Do not also set `entity` or `unit-of-work` on a workflow that uses
+`scope: inherit-entry`. The inherited ids are the ones the run keeps.
+
+Example. The brain has an entity type `projects`, a blueprint `projects` with
+`scope: entity:projects`, and brain blueprints `company` and `memory`. The
+review task is:
+
+```markdown
+---
+name: Review blueprint
+code: WF-REVIEW-BLUEPRINT
+type: TRIGGERED
+trigger: inbox:MEMORY_UPDATE
+scope: inherit-entry
+tools:
+  - add_blueprint_entry
+  - search_blueprint_entries
+---
+```
+
+Complete a unit of work on a project. The eval run is already scoped to that
+project, and `create_inbox_entry` stores the project id on the inbox entry.
+The `WF-REVIEW-BLUEPRINT` task then sees the `projects` blueprint. A second
+task workflow on the same entry, without `scope`, still sees only `company`
+and `memory`.
+
+If the entry shows `EntityName: Security` but has no entity id, the review task
+still sees only `company` and `memory`. Check the warning, then re-run the eval
+from a scoped run so the entry is created with an id. Renaming the entry does
+not fix it.
 
 ## 4. Chat session settings (optional)
 

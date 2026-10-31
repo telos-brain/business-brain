@@ -1,0 +1,21 @@
+name: xero_get_tracking_categories
+version: 1
+description: >-
+  Retrieves tracking categories and options. Xero API GET /api.xro/2.0/TrackingCategories.
+api:
+  method: GET
+  path: /api.xro/2.0/TrackingCategories
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: includeArchived
+    description: >-
+      e.g. includeArchived=true - Categories and options with a status of ARCHIVED will be included in the response. Use true or false.
+    type: string

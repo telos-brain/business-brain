@@ -1,0 +1,14 @@
+name: xero_get_bank_transactions_history
+version: 1
+description: >-
+  Retrieves history from a specific bank transaction using a unique bank transaction Id. Xero API GET /api.xro/2.0/BankTransactions/{BankTransactionID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/BankTransactions/{BankTransactionID}/History
+  connector: xero
+parameters:
+  - name: BankTransactionID
+    description: >-
+      Xero generated unique identifier for a bank transaction.
+    type: string
+    required: true

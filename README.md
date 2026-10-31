@@ -150,7 +150,7 @@ Shipped skill books:
 
 ## The name "Sol"
 
-**Sol** is the advisor's persona — how Ask Sol speaks. The MCP server is **Business** (`WF-BUSINESS`). The brain's title in `brain-compose.yml` is the **company name**, set during onboarding. Do not leave that title as **Business**.
+**Sol** is the advisor's persona — how Ask Sol speaks — and the MCP server (`SOL`, `workflows/solMCP.md`). The brain's title in `brain-compose.yml` is the **company name**, set during onboarding. Do not leave that title as **Business**.
 
 To rename Sol only, edit these files and redeploy. Search the `brain/` folder for `Sol` so you do not miss a line.
 
@@ -158,7 +158,7 @@ To rename Sol only, edit these files and redeploy. Search the `brain/` folder fo
 |---|---|
 | `workflows/system-prompt.md` | Persona: "You are Sol…" |
 | `workflows/ask-for-advice.md` | Workflow title **Ask Sol** |
-| `tools/execution/advisor/ask-sol.yml` | Tool name `ask_sol` and description. If you rename the tool, also update the `tools:` list on `business.md` and `chat.md`. |
+| `tools/execution/advisor/ask-sol.yml` | Tool name `ask_sol` and description. If you rename the tool, also update the `tools:` list on `solMCP.md` and `chat.md`. |
 | `workflows/sol-research.md` | Opening line |
 
 ---
@@ -248,11 +248,11 @@ After a successful cloud deploy:
 
 1. Tell the user to sign in at **https://go.telosbrain.com**.
 2. Open this brain (instance **the company-name slug**, title **the company name**).
-3. Open **Workflows**. Find the MCP workflow named **Business** (`WF-BUSINESS`).
+3. Open **Workflows**. Find the MCP workflow named **Sol** (`SOL`).
 4. Copy the **MCP URL** shown on that workflow. That is the URL the calling agent uses.
 5. In Claude Cowork, Grokbot, Cursor, or the host they use, add an MCP server with that URL and complete authorisation (OAuth on the hosted MCP, or the organisation API key if the client asks for a bearer token).
 
-After connecting, the calling agent should see `briefing`, `research`, `create_frame_of_reference`, `ask_sol`, `ask_question`, `find_available_skills`, and `get_skill`.
+After connecting, the calling agent should see `briefing`, `research`, `create_frame_of_reference`, `ask_sol`, `ask_question`, `find_available_skills`, `get_skill`, `read_finances`, and `update_finances`.
 
 If tools do not appear, have the user toggle the MCP server off and on in the client so the tool list refreshes.
 
@@ -306,7 +306,7 @@ Telos-hosted Grok is unavailable on the local stack. Put a Claude or Grok key in
 brain deploy --env local --instance <company-name>
 ```
 
-Find the Business MCP URL on the local workflows page the same way as in the cloud. Point the MCP client at that local URL. Localhost does not use hosted OAuth the same way — the client should send the local organisation API key if asked.
+Find the Sol MCP URL on the local workflows page the same way as in the cloud. Point the MCP client at that local URL. Localhost does not use hosted OAuth the same way — the client should send the local organisation API key if asked.
 
 ```bash
 brain status

@@ -1,0 +1,14 @@
+name: xero_get_credit_note_as_pdf
+version: 1
+description: >-
+  Retrieves credit notes as PDF files. Xero API GET /api.xro/2.0/CreditNotes/{CreditNoteID}/pdf.
+api:
+  method: GET
+  path: /api.xro/2.0/CreditNotes/{CreditNoteID}/pdf
+  connector: xero
+parameters:
+  - name: CreditNoteID
+    description: >-
+      Unique identifier for a Credit Note.
+    type: string
+    required: true

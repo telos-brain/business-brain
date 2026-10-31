@@ -1,0 +1,14 @@
+name: xero_get_organisation_cissettings
+version: 1
+description: >-
+  Retrieves the CIS settings for the Xero organisation. Xero API GET /api.xro/2.0/Organisation/{OrganisationID}/CISSettings.
+api:
+  method: GET
+  path: /api.xro/2.0/Organisation/{OrganisationID}/CISSettings
+  connector: xero
+parameters:
+  - name: OrganisationID
+    description: >-
+      The unique Xero identifier for an organisation.
+    type: string
+    required: true

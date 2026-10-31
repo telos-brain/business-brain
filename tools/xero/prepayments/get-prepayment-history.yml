@@ -1,0 +1,14 @@
+name: xero_get_prepayment_history
+version: 1
+description: >-
+  Retrieves history record for a specific prepayment. Xero API GET /api.xro/2.0/Prepayments/{PrepaymentID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Prepayments/{PrepaymentID}/History
+  connector: xero
+parameters:
+  - name: PrepaymentID
+    description: >-
+      Unique identifier for a PrePayment.
+    type: string
+    required: true

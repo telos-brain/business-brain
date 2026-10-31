@@ -1,0 +1,19 @@
+name: xero_delete_credit_note_allocations
+version: 1
+description: >-
+  Deletes an Allocation from a Credit Note. Xero API DELETE /api.xro/2.0/CreditNotes/{CreditNoteID}/Allocations/{AllocationID}.
+api:
+  method: DELETE
+  path: /api.xro/2.0/CreditNotes/{CreditNoteID}/Allocations/{AllocationID}
+  connector: xero
+parameters:
+  - name: CreditNoteID
+    description: >-
+      Unique identifier for a Credit Note.
+    type: string
+    required: true
+  - name: AllocationID
+    description: >-
+      Unique identifier for Allocation object.
+    type: string
+    required: true

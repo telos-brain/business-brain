@@ -1,0 +1,17 @@
+name: xero_get_batch_payments
+version: 1
+description: >-
+  Retrieves either one or many batch payments for invoices. Xero API GET /api.xro/2.0/BatchPayments.
+api:
+  method: GET
+  path: /api.xro/2.0/BatchPayments
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string

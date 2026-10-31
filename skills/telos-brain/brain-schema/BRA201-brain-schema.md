@@ -1,10 +1,10 @@
 ---
 name: Brain Schema
 code: BRA201
-version: 53
+version: 55
 description: Overview of the brain-schema format — mental model, directory
   layout, deploy, versioning, and which skill to load for each file type. Do
-  not load this for field-level authoring; use BRA213–BRA217, BRA209, or
+  not load this for field-level authoring; use BRA213–BRA218, BRA209, or
   BRA202 instead.
 ---
 
@@ -20,7 +20,8 @@ instead of treating this page as the field reference.
 | When you are authoring… | Load |
 | --- | --- |
 | `brain-compose.yml` (entities, units of work, variables, checkpoints, callback domains) | **BRA213** |
-| Tool groups and tool YAML (`api` / `mcp` / `system` / `workflow` / `native`, parameters) | **BRA214** |
+| Tool groups and tool YAML (`api` / `mcp` / `system` / `workflow` / `native`, parameters, optional `roles`) | **BRA214** |
+| Tool audit and approval (`audit:` on a tool, paused runs, the audit log) | **BRA218** |
 | Connectors | **BRA209** |
 | Environment variables and secrets | **BRA202** |
 | `skillbook.yml` and skill markdown | **BRA215** (design/ranges: **BRA208**) |
@@ -180,7 +181,7 @@ on the skill in the last column.
 | — entity | `name`, `code`; each `variables` item needs `key` | **BRA213** |
 | Connector YAML | `name`, `url` or `url-env`, `auth-type`; each parameter needs `name` + `description` | **BRA209** |
 | Tool group `tools.yml` | `name`, `description` | **BRA214** |
-| Tool definition | `name`, `description`, exactly one of `api`/`mcp`/`system`/`workflow`/`native` | **BRA214** |
+| Tool definition | `name`, `description`, exactly one of `api`/`mcp`/`system`/`workflow`/`native`. Optional `roles` (omit it and every caller can use the tool) | **BRA214** |
 | Tool parameter | `name`, `description` (not used by `native` tools) | **BRA214** |
 | `skillbook.yml` | `name`, `code`, `prefix`; each category needs `name` | **BRA215** |
 | Skill markdown | frontmatter `name`, `code` + non-empty body | **BRA215** |

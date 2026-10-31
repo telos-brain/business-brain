@@ -1,0 +1,18 @@
+name: xero_get_invoice
+version: 1
+description: >-
+  Retrieves a specific sales invoice or purchase bill using a unique invoice Id. Xero API GET /api.xro/2.0/Invoices/{InvoiceID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Invoices/{InvoiceID}
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int

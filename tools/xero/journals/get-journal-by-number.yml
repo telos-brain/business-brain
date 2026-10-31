@@ -1,0 +1,14 @@
+name: xero_get_journal_by_number
+version: 1
+description: >-
+  Retrieves a specific journal using a unique journal number. Xero API GET /api.xro/2.0/Journals/{JournalNumber}.
+api:
+  method: GET
+  path: /api.xro/2.0/Journals/{JournalNumber}
+  connector: xero
+parameters:
+  - name: JournalNumber
+    description: >-
+      Number of a Journal.
+    type: int
+    required: true

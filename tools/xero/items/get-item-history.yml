@@ -1,0 +1,14 @@
+name: xero_get_item_history
+version: 1
+description: >-
+  Retrieves history for a specific item. Xero API GET /api.xro/2.0/Items/{ItemID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Items/{ItemID}/History
+  connector: xero
+parameters:
+  - name: ItemID
+    description: >-
+      Unique identifier for an Item.
+    type: string
+    required: true

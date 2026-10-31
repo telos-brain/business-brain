@@ -1,0 +1,14 @@
+name: xero_get_report_from_id
+version: 1
+description: >-
+  Retrieves a specific report using a unique ReportID. Xero API GET /api.xro/2.0/Reports/{ReportID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/{ReportID}
+  connector: xero
+parameters:
+  - name: ReportID
+    description: >-
+      Unique identifier for a Report.
+    type: string
+    required: true

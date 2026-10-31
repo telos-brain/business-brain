@@ -1,0 +1,25 @@
+name: xero_get_manual_journals
+version: 1
+description: >-
+  Retrieves manual journals. Xero API GET /api.xro/2.0/ManualJournals.
+api:
+  method: GET
+  path: /api.xro/2.0/ManualJournals
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: page
+    description: >-
+      e.g. page=1 – Up to 100 manual journals will be returned in a single API call with line items shown for each overpayment.
+    type: int
+  - name: pageSize
+    description: >-
+      Number of records to retrieve per page.
+    type: int

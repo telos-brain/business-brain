@@ -1,0 +1,14 @@
+name: xero_get_bank_transaction_attachments
+version: 1
+description: >-
+  Retrieves any attachments from a specific bank transactions. Xero API GET /api.xro/2.0/BankTransactions/{BankTransactionID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/BankTransactions/{BankTransactionID}/Attachments
+  connector: xero
+parameters:
+  - name: BankTransactionID
+    description: >-
+      Xero generated unique identifier for a bank transaction.
+    type: string
+    required: true

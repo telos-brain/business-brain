@@ -1,0 +1,22 @@
+name: update_finances
+version: 1
+description: >-
+  Creates or changes Xero data for the connected organisations. Reads the
+  current records, then uses Xero read and write tools to do what the
+  request asks. Requires CFO approval before it runs.
+audit:
+  title: Update Xero — CFO approval
+  body: |
+    {{arguments.request}}
+  requires-approval: yes
+  approver-role: CFO
+workflow:
+  code: WF-UPDATE-FINANCES
+parameters:
+  - name: request
+    description: >-
+      What to change in Xero. Name the organisation if more than one is
+      connected, the records involved, the outcome, and any constraint
+      (do not email, do not delete, as-at date, and so on).
+    type: string
+    required: true

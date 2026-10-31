@@ -1,0 +1,14 @@
+name: xero_get_contact_cissettings
+version: 1
+description: >-
+  Retrieves CIS settings for a specific contact in a Xero organisation. Xero API GET /api.xro/2.0/Contacts/{ContactID}/CISSettings.
+api:
+  method: GET
+  path: /api.xro/2.0/Contacts/{ContactID}/CISSettings
+  connector: xero
+parameters:
+  - name: ContactID
+    description: >-
+      Unique identifier for a Contact.
+    type: string
+    required: true

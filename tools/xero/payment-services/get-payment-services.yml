@@ -1,0 +1,8 @@
+name: xero_get_payment_services
+version: 1
+description: >-
+  Retrieves payment services. Xero API GET /api.xro/2.0/PaymentServices.
+api:
+  method: GET
+  path: /api.xro/2.0/PaymentServices
+  connector: xero

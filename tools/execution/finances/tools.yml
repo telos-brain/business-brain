@@ -1,0 +1,7 @@
+name: Finances
+description: >-
+  Workflow tools for reading and updating Xero. Read does not change the
+  books. Update requires CFO approval before it runs.
+tools:
+  - read-finances.yml
+  - update-finances.yml

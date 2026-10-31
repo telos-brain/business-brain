@@ -1,0 +1,19 @@
+name: xero_delete_tracking_options
+version: 1
+description: >-
+  Deletes a specific option for a specific tracking category. Xero API DELETE /api.xro/2.0/TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}.
+api:
+  method: DELETE
+  path: /api.xro/2.0/TrackingCategories/{TrackingCategoryID}/Options/{TrackingOptionID}
+  connector: xero
+parameters:
+  - name: TrackingCategoryID
+    description: >-
+      Unique identifier for a TrackingCategory.
+    type: string
+    required: true
+  - name: TrackingOptionID
+    description: >-
+      Unique identifier for a Tracking Option.
+    type: string
+    required: true

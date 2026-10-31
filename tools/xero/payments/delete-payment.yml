@@ -1,0 +1,19 @@
+name: xero_delete_payment
+version: 1
+description: >-
+  Updates a specific payment for invoices and credit notes. Xero API POST /api.xro/2.0/Payments/{PaymentID}.
+api:
+  method: POST
+  path: /api.xro/2.0/Payments/{PaymentID}
+  connector: xero
+parameters:
+  - name: PaymentID
+    description: >-
+      Unique identifier for a Payment.
+    type: string
+    required: true
+  - name: Status
+    description: >-
+      The status of the payment.
+    type: string
+    required: true

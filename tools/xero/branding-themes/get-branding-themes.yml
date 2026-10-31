@@ -1,0 +1,8 @@
+name: xero_get_branding_themes
+version: 1
+description: >-
+  Retrieves all the branding themes. Xero API GET /api.xro/2.0/BrandingThemes.
+api:
+  method: GET
+  path: /api.xro/2.0/BrandingThemes
+  connector: xero

@@ -1,0 +1,19 @@
+name: xero_get_account_attachment_by_id
+version: 1
+description: >-
+  Retrieves a specific attachment from a specific account using a unique attachment Id. Xero API GET /api.xro/2.0/Accounts/{AccountID}/Attachments/{AttachmentID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Accounts/{AccountID}/Attachments/{AttachmentID}
+  connector: xero
+parameters:
+  - name: AccountID
+    description: >-
+      Unique identifier for Account object.
+    type: string
+    required: true
+  - name: AttachmentID
+    description: >-
+      Unique identifier for Attachment object.
+    type: string
+    required: true

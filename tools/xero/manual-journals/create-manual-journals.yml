@@ -1,0 +1,66 @@
+name: xero_create_manual_journals
+version: 1
+description: >-
+  Creates one or more manual journals. Xero API PUT /api.xro/2.0/ManualJournals.
+api:
+  method: PUT
+  path: /api.xro/2.0/ManualJournals
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: ManualJournals
+    description: |
+      JSON array of one or more journals. Pass the array only — do not wrap it
+      in {"ManualJournals": ...}. List account codes first (xero_get_accounts)
+      and use those codes on every line. Each journal needs at least two
+      JournalLines whose LineAmounts sum to zero (debits positive, credits
+      negative). Pair typical account types when the user does not specify them.
+
+      Same fields as the official Xero MCP create-manual-journal tool, as one
+      REST object (PascalCase). Example value for this parameter:
+
+      [
+        {
+          "Narration": "Description of manual journal being posted",
+          "JournalLines": [
+            {
+              "LineAmount": 100,
+              "AccountCode": "400",
+              "Description": "Optional description for this line",
+              "TaxType": "NONE"
+            },
+            {
+              "LineAmount": -100,
+              "AccountCode": "200",
+              "Description": "Optional description for this line",
+              "TaxType": "NONE"
+            }
+          ],
+          "Date": "2019-03-14",
+          "LineAmountTypes": "NoTax",
+          "Status": "DRAFT",
+          "ShowOnCashBasisReports": true
+        }
+      ]
+
+      Journal fields:
+      - Narration (string, required) — description of the journal being posted
+      - JournalLines (array, required) — at least two line objects
+      - Date (string, optional) — YYYY-MM-DD
+      - LineAmountTypes (string, optional) — Exclusive | Inclusive | NoTax
+        (NoTax if omitted). REST values, not EXCLUSIVE / NO_TAX
+      - Status (string, optional) — DRAFT | POSTED | DELETED | VOIDED | ARCHIVED
+        (DRAFT if omitted)
+      - Url (string, optional) — source-document link
+      - ShowOnCashBasisReports (boolean, optional) — default true
+
+      JournalLines item:
+      - LineAmount (number, required) — debit positive, credit negative
+      - AccountCode (string, required) — from xero_get_accounts
+      - Description (string, optional)
+      - TaxType (string, optional) — from xero_get_tax_rates
+      - Tracking (array, optional, max 2) — {"Name": category, "Option": option}
+    type: json

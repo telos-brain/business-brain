@@ -1,0 +1,14 @@
+name: xero_get_quote_history
+version: 1
+description: >-
+  Retrieves history records of a specific quote. Xero API GET /api.xro/2.0/Quotes/{QuoteID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Quotes/{QuoteID}/History
+  connector: xero
+parameters:
+  - name: QuoteID
+    description: >-
+      Unique identifier for an Quote.
+    type: string
+    required: true

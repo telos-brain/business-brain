@@ -1,0 +1,14 @@
+name: xero_get_receipt_history
+version: 1
+description: >-
+  Retrieves a history record for a specific receipt. Xero API GET /api.xro/2.0/Receipts/{ReceiptID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Receipts/{ReceiptID}/History
+  connector: xero
+parameters:
+  - name: ReceiptID
+    description: >-
+      Unique identifier for a Receipt.
+    type: string
+    required: true

@@ -1,0 +1,8 @@
+name: xero_get_organisation_actions
+version: 1
+description: >-
+  Retrieves a list of the key actions your app has permission to perform in the connected Xero organisation. Xero API GET /api.xro/2.0/Organisation/Actions.
+api:
+  method: GET
+  path: /api.xro/2.0/Organisation/Actions
+  connector: xero

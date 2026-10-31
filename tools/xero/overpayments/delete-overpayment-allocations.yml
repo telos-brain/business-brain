@@ -1,0 +1,19 @@
+name: xero_delete_overpayment_allocations
+version: 1
+description: >-
+  Deletes an Allocation from an overpayment. Xero API DELETE /api.xro/2.0/Overpayments/{OverpaymentID}/Allocations/{AllocationID}.
+api:
+  method: DELETE
+  path: /api.xro/2.0/Overpayments/{OverpaymentID}/Allocations/{AllocationID}
+  connector: xero
+parameters:
+  - name: OverpaymentID
+    description: >-
+      Unique identifier for a Overpayment.
+    type: string
+    required: true
+  - name: AllocationID
+    description: >-
+      Unique identifier for Allocation object.
+    type: string
+    required: true

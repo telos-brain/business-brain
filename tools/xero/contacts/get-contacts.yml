@@ -1,0 +1,41 @@
+name: xero_get_contacts
+version: 1
+description: >-
+  Retrieves all contacts in a Xero organisation. Xero API GET /api.xro/2.0/Contacts.
+api:
+  method: GET
+  path: /api.xro/2.0/Contacts
+  connector: xero
+parameters:
+  - name: where
+    description: >-
+      Xero where filter, e.g. Status=="AUTHORISED" AND Type=="ACCREC". See https://developer.xero.com/documentation/guides/how-to-guides/filtering
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: IDs
+    description: >-
+      Filter by a comma separated list of ContactIDs. Allows you to retrieve a specific set of contacts in a single call.
+    type: string
+  - name: page
+    description: >-
+      e.g. page=1 - Up to 100 contacts will be returned in a single API call.
+    type: int
+  - name: includeArchived
+    description: >-
+      e.g. includeArchived=true - Contacts with a status of ARCHIVED will be included in the response. Use true or false.
+    type: string
+  - name: summaryOnly
+    description: >-
+      Use summaryOnly=true in GET Contacts and Invoices endpoint to retrieve a smaller version of the response object. This returns only lightweight fields, excluding computation-heavy fields from the response, making the API calls quick and efficient. Use true or false.
+    type: string
+  - name: searchTerm
+    description: >-
+      Search parameter that performs a case-insensitive text search across the Name, FirstName, LastName, ContactNumber and EmailAddress fields.
+    type: string
+  - name: pageSize
+    description: >-
+      Number of records to retrieve per page.
+    type: int

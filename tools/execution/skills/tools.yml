@@ -6,4 +6,5 @@ tools:
   - find-available-skills.yml
   - get-skill.yml
   - find-available-tools.yml
+  - activate-tools.yml
   - compact-context.yml

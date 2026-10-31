@@ -1,0 +1,26 @@
+name: xero_create_tracking_options
+version: 1
+description: >-
+  Creates options for a specific tracking category. Xero API PUT /api.xro/2.0/TrackingCategories/{TrackingCategoryID}/Options.
+api:
+  method: PUT
+  path: /api.xro/2.0/TrackingCategories/{TrackingCategoryID}/Options
+  connector: xero
+parameters:
+  - name: TrackingCategoryID
+    description: >-
+      Unique identifier for a TrackingCategory.
+    type: string
+    required: true
+  - name: TrackingOptionID
+    description: >-
+      The Xero identifier for a tracking option e.g. ae777a87-5ef3-4fa0-a4f0-d10e1f13073a.
+    type: string
+  - name: Name
+    description: >-
+      The name of the tracking option e.g. Marketing, East (max length = 100).
+    type: string
+  - name: Status
+    description: >-
+      The status of a tracking option. One of: ACTIVE, ARCHIVED, DELETED.
+    type: string

@@ -1,0 +1,22 @@
+name: xero_update_credit_note
+version: 1
+description: >-
+  Updates a specific credit note. Xero API POST /api.xro/2.0/CreditNotes/{CreditNoteID}.
+api:
+  method: POST
+  path: /api.xro/2.0/CreditNotes/{CreditNoteID}
+  connector: xero
+parameters:
+  - name: CreditNoteID
+    description: >-
+      Unique identifier for a Credit Note.
+    type: string
+    required: true
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int
+  - name: CreditNotes
+    description: >-
+      Pass as a JSON array. Each item may include: Type (string) [ACCPAYCREDIT, ACCRECCREDIT]; Contact (object); Date (string): The date the credit note is issued YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the timezone setting of the organisation; DueDate (string): Date invoice is due – YYYY-MM-DD; Status (string) [DRAFT, SUBMITTED, DELETED, AUTHORISED, PAID, VOIDED]; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; LineItems (array): See Invoice Line Items; SubTotal (number): The subtotal of the credit note excluding taxes; TotalTax (number): The total tax on the credit note; Total (number): The total of the Credit Note(subtotal + total tax); CISDeduction (number): CIS deduction for UK contractors; CISRate (number): CIS Deduction rate for the organisation; UpdatedDateUTCString (string): UTC ISO-8601 formatted timestamp of last update to the credit note; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; FullyPaidOnDate (string): Date when credit note was fully paid(UTC format); CreditNoteID (string): Xero generated unique identifier; CreditNoteNumber (string): ACCRECCREDIT – Unique alpha numeric code identifying credit note (when missing will auto-generate from your Organisation Invoice Settings) and 14 more.
+    type: json

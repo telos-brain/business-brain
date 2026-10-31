@@ -1,0 +1,19 @@
+name: xero_get_credit_note_attachment_by_id
+version: 1
+description: >-
+  Retrieves a specific attachment from a specific credit note using a unique attachment Id. Xero API GET /api.xro/2.0/CreditNotes/{CreditNoteID}/Attachments/{AttachmentID}.
+api:
+  method: GET
+  path: /api.xro/2.0/CreditNotes/{CreditNoteID}/Attachments/{AttachmentID}
+  connector: xero
+parameters:
+  - name: CreditNoteID
+    description: >-
+      Unique identifier for a Credit Note.
+    type: string
+    required: true
+  - name: AttachmentID
+    description: >-
+      Unique identifier for Attachment object.
+    type: string
+    required: true

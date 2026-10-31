@@ -1,0 +1,14 @@
+name: xero_get_overpayment_history
+version: 1
+description: >-
+  Retrieves history records of a specific overpayment. Xero API GET /api.xro/2.0/Overpayments/{OverpaymentID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Overpayments/{OverpaymentID}/History
+  connector: xero
+parameters:
+  - name: OverpaymentID
+    description: >-
+      Unique identifier for a Overpayment.
+    type: string
+    required: true

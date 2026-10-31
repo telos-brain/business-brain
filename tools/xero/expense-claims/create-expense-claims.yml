@@ -1,0 +1,13 @@
+name: xero_create_expense_claims
+version: 1
+description: >-
+  Creates expense claims. Xero API PUT /api.xro/2.0/ExpenseClaims.
+api:
+  method: PUT
+  path: /api.xro/2.0/ExpenseClaims
+  connector: xero
+parameters:
+  - name: ExpenseClaims
+    description: >-
+      Pass as a JSON array. Each item may include: ExpenseClaimID (string): Xero generated unique identifier for an expense claim; Status (string) [SUBMITTED, AUTHORISED, PAID, VOIDED, DELETED]; Payments (array): See Payments; User (object); Receipts (array); Total (number): The total of an expense claim being paid; AmountDue (number): The amount due to be paid for an expense claim; AmountPaid (number): The amount still to pay for an expense claim; PaymentDueDate (string): The date when the expense claim is due to be paid YYYY-MM-DD; ReportingDate (string): The date the expense claim will be reported in Xero YYYY-MM-DD; ReceiptID (string): The Xero identifier for the Receipt e.g. e59a2c7f-1306-4078-a0f3-73537afcbba9.
+    type: json

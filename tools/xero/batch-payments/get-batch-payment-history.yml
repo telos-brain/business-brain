@@ -1,0 +1,14 @@
+name: xero_get_batch_payment_history
+version: 1
+description: >-
+  Retrieves history from a specific batch payment. Xero API GET /api.xro/2.0/BatchPayments/{BatchPaymentID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/BatchPayments/{BatchPaymentID}/History
+  connector: xero
+parameters:
+  - name: BatchPaymentID
+    description: >-
+      Unique identifier for BatchPayment.
+    type: string
+    required: true

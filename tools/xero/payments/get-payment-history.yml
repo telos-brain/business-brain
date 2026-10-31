@@ -1,0 +1,14 @@
+name: xero_get_payment_history
+version: 1
+description: >-
+  Retrieves history records of a specific payment. Xero API GET /api.xro/2.0/Payments/{PaymentID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/Payments/{PaymentID}/History
+  connector: xero
+parameters:
+  - name: PaymentID
+    description: >-
+      Unique identifier for a Payment.
+    type: string
+    required: true

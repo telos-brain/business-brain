@@ -1,0 +1,45 @@
+name: xero_create_linked_transaction
+version: 1
+description: >-
+  Creates linked transactions (billable expenses). Xero API PUT /api.xro/2.0/LinkedTransactions.
+api:
+  method: PUT
+  path: /api.xro/2.0/LinkedTransactions
+  connector: xero
+parameters:
+  - name: SourceTransactionID
+    description: >-
+      Filter by the SourceTransactionID. Get all the linked transactions created from a particular ACCPAY invoice.
+    type: string
+  - name: SourceLineItemID
+    description: >-
+      The line item identifier from the source transaction.
+    type: string
+  - name: ContactID
+    description: >-
+      Filter by the combination of ContactID and Status. Get all the linked transactions that have been assigned to a particular customer and have a particular status e.g. GET /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED.
+    type: string
+  - name: TargetTransactionID
+    description: >-
+      Filter by the TargetTransactionID. Get all the linked transactions allocated to a particular ACCREC invoice.
+    type: string
+  - name: TargetLineItemID
+    description: >-
+      The line item identifier from the target transaction. It is possible to link multiple billable expenses to the same TargetLineItemID.
+    type: string
+  - name: LinkedTransactionID
+    description: >-
+      The Xero identifier for an Linked Transaction e.g./LinkedTransactions/297c2dc5-cc47-4afd-8ec8-74990b8761e9.
+    type: string
+  - name: Status
+    description: >-
+      Filter by the combination of ContactID and Status. Get all the linked transactions that have been assigned to a particular customer and have a particular status e.g. GET /LinkedTransactions?ContactID=4bb34b03-3378-4bb2-a0ed-6345abf3224e&Status=APPROVED. One of: APPROVED, DRAFT, ONDRAFT, BILLED, VOIDED.
+    type: string
+  - name: Type
+    description: >-
+      This will always be BILLABLEEXPENSE. More types may be added in future. One of: BILLABLEEXPENSE.
+    type: string
+  - name: SourceTransactionTypeCode
+    description: >-
+      The Type of the source tranasction. This will be ACCPAY if the linked transaction was created from an invoice and SPEND if it was created from a bank transaction. One of: ACCPAY, SPEND.
+    type: string

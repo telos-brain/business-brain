@@ -1,0 +1,22 @@
+name: xero_update_receipt
+version: 1
+description: >-
+  Updates a specific draft expense claim receipts. Xero API POST /api.xro/2.0/Receipts/{ReceiptID}.
+api:
+  method: POST
+  path: /api.xro/2.0/Receipts/{ReceiptID}
+  connector: xero
+parameters:
+  - name: ReceiptID
+    description: >-
+      Unique identifier for a Receipt.
+    type: string
+    required: true
+  - name: unitdp
+    description: >-
+      e.g. unitdp=4 – (Unit Decimal Places) You can opt in to use four decimal places for unit amounts.
+    type: int
+  - name: Receipts
+    description: >-
+      Pass as a JSON array. Each item may include: Date (string): Date of receipt – YYYY-MM-DD; Contact (object); LineItems (array); User (object); Reference (string): Additional reference number; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; SubTotal (number): Total of receipt excluding taxes; TotalTax (number): Total tax on receipt; Total (number): Total of receipt tax inclusive (i.e. SubTotal + TotalTax); ReceiptID (string): Xero generated unique identifier for receipt; Status (string) [DRAFT, SUBMITTED, AUTHORISED, DECLINED, VOIDED]; ReceiptNumber (string): Xero generated sequence number for receipt in current claim for a given user; Url (string): URL link to a source document – shown as “Go to [appName]” in the Xero app; Attachments (array): Displays array of attachments from the API.
+    type: json

@@ -1,0 +1,18 @@
+name: xero_create_contact_history
+version: 1
+description: >-
+  Creates a new history record for a specific contact. Xero API PUT /api.xro/2.0/Contacts/{ContactID}/History.
+api:
+  method: PUT
+  path: /api.xro/2.0/Contacts/{ContactID}/History
+  connector: xero
+parameters:
+  - name: ContactID
+    description: >-
+      Unique identifier for a Contact.
+    type: string
+    required: true
+  - name: HistoryRecords
+    description: >-
+      Pass as a JSON array. Each item may include: Details (string): details; Changes (string): Name of branding theme; User (string): has a value of 0; DateUTC (string): UTC timestamp of creation date of branding theme.
+    type: json

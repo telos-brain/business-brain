@@ -1,0 +1,14 @@
+name: xero_get_bank_transfer_attachments
+version: 1
+description: >-
+  Retrieves attachments from a specific bank transfer. Xero API GET /api.xro/2.0/BankTransfers/{BankTransferID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/BankTransfers/{BankTransferID}/Attachments
+  connector: xero
+parameters:
+  - name: BankTransferID
+    description: >-
+      Xero generated unique identifier for a bank transfer.
+    type: string
+    required: true

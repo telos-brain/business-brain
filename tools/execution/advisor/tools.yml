@@ -1,6 +1,6 @@
 name: Business
 description: >-
-  Workflow tools the Business MCP exposes — briefing into memory,
+  Workflow tools the Sol MCP exposes — briefing into memory,
   research, and asking Sol for a short quality check.
 tools:
   - briefing.yml

@@ -1,0 +1,22 @@
+name: xero_create_prepayment_allocations
+version: 1
+description: >-
+  Allows you to create an Allocation for prepayments. Xero API PUT /api.xro/2.0/Prepayments/{PrepaymentID}/Allocations.
+api:
+  method: PUT
+  path: /api.xro/2.0/Prepayments/{PrepaymentID}/Allocations
+  connector: xero
+parameters:
+  - name: PrepaymentID
+    description: >-
+      Unique identifier for a PrePayment.
+    type: string
+    required: true
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: Allocations
+    description: >-
+      Pass as a JSON array. Each item may include: AllocationID (string): Xero generated unique identifier; Invoice (object); Overpayment (object); Prepayment (object); CreditNote (object); Amount (number): the amount being applied to the invoice; Date (string): the date the allocation is applied YYYY-MM-DD; IsDeleted (boolean): A flag that returns true when the allocation is succesfully deleted; StatusAttributeString (string): A string to indicate if a invoice status.
+    type: json

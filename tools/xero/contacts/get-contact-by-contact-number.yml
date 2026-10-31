@@ -1,0 +1,14 @@
+name: xero_get_contact_by_contact_number
+version: 1
+description: >-
+  Retrieves a specific contact by contact number in a Xero organisation. Xero API GET /api.xro/2.0/Contacts/{ContactNumber}.
+api:
+  method: GET
+  path: /api.xro/2.0/Contacts/{ContactNumber}
+  connector: xero
+parameters:
+  - name: ContactNumber
+    description: >-
+      This field is read only on the Xero contact screen, used to identify contacts in external systems (max length = 50).
+    type: string
+    required: true

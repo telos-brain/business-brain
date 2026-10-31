@@ -1,0 +1,113 @@
+name: xero_create_payment
+version: 1
+description: >-
+  Creates a single payment for invoice or credit notes. Xero API POST /api.xro/2.0/Payments.
+api:
+  method: POST
+  path: /api.xro/2.0/Payments
+  connector: xero
+parameters:
+  - name: Invoice
+    description: >-
+      Pass as a JSON object. Fields: Type (string) [ACCPAY, ACCPAYCREDIT, APOVERPAYMENT, APPREPAYMENT, ACCREC, ACCRECCREDIT, AROVERPAYMENT, ARPREPAYMENT]; Contact (object); LineItems (array): See LineItems; Date (string): Date invoice was issued – YYYY-MM-DD. If the Date element is not specified it will default to the current date based on the timezone setting of the organisation; DueDate (string): Date invoice is due – YYYY-MM-DD; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; InvoiceNumber (string): ACCREC – Unique alpha numeric code identifying invoice (when missing will auto-generate from your Organisation Invoice Settings) (max length = 255); Reference (string): ACCREC only – additional reference number; BrandingThemeID (string): See BrandingThemes; Url (string): URL link to a source document – shown as “Go to [appName]” in the Xero app; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; CurrencyRate (number): The currency rate for a multicurrency invoice. If no rate is specified, the XE.com day rate is used. (max length = [18].[6]); Status (string) [DRAFT, SUBMITTED, DELETED, AUTHORISED, PAID, VOIDED]; SentToContact (boolean): Boolean to set whether the invoice in the Xero app should be marked as “sent”. This can be set only on invoices that have been approved; ExpectedPaymentDate (string): Shown on sales invoices (Accounts Receivable) when this has been set; PlannedPaymentDate (string): Shown on bills (Accounts Payable) when this has been set; CISDeduction (number): CIS deduction for UK contractors; CISRate (number): CIS Deduction rate for the organisation and 26 more.
+    type: json
+  - name: CreditNote
+    description: >-
+      Pass as a JSON object. Fields: Type (string) [ACCPAYCREDIT, ACCRECCREDIT]; Contact (object); Date (string): The date the credit note is issued YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the timezone setting of the organisation; DueDate (string): Date invoice is due – YYYY-MM-DD; Status (string) [DRAFT, SUBMITTED, DELETED, AUTHORISED, PAID, VOIDED]; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; LineItems (array): See Invoice Line Items; SubTotal (number): The subtotal of the credit note excluding taxes; TotalTax (number): The total tax on the credit note; Total (number): The total of the Credit Note(subtotal + total tax); CISDeduction (number): CIS deduction for UK contractors; CISRate (number): CIS Deduction rate for the organisation; UpdatedDateUTCString (string): UTC ISO-8601 formatted timestamp of last update to the credit note; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; FullyPaidOnDate (string): Date when credit note was fully paid(UTC format); CreditNoteID (string): Xero generated unique identifier; CreditNoteNumber (string): ACCRECCREDIT – Unique alpha numeric code identifying credit note (when missing will auto-generate from your Organisation Invoice Settings) and 14 more.
+    type: json
+  - name: Prepayment
+    description: >-
+      Pass as a JSON object. Fields: Type (string) [RECEIVE-PREPAYMENT, SPEND-PREPAYMENT, ARPREPAYMENT, APPREPAYMENT]; Contact (object); Date (string): The date the prepayment is created YYYY-MM-DD; Status (string) [AUTHORISED, PAID, VOIDED]; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; LineItems (array): See Prepayment Line Items; SubTotal (number): The subtotal of the prepayment excluding taxes; TotalTax (number): The total tax on the prepayment; Total (number): The total of the prepayment(subtotal + total tax); Reference (string): Returns Invoice number field. Reference field isn't available; InvoiceNumber (string): Returns Invoice number for prepayment receive document only; UpdatedDateUTCString (string): UTC ISO-8601 formatted timestamp of last update to the prepayment; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; PrepaymentID (string): Xero generated unique identifier; BrandingThemeID (string): The unique identifier of the branding template applied to a receive prepayment; CurrencyRate (number): The currency rate for a multicurrency prepayment. If no rate is specified, the XE.com day rate is used; RemainingCredit (number): The remaining credit balance on the prepayment and 5 more.
+    type: json
+  - name: Overpayment
+    description: >-
+      Pass as a JSON object. Fields: Type (string) [RECEIVE-OVERPAYMENT, SPEND-OVERPAYMENT, AROVERPAYMENT]; Contact (object); Date (string): The date the overpayment is created YYYY-MM-DD; Status (string) [AUTHORISED, PAID, VOIDED]; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; LineItems (array): See Overpayment Line Items; SubTotal (number): The subtotal of the overpayment excluding taxes; TotalTax (number): The total tax on the overpayment; Total (number): The total of the overpayment (subtotal + total tax); UpdatedDateUTCString (string): UTC ISO-8601 formatted timestamp of last update to the overpayment; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; OverpaymentID (string): Xero generated unique identifier; CurrencyRate (number): The currency rate for a multicurrency overpayment. If no rate is specified, the XE.com day rate is used; RemainingCredit (number): The remaining credit balance on the overpayment; Allocations (array): See Allocations; AppliedAmount (number): The amount of applied to an invoice; Payments (array): See Payments and 3 more.
+    type: json
+  - name: InvoiceNumber
+    description: >-
+      Number of invoice or credit note you are applying payment to e.g.INV-4003.
+    type: string
+  - name: CreditNoteNumber
+    description: >-
+      Number of invoice or credit note you are applying payment to e.g. INV-4003.
+    type: string
+  - name: BatchPayment
+    description: >-
+      Pass as a JSON object. Fields: Account (object); Reference (string): (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero; Particulars (string): (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero; Code (string): (NZ Only) Optional references for the batch payment transaction. It will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement you import into Xero; Details (string): (Non-NZ Only) These details are sent to the org’s bank as a reference for the batch payment transaction. They will also show with the batch payment transaction in the bank reconciliation Find & Match screen. Depending on your individual bank, the detail may also show on the bank statement imported into Xero. Maximum field length = 18; Narrative (string): (UK Only) Only shows on the statement line in Xero. Max length =18; BatchPaymentID (string): The Xero generated unique identifier for the bank transaction (read-only); DateString (string): Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06; Date (string): Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06; Amount (number): The amount of the payment. Must be less than or equal to the outstanding amount owing on the invoice e.g. 200.00; Payments (array): An array of payments; Type (string) [PAYBATCH, RECBATCH]; Status (string) [AUTHORISED, DELETED]; TotalAmount (number): The total of the payments that make up the batch (read-only); IsReconciled (boolean): Booelan that tells you if the batch payment has been reconciled (read-only).
+    type: json
+  - name: Account
+    description: >-
+      Pass as a JSON object. Fields: Code (string): Customer defined alpha numeric account code e.g 200 or SALES (max length = 10); Name (string): Name of account (max length = 150); AccountID (string): The Xero identifier for an account – specified as a string following the endpoint name e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9; Type (string) [BANK, CURRENT, CURRLIAB, DEPRECIATN, DIRECTCOSTS, EQUITY, EXPENSE, FIXED]; BankAccountNumber (string): For bank accounts only (Account Type BANK); Status (string) [ACTIVE, ARCHIVED, DELETED]; Description (string): Description of the Account. Valid for all types of accounts except bank accounts (max length = 4000); BankAccountType (string) [BANK, CREDITCARD, PAYPAL, NONE, ]; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; TaxType (string): The tax type from taxRates; EnablePaymentsToAccount (boolean): Boolean – describes whether account can have payments applied to it; ShowInExpenseClaims (boolean): Boolean – describes whether account code is available for use with expense claims; Class (string) [ASSET, EQUITY, EXPENSE, LIABILITY, REVENUE]; ReportingCode (string): Shown if set and 2 more.
+    type: json
+  - name: Code
+    description: >-
+      Code of account you are using to make the payment e.g. 001 (note- not all accounts have a code value).
+    type: string
+  - name: Date
+    description: >-
+      Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06.
+    type: date
+  - name: CurrencyRate
+    description: >-
+      Exchange rate when payment is received. Only used for non base currency invoices and credit notes e.g. 0.7500.
+    type: decimal
+  - name: Amount
+    description: >-
+      The amount of the payment. Must be less than or equal to the outstanding amount owing on the invoice e.g. 200.00.
+    type: decimal
+  - name: BankAmount
+    description: >-
+      The amount of the payment in the currency of the bank account.
+    type: decimal
+  - name: Reference
+    description: >-
+      An optional description for the payment e.g. Direct Debit.
+    type: string
+  - name: IsReconciled
+    description: >-
+      An optional parameter for the payment. A boolean indicating whether you would like the payment to be created as reconciled when using PUT, or whether a payment has been reconciled when using GET. Use true or false.
+    type: string
+  - name: Status
+    description: >-
+      The status of the payment. One of: AUTHORISED, DELETED.
+    type: string
+  - name: PaymentType
+    description: >-
+      See Payment Types. One of: ACCRECPAYMENT, ACCPAYPAYMENT, ARCREDITPAYMENT, APCREDITPAYMENT, AROVERPAYMENTPAYMENT, ARPREPAYMENTPAYMENT, APPREPAYMENTPAYMENT, APOVERPAYMENTPAYMENT.
+    type: string
+  - name: UpdatedDateUTCString
+    description: >-
+      UTC ISO-8601 formatted timestamp of last update to the payment.
+    type: string
+  - name: PaymentID
+    description: >-
+      The Xero identifier for an Payment e.g. 297c2dc5-cc47-4afd-8ec8-74990b8761e9.
+    type: string
+  - name: BatchPaymentID
+    description: >-
+      Present if the payment was created as part of a batch.
+    type: string
+  - name: BankAccountNumber
+    description: >-
+      The suppliers bank account number the payment is being made to.
+    type: string
+  - name: Particulars
+    description: >-
+      The suppliers bank account number the payment is being made to.
+    type: string
+  - name: Details
+    description: >-
+      The information to appear on the supplier's bank account.
+    type: string
+  - name: HasAccount
+    description: >-
+      A boolean to indicate if a contact has an validation errors. Use true or false.
+    type: string
+  - name: HasValidationErrors
+    description: >-
+      A boolean to indicate if a contact has an validation errors. Use true or false.
+    type: string
+  - name: StatusAttributeString
+    description: >-
+      A string to indicate if a invoice status.
+    type: string

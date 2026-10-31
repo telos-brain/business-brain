@@ -1,0 +1,14 @@
+name: xero_get_invoice_attachments
+version: 1
+description: >-
+  Retrieves attachments for a specific invoice or purchase bill. Xero API GET /api.xro/2.0/Invoices/{InvoiceID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/Invoices/{InvoiceID}/Attachments
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true

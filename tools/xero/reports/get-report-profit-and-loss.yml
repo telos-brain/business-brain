@@ -1,0 +1,49 @@
+name: xero_get_report_profit_and_loss
+version: 1
+description: >-
+  Retrieves report for profit and loss. Xero API GET /api.xro/2.0/Reports/ProfitAndLoss.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/ProfitAndLoss
+  connector: xero
+parameters:
+  - name: fromDate
+    description: >-
+      filter by the from date of the report e.g. 2021-02-01.
+    type: date
+  - name: toDate
+    description: >-
+      filter by the to date of the report e.g. 2021-02-28.
+    type: date
+  - name: periods
+    description: >-
+      The number of periods to compare (integer between 1 and 12).
+    type: int
+  - name: timeframe
+    description: >-
+      The period size to compare to (MONTH, QUARTER, YEAR). One of: MONTH, QUARTER, YEAR.
+    type: string
+  - name: trackingCategoryID
+    description: >-
+      The trackingCategory 1 for the ProfitAndLoss report.
+    type: string
+  - name: trackingCategoryID2
+    description: >-
+      The trackingCategory 2 for the ProfitAndLoss report.
+    type: string
+  - name: trackingOptionID
+    description: >-
+      The tracking option 1 for the ProfitAndLoss report.
+    type: string
+  - name: trackingOptionID2
+    description: >-
+      The tracking option 2 for the ProfitAndLoss report.
+    type: string
+  - name: standardLayout
+    description: >-
+      Return the standard layout for the ProfitAndLoss report. Use true or false.
+    type: string
+  - name: paymentsOnly
+    description: >-
+      Return cash only basis for the ProfitAndLoss report. Use true or false.
+    type: string

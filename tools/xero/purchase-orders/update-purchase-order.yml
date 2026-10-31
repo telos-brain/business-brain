@@ -1,0 +1,18 @@
+name: xero_update_purchase_order
+version: 1
+description: >-
+  Updates a specific purchase order. Xero API POST /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}.
+api:
+  method: POST
+  path: /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}
+  connector: xero
+parameters:
+  - name: PurchaseOrderID
+    description: >-
+      Unique identifier for an Purchase Order.
+    type: string
+    required: true
+  - name: PurchaseOrders
+    description: >-
+      Pass as a JSON array. Each item may include: Contact (object); LineItems (array): See LineItems; Date (string): Date purchase order was issued – YYYY-MM-DD. If the Date element is not specified then it will default to the current date based on the timezone setting of the organisation; DeliveryDate (string): Date the goods are to be delivered – YYYY-MM-DD; LineAmountTypes (string) [Exclusive, Inclusive, NoTax]; PurchaseOrderNumber (string): Unique alpha numeric code identifying purchase order (when missing will auto-generate from your Organisation Invoice Settings); Reference (string): Additional reference number; BrandingThemeID (string): See BrandingThemes; CurrencyCode (string) [AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD]; Status (string) [DRAFT, SUBMITTED, AUTHORISED, BILLED, DELETED]; SentToContact (boolean): Boolean to set whether the purchase order should be marked as “sent”. This can be set only on purchase orders that have been approved or billed; DeliveryAddress (string): The address the goods are to be delivered to; AttentionTo (string): The person that the delivery is going to; Telephone (string): The phone number for the person accepting the delivery; DeliveryInstructions (string): A free text feild for instructions (500 characters max); ExpectedArrivalDate (string): The date the goods are expected to arrive; PurchaseOrderID (string): Xero generated unique identifier for purchase order; CurrencyRate (number): The currency rate for a multicurrency purchase order. If no rate is specified, the XE.com day rate is used and 10 more.
+    type: json

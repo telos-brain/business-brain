@@ -1,0 +1,19 @@
+name: xero_delete_prepayment_allocations
+version: 1
+description: >-
+  Deletes an Allocation from a Prepayment. Xero API DELETE /api.xro/2.0/Prepayments/{PrepaymentID}/Allocations/{AllocationID}.
+api:
+  method: DELETE
+  path: /api.xro/2.0/Prepayments/{PrepaymentID}/Allocations/{AllocationID}
+  connector: xero
+parameters:
+  - name: PrepaymentID
+    description: >-
+      Unique identifier for a PrePayment.
+    type: string
+    required: true
+  - name: AllocationID
+    description: >-
+      Unique identifier for Allocation object.
+    type: string
+    required: true

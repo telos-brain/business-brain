@@ -1,0 +1,14 @@
+name: xero_delete_contact_group_contacts
+version: 1
+description: >-
+  Deletes all contacts from a specific contact group. Xero API DELETE /api.xro/2.0/ContactGroups/{ContactGroupID}/Contacts.
+api:
+  method: DELETE
+  path: /api.xro/2.0/ContactGroups/{ContactGroupID}/Contacts
+  connector: xero
+parameters:
+  - name: ContactGroupID
+    description: >-
+      Unique identifier for a Contact Group.
+    type: string
+    required: true

@@ -1,0 +1,17 @@
+name: xero_create_contacts
+version: 1
+description: >-
+  Creates multiple contacts (bulk) in a Xero organisation. Xero API PUT /api.xro/2.0/Contacts.
+api:
+  method: PUT
+  path: /api.xro/2.0/Contacts
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: Contacts
+    description: >-
+      Pass as a JSON array. Each item may include: ContactID (string): Xero identifier; MergedToContactID (string): ID for the destination of a merged contact. Only returned when using paging or when fetching a contact by ContactId or ContactNumber; ContactNumber (string): This can be updated via the API only i.e. This field is read only on the Xero contact screen, used to identify contacts in external systems (max length = 50). If the Contact Number is used, this is displayed as Contact Code in the Contacts UI in Xero; AccountNumber (string): A user defined account number. This can be updated via the API and the Xero UI (max length = 50); ContactStatus (string) [ACTIVE, ARCHIVED, GDPRREQUEST]; Name (string): Full name of contact/organisation (max length = 255); FirstName (string): First name of contact person (max length = 255); LastName (string): Last name of contact person (max length = 255); CompanyNumber (string): Company registration number (max length = 50); EmailAddress (string): Email address of contact person (umlauts not supported) (max length = 255); ContactPersons (array): See contact persons; BankAccountDetails (string): Bank account number of contact; TaxNumber (string): Tax number of contact – this is also known as the ABN (Australia), GST Number (New Zealand), VAT Number (UK) or Tax ID Number (US and global) in the Xero UI depending on which regionalized version of Xero you are using (max length = 50); TaxNumberType (string) [SSN, EIN, ITIN, ATIN]; AccountsReceivableTaxType (string): The tax type from TaxRates; AccountsPayableTaxType (string): The tax type from TaxRates; Addresses (array): Store certain address types for a contact – see address types; Phones (array): Store certain phone types for a contact – see phone types and 25 more.
+    type: json

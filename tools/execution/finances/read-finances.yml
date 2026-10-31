@@ -1,0 +1,17 @@
+name: read_finances
+version: 1
+description: >-
+  Reads Xero for the connected organisations. Looks up which organisations
+  the Xero connection covers, then uses Xero read tools to answer the
+  request. Does not create, update, delete, or email anything. Use for
+  balances, invoices, contacts, bills, payments, and reports.
+workflow:
+  code: WF-READ-FINANCES
+parameters:
+  - name: request
+    description: >-
+      What to look up in Xero. Name the organisation if more than one is
+      connected, the records or report you need, and any date or status
+      filter.
+    type: string
+    required: true

@@ -1,0 +1,14 @@
+name: xero_get_user
+version: 1
+description: >-
+  Retrieves a specific user. Xero API GET /api.xro/2.0/Users/{UserID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Users/{UserID}
+  connector: xero
+parameters:
+  - name: UserID
+    description: >-
+      Unique identifier for a User.
+    type: string
+    required: true

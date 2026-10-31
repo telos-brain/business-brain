@@ -1,0 +1,18 @@
+name: xero_email_invoice
+version: 1
+description: >-
+  Sends a copy of a specific invoice to related contact via email. Xero API POST /api.xro/2.0/Invoices/{InvoiceID}/Email.
+api:
+  method: POST
+  path: /api.xro/2.0/Invoices/{InvoiceID}/Email
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true
+  - name: Status
+    description: >-
+      Need at least one field to create an empty JSON payload.
+    type: string

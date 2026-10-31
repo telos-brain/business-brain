@@ -1,0 +1,18 @@
+name: xero_update_expense_claim
+version: 1
+description: >-
+  Updates a specific expense claims. Xero API POST /api.xro/2.0/ExpenseClaims/{ExpenseClaimID}.
+api:
+  method: POST
+  path: /api.xro/2.0/ExpenseClaims/{ExpenseClaimID}
+  connector: xero
+parameters:
+  - name: ExpenseClaimID
+    description: >-
+      Unique identifier for a ExpenseClaim.
+    type: string
+    required: true
+  - name: ExpenseClaims
+    description: >-
+      Pass as a JSON array. Each item may include: ExpenseClaimID (string): Xero generated unique identifier for an expense claim; Status (string) [SUBMITTED, AUTHORISED, PAID, VOIDED, DELETED]; Payments (array): See Payments; User (object); Receipts (array); Total (number): The total of an expense claim being paid; AmountDue (number): The amount due to be paid for an expense claim; AmountPaid (number): The amount still to pay for an expense claim; PaymentDueDate (string): The date when the expense claim is due to be paid YYYY-MM-DD; ReportingDate (string): The date the expense claim will be reported in Xero YYYY-MM-DD; ReceiptID (string): The Xero identifier for the Receipt e.g. e59a2c7f-1306-4078-a0f3-73537afcbba9.
+    type: json

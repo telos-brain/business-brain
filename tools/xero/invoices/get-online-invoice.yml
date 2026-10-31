@@ -1,0 +1,14 @@
+name: xero_get_online_invoice
+version: 1
+description: >-
+  Retrieves a URL to an online invoice. Xero API GET /api.xro/2.0/Invoices/{InvoiceID}/OnlineInvoice.
+api:
+  method: GET
+  path: /api.xro/2.0/Invoices/{InvoiceID}/OnlineInvoice
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true

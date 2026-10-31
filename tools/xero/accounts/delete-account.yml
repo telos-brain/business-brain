@@ -1,0 +1,14 @@
+name: xero_delete_account
+version: 1
+description: >-
+  Deletes a chart of accounts. Xero API DELETE /api.xro/2.0/Accounts/{AccountID}.
+api:
+  method: DELETE
+  path: /api.xro/2.0/Accounts/{AccountID}
+  connector: xero
+parameters:
+  - name: AccountID
+    description: >-
+      Unique identifier for Account object.
+    type: string
+    required: true

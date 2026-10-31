@@ -1,0 +1,69 @@
+name: xero_create_account
+version: 1
+description: >-
+  Creates a new chart of accounts. Xero API PUT /api.xro/2.0/Accounts.
+api:
+  method: PUT
+  path: /api.xro/2.0/Accounts
+  connector: xero
+parameters:
+  - name: Code
+    description: >-
+      Customer defined alpha numeric account code e.g 200 or SALES (max length = 10).
+    type: string
+  - name: Name
+    description: >-
+      Name of account (max length = 150).
+    type: string
+  - name: AccountID
+    description: >-
+      The Xero identifier for an account – specified as a string following the endpoint name e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9.
+    type: string
+  - name: Type
+    description: >-
+      See Account Types. One of: BANK, CURRENT, CURRLIAB, DEPRECIATN, DIRECTCOSTS, EQUITY, EXPENSE, FIXED, INVENTORY, LIABILITY, NONCURRENT, OTHERINCOME, OVERHEADS, PREPAYMENT, REVENUE, SALES, TERMLIAB, PAYG.
+    type: string
+  - name: BankAccountNumber
+    description: >-
+      For bank accounts only (Account Type BANK).
+    type: string
+  - name: Status
+    description: >-
+      Accounts with a status of ACTIVE can be updated to ARCHIVED. See Account Status Codes. One of: ACTIVE, ARCHIVED, DELETED.
+    type: string
+  - name: Description
+    description: >-
+      Description of the Account. Valid for all types of accounts except bank accounts (max length = 4000).
+    type: string
+  - name: BankAccountType
+    description: >-
+      For bank accounts only. See Bank Account types. One of: BANK, CREDITCARD, PAYPAL, NONE, .
+    type: string
+  - name: CurrencyCode
+    description: >-
+      3 letter alpha code for the currency – see list of currency codes. One of: AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BRL (168 values).
+    type: string
+  - name: TaxType
+    description: >-
+      The tax type from taxRates.
+    type: string
+  - name: EnablePaymentsToAccount
+    description: >-
+      Boolean – describes whether account can have payments applied to it. Use true or false.
+    type: string
+  - name: ShowInExpenseClaims
+    description: >-
+      Boolean – describes whether account code is available for use with expense claims. Use true or false.
+    type: string
+  - name: Class
+    description: >-
+      See Account Class Types. One of: ASSET, EQUITY, EXPENSE, LIABILITY, REVENUE.
+    type: string
+  - name: ReportingCode
+    description: >-
+      Shown if set.
+    type: string
+  - name: AddToWatchlist
+    description: >-
+      Boolean – describes whether the account is shown in the watchlist widget on the dashboard. Use true or false.
+    type: string

@@ -1,0 +1,14 @@
+name: xero_get_prepayment
+version: 1
+description: >-
+  Allows you to retrieve a specified prepayments. Xero API GET /api.xro/2.0/Prepayments/{PrepaymentID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Prepayments/{PrepaymentID}
+  connector: xero
+parameters:
+  - name: PrepaymentID
+    description: >-
+      Unique identifier for a PrePayment.
+    type: string
+    required: true

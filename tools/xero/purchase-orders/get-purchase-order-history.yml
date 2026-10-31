@@ -1,0 +1,14 @@
+name: xero_get_purchase_order_history
+version: 1
+description: >-
+  Retrieves history for a specific purchase order. Xero API GET /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}/History
+  connector: xero
+parameters:
+  - name: PurchaseOrderID
+    description: >-
+      Unique identifier for an Purchase Order.
+    type: string
+    required: true

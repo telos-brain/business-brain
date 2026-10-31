@@ -1,0 +1,14 @@
+name: xero_get_purchase_order_attachments
+version: 1
+description: >-
+  Retrieves attachments for a specific purchase order. Xero API GET /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}/Attachments.
+api:
+  method: GET
+  path: /api.xro/2.0/PurchaseOrders/{PurchaseOrderID}/Attachments
+  connector: xero
+parameters:
+  - name: PurchaseOrderID
+    description: >-
+      Unique identifier for an Purchase Order.
+    type: string
+    required: true

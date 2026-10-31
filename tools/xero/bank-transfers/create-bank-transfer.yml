@@ -1,0 +1,13 @@
+name: xero_create_bank_transfer
+version: 1
+description: >-
+  Creates a bank transfer. Xero API PUT /api.xro/2.0/BankTransfers.
+api:
+  method: PUT
+  path: /api.xro/2.0/BankTransfers
+  connector: xero
+parameters:
+  - name: BankTransfers
+    description: >-
+      Pass as a JSON array. Each item may include: FromBankAccount (object); ToBankAccount (object); Amount (number): amount of the transaction; Date (string): The date of the Transfer YYYY-MM-DD; BankTransferID (string): The identifier of the Bank Transfer; CurrencyRate (number): The currency rate; FromBankTransactionID (string): The Bank Transaction ID for the source account; ToBankTransactionID (string): The Bank Transaction ID for the destination account; FromIsReconciled (boolean): The Bank Transaction boolean to show if it is reconciled for the source account; ToIsReconciled (boolean): The Bank Transaction boolean to show if it is reconciled for the destination account; Reference (string): Reference for the transactions; CreatedDateUTC (string): UTC timestamp of creation date of bank transfer; Status (string) [AUTHORISED, DELETED]; FromTracking (array): Optional Tracking Category for the source account – see Tracking. A bank transfer can have a maximum of 2 tracking categories per account; ToTracking (array): Optional Tracking Category for the destination account – see Tracking. A bank transfer can have a maximum of 2 tracking categories per account.
+    type: json

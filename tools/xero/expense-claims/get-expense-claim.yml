@@ -1,0 +1,14 @@
+name: xero_get_expense_claim
+version: 1
+description: >-
+  Retrieves a specific expense claim using a unique expense claim Id. Xero API GET /api.xro/2.0/ExpenseClaims/{ExpenseClaimID}.
+api:
+  method: GET
+  path: /api.xro/2.0/ExpenseClaims/{ExpenseClaimID}
+  connector: xero
+parameters:
+  - name: ExpenseClaimID
+    description: >-
+      Unique identifier for a ExpenseClaim.
+    type: string
+    required: true

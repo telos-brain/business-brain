@@ -1,0 +1,14 @@
+name: xero_get_invoice_as_pdf
+version: 1
+description: >-
+  Retrieves invoices or purchase bills as PDF files. Xero API GET /api.xro/2.0/Invoices/{InvoiceID}/pdf.
+api:
+  method: GET
+  path: /api.xro/2.0/Invoices/{InvoiceID}/pdf
+  connector: xero
+parameters:
+  - name: InvoiceID
+    description: >-
+      Unique identifier for an Invoice.
+    type: string
+    required: true

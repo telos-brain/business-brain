@@ -1,0 +1,13 @@
+name: xero_get_report_ten_ninety_nine
+version: 1
+description: >-
+  Retrieve reports for 1099. Xero API GET /api.xro/2.0/Reports/TenNinetyNine.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/TenNinetyNine
+  connector: xero
+parameters:
+  - name: reportYear
+    description: >-
+      The year of the 1099 report.
+    type: string

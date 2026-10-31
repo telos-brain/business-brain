@@ -1,0 +1,26 @@
+name: xero_get_report_aged_receivables_by_contact
+version: 1
+description: >-
+  Retrieves report for aged receivables by contact. Xero API GET /api.xro/2.0/Reports/AgedReceivablesByContact.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/AgedReceivablesByContact
+  connector: xero
+parameters:
+  - name: contactId
+    description: >-
+      Unique identifier for a Contact.
+    type: string
+    required: true
+  - name: date
+    description: >-
+      The date of the Aged Receivables By Contact report.
+    type: date
+  - name: fromDate
+    description: >-
+      filter by the from date of the report e.g. 2021-02-01.
+    type: date
+  - name: toDate
+    description: >-
+      filter by the to date of the report e.g. 2021-02-28.
+    type: date

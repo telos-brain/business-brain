@@ -1,0 +1,13 @@
+name: xero_create_tax_rates
+version: 1
+description: >-
+  Creates one or more tax rates. Xero API PUT /api.xro/2.0/TaxRates.
+api:
+  method: PUT
+  path: /api.xro/2.0/TaxRates
+  connector: xero
+parameters:
+  - name: TaxRates
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): Name of tax rate; TaxType (string): The tax type; TaxComponents (array): See TaxComponents; Status (string) [ACTIVE, DELETED, ARCHIVED, PENDING]; ReportTaxType (string) [AVALARA, BASEXCLUDED, CAPITALSALESOUTPUT, CAPITALEXPENSESINPUT, ECOUTPUT, ECOUTPUTSERVICES, ECINPUT, ECACQUISITIONS]; CanApplyToAssets (boolean): Boolean to describe if tax rate can be used for asset accounts i.e. true,false; CanApplyToEquity (boolean): Boolean to describe if tax rate can be used for equity accounts i.e true,false; CanApplyToExpenses (boolean): Boolean to describe if tax rate can be used for expense accounts i.e. true,false; CanApplyToLiabilities (boolean): Boolean to describe if tax rate can be used for liability accounts i.e. true,false; CanApplyToRevenue (boolean): Boolean to describe if tax rate can be used for revenue accounts i.e. true,false; DisplayTaxRate (number): Tax Rate (decimal to 4dp) e.g 12.5000; EffectiveRate (number): Effective Tax Rate (decimal to 4dp) e.g 12.5000.
+    type: json

@@ -1,0 +1,14 @@
+name: xero_get_batch_payment
+version: 1
+description: >-
+  Retrieves a specific batch payment using a unique batch payment Id. Xero API GET /api.xro/2.0/BatchPayments/{BatchPaymentID}.
+api:
+  method: GET
+  path: /api.xro/2.0/BatchPayments/{BatchPaymentID}
+  connector: xero
+parameters:
+  - name: BatchPaymentID
+    description: >-
+      Unique identifier for BatchPayment.
+    type: string
+    required: true

@@ -1,0 +1,33 @@
+name: xero_get_purchase_orders
+version: 1
+description: >-
+  Retrieves purchase orders. Xero API GET /api.xro/2.0/PurchaseOrders.
+api:
+  method: GET
+  path: /api.xro/2.0/PurchaseOrders
+  connector: xero
+parameters:
+  - name: Status
+    description: >-
+      Filter by purchase order status. One of: DRAFT, SUBMITTED, AUTHORISED, BILLED, DELETED.
+    type: string
+  - name: DateFrom
+    description: >-
+      Filter by purchase order date (e.g. GET https://.../PurchaseOrders?DateFrom=2015-12-01&DateTo=2015-12-31.
+    type: string
+  - name: DateTo
+    description: >-
+      Filter by purchase order date (e.g. GET https://.../PurchaseOrders?DateFrom=2015-12-01&DateTo=2015-12-31.
+    type: string
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: page
+    description: >-
+      To specify a page, append the page parameter to the URL e.g. ?page=1. If there are 100 records in the response you will need to check if there is any more data by fetching the next page e.g ?page=2 and continuing this process until no more results are returned.
+    type: int
+  - name: pageSize
+    description: >-
+      Number of records to retrieve per page.
+    type: int

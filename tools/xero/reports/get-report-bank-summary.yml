@@ -1,0 +1,17 @@
+name: xero_get_report_bank_summary
+version: 1
+description: >-
+  Retrieves report for bank summary. Xero API GET /api.xro/2.0/Reports/BankSummary.
+api:
+  method: GET
+  path: /api.xro/2.0/Reports/BankSummary
+  connector: xero
+parameters:
+  - name: fromDate
+    description: >-
+      filter by the from date of the report e.g. 2021-02-01.
+    type: date
+  - name: toDate
+    description: >-
+      filter by the to date of the report e.g. 2021-02-28.
+    type: date

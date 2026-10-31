@@ -1,0 +1,14 @@
+name: xero_get_tax_rate_by_tax_type
+version: 1
+description: >-
+  Retrieves a specific tax rate according to given TaxType code. Xero API GET /api.xro/2.0/TaxRates/{TaxType}.
+api:
+  method: GET
+  path: /api.xro/2.0/TaxRates/{TaxType}
+  connector: xero
+parameters:
+  - name: TaxType
+    description: >-
+      A valid TaxType code.
+    type: string
+    required: true

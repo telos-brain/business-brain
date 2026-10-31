@@ -1,0 +1,14 @@
+name: xero_get_payment
+version: 1
+description: >-
+  Retrieves a specific payment for invoices and credit notes using a unique payment Id. Xero API GET /api.xro/2.0/Payments/{PaymentID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Payments/{PaymentID}
+  connector: xero
+parameters:
+  - name: PaymentID
+    description: >-
+      Unique identifier for a Payment.
+    type: string
+    required: true

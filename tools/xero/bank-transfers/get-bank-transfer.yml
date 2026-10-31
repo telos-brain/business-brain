@@ -1,0 +1,14 @@
+name: xero_get_bank_transfer
+version: 1
+description: >-
+  Retrieves specific bank transfers by using a unique bank transfer Id. Xero API GET /api.xro/2.0/BankTransfers/{BankTransferID}.
+api:
+  method: GET
+  path: /api.xro/2.0/BankTransfers/{BankTransferID}
+  connector: xero
+parameters:
+  - name: BankTransferID
+    description: >-
+      Xero generated unique identifier for a bank transfer.
+    type: string
+    required: true

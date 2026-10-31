@@ -1,0 +1,17 @@
+name: xero_create_payments
+version: 1
+description: >-
+  Creates multiple payments for invoices or credit notes. Xero API PUT /api.xro/2.0/Payments.
+api:
+  method: PUT
+  path: /api.xro/2.0/Payments
+  connector: xero
+parameters:
+  - name: summarizeErrors
+    description: >-
+      If false return 200 OK and mix of successfully created objects and any with validation errors. Use true or false.
+    type: string
+  - name: Payments
+    description: >-
+      Pass as a JSON array. Each item may include: Invoice (object); CreditNote (object); Prepayment (object); Overpayment (object); InvoiceNumber (string): Number of invoice or credit note you are applying payment to e.g.INV-4003; CreditNoteNumber (string): Number of invoice or credit note you are applying payment to e.g. INV-4003; BatchPayment (object); Account (object); Code (string): Code of account you are using to make the payment e.g. 001 (note- not all accounts have a code value); Date (string): Date the payment is being made (YYYY-MM-DD) e.g. 2009-09-06; CurrencyRate (number): Exchange rate when payment is received. Only used for non base currency invoices and credit notes e.g. 0.7500; Amount (number): The amount of the payment. Must be less than or equal to the outstanding amount owing on the invoice e.g. 200.00; BankAmount (number): The amount of the payment in the currency of the bank account; Reference (string): An optional description for the payment e.g. Direct Debit; IsReconciled (boolean): An optional parameter for the payment. A boolean indicating whether you would like the payment to be created as reconciled when using PUT, or whether a payment has been reconciled when using GET; Status (string) [AUTHORISED, DELETED]; PaymentType (string) [ACCRECPAYMENT, ACCPAYPAYMENT, ARCREDITPAYMENT, APCREDITPAYMENT, AROVERPAYMENTPAYMENT, ARPREPAYMENTPAYMENT, APPREPAYMENTPAYMENT, APOVERPAYMENTPAYMENT] and 11 more.
+    type: json

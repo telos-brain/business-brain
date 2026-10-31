@@ -1,0 +1,14 @@
+name: xero_get_repeating_invoice_history
+version: 1
+description: >-
+  Retrieves history record for a specific repeating invoice. Xero API GET /api.xro/2.0/RepeatingInvoices/{RepeatingInvoiceID}/History.
+api:
+  method: GET
+  path: /api.xro/2.0/RepeatingInvoices/{RepeatingInvoiceID}/History
+  connector: xero
+parameters:
+  - name: RepeatingInvoiceID
+    description: >-
+      Unique identifier for a Repeating Invoice.
+    type: string
+    required: true

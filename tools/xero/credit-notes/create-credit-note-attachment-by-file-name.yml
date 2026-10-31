@@ -1,0 +1,28 @@
+name: xero_create_credit_note_attachment_by_file_name
+version: 1
+description: >-
+  Creates an attachment for a specific credit note. Xero API PUT /api.xro/2.0/CreditNotes/{CreditNoteID}/Attachments/{FileName}.
+api:
+  method: PUT
+  path: /api.xro/2.0/CreditNotes/{CreditNoteID}/Attachments/{FileName}
+  connector: xero
+parameters:
+  - name: CreditNoteID
+    description: >-
+      Unique identifier for a Credit Note.
+    type: string
+    required: true
+  - name: FileName
+    description: >-
+      Name of the attachment.
+    type: string
+    required: true
+  - name: IncludeOnline
+    description: >-
+      Allows an attachment to be seen by the end customer within their online invoice. Use true or false.
+    type: string
+  - name: file
+    description: >-
+      Raw file bytes. The Xero API expects application/octet-stream. Include the file name in the path.
+    type: string
+    required: true

@@ -1,0 +1,13 @@
+name: xero_create_contact_group
+version: 1
+description: >-
+  Creates a contact group. Xero API PUT /api.xro/2.0/ContactGroups.
+api:
+  method: PUT
+  path: /api.xro/2.0/ContactGroups
+  connector: xero
+parameters:
+  - name: ContactGroups
+    description: >-
+      Pass as a JSON array. Each item may include: Name (string): The Name of the contact group. Required when creating a new contact group; Status (string) [ACTIVE, DELETED]; ContactGroupID (string): The Xero identifier for an contact group – specified as a string following the endpoint name. e.g. /297c2dc5-cc47-4afd-8ec8-74990b8761e9; Contacts (array): The ContactID and Name of Contacts in a contact group. Returned on GETs when the ContactGroupID is supplied in the URL.
+    type: json

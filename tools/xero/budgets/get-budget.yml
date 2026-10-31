@@ -1,0 +1,22 @@
+name: xero_get_budget
+version: 1
+description: >-
+  Retrieves a specific budget, which includes budget lines. Xero API GET /api.xro/2.0/Budgets/{BudgetID}.
+api:
+  method: GET
+  path: /api.xro/2.0/Budgets/{BudgetID}
+  connector: xero
+parameters:
+  - name: BudgetID
+    description: >-
+      Unique identifier for Budgets.
+    type: string
+    required: true
+  - name: DateTo
+    description: >-
+      Filter by start date.
+    type: date
+  - name: DateFrom
+    description: >-
+      Filter by end date.
+    type: date

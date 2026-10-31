@@ -1,0 +1,45 @@
+name: xero_get_quotes
+version: 1
+description: >-
+  Retrieves sales quotes. Xero API GET /api.xro/2.0/Quotes.
+api:
+  method: GET
+  path: /api.xro/2.0/Quotes
+  connector: xero
+parameters:
+  - name: DateFrom
+    description: >-
+      Filter for quotes after a particular date.
+    type: date
+  - name: DateTo
+    description: >-
+      Filter for quotes before a particular date.
+    type: date
+  - name: ExpiryDateFrom
+    description: >-
+      Filter for quotes expiring after a particular date.
+    type: date
+  - name: ExpiryDateTo
+    description: >-
+      Filter for quotes before a particular date.
+    type: date
+  - name: ContactID
+    description: >-
+      Filter for quotes belonging to a particular contact.
+    type: string
+  - name: Status
+    description: >-
+      Filter for quotes of a particular Status.
+    type: string
+  - name: page
+    description: >-
+      e.g. page=1 – Up to 100 Quotes will be returned in a single API call with line items shown for each quote.
+    type: int
+  - name: order
+    description: >-
+      Sort expression, e.g. Date DESC or InvoiceNumber.
+    type: string
+  - name: QuoteNumber
+    description: >-
+      Filter by quote number (e.g. GET https://.../Quotes?QuoteNumber=QU-0001).
+    type: string

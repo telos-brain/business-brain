@@ -1,0 +1,8 @@
+name: xero_get_invoice_reminders
+version: 1
+description: >-
+  Retrieves invoice reminder settings. Xero API GET /api.xro/2.0/InvoiceReminders/Settings.
+api:
+  method: GET
+  path: /api.xro/2.0/InvoiceReminders/Settings
+  connector: xero

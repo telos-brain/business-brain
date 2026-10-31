@@ -1,0 +1,17 @@
+name: xero_create_currency
+version: 1
+description: >-
+  Create a new currency for a Xero organisation. Xero API PUT /api.xro/2.0/Currencies.
+api:
+  method: PUT
+  path: /api.xro/2.0/Currencies
+  connector: xero
+parameters:
+  - name: Code
+    description: >-
+      3 letter alpha code for the currency – see list of currency codes. One of: AED, AFN, ALL, AMD, ANG, AOA, ARS, AUD, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BRL (168 values).
+    type: string
+  - name: Description
+    description: >-
+      Name of Currency.
+    type: string
