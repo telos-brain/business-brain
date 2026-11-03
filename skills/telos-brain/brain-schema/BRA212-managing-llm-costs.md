@@ -1,7 +1,7 @@
 ---
 name: Managing LLM Costs
 code: BRA212
-version: 7
+version: 8
 description: How to keep LLM spend down in a Telos Brain — aim for 80% cache
   reads (or turn on automatic caching), convert JSON tool data to markdown or
   CSV, treat tool definitions as mini-skills to cut retries, compact older
@@ -181,8 +181,8 @@ more than the successful work.
 
 | Field | Cost job |
 |---|---|
-| `description` | When to call, when *not* to call, and one example value. Tight, but sufficient. |
-| Parameter `description` | Format, example, and allowed values. The model only sees params that are not bound to `value` / `secret` / `entity` / `unitofwork` / `input`. |
+| `description` | Why the caller uses this tool, and which neighbouring tool to choose instead. Tight. Full writing rules: **BRA214**. |
+| Parameter `description` | The value to pass. A format, allowed set, or example only when a wrong value fails the call. Leave out case folding and other internals. |
 | Parameter `type` | `int` / `decimal` / `date` / `datetime` so the router coerces before dispatch — parse failures become a clear tool error instead of a bad HTTP call. |
 | Hidden bindings | Tenant ids, API keys, and run inputs are **not** LLM-facing. Bind them; do not ask the model to copy a UUID. |
 | `response-markdown` | Compact success text. Tell the model what happened and the reference to use next. |
@@ -211,9 +211,13 @@ error-markdown: |
   `widgetSvc_listV2`).
 - Hide everything the model cannot know or must not see.
 - Keep the description short — it is billed on every cache write of the
-  prefix.
+  prefix. Describe the caller's job. Leave matching rules and other
+  resilience (for example that a parameter accepts any case) in the
+  implementation (**BRA214**).
 - If evals show the same argument mistake, fix the parameter description
-  or `error-markdown`, not the workflow instructions.
+  or `error-markdown`, not the workflow instructions. Add the constraint
+  the caller must satisfy. Do not document behaviour the tool already
+  forgives.
 
 ---
 

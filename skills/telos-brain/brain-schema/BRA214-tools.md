@@ -1,12 +1,12 @@
 ---
 name: Brain Schema Tools
 code: BRA214
-version: 13
-description: How to author tool groups and tool YAML — api, mcp, system,
-  workflow, and native tools, optional roles, optional audit and approval,
-  plus parameters (headers vs query vs body vs path, secrets, entity /
-  unit-of-work / input bindings, URL path tokens, and outbound types). Load
-  this when creating or editing a tool.
+version: 14
+description: How to author tool groups and tool YAML — caller-facing
+  descriptions, api, mcp, system, workflow, and native tools, optional roles,
+  optional audit and approval, plus parameters (headers vs query vs body vs
+  path, secrets, entity / unit-of-work / input bindings, URL path tokens, and
+  outbound types). Load this when creating or editing a tool.
 ---
 
 # Brain Schema Tools
@@ -46,6 +46,53 @@ description: >-                         # REQUIRED
   Adds a comment to an existing ticket…
 # roles: Finance, Support              # optional — omit so every caller can use it
 ```
+
+### Descriptions
+
+The tool `description`, and the `description` on each parameter the model can
+see, are how the caller decides to use the tool. Write that decision. The same
+text sits in the cached prompt prefix (**BRA212**), so keep it short.
+
+**Why and how the caller uses it.** Name the outcome the caller wants. When a
+neighbouring tool is the better choice, say so in one clause. When a wrong
+value fails the call, give the format or the allowed set, and one example.
+When an empty result is success, say so in one clause so the caller does not
+retry.
+
+**Leave the mechanism out.** Case folding, trimming, substring matching, type
+coercion, default limits, sort order, storage keys, and which service does the
+work are resilience inside the tool. Publishing them invites the caller to
+depend on an internal courtesy. Describe the value the caller should pass.
+
+`required: true` already marks the argument mandatory. Leave "Required." out
+of the description.
+
+```yaml
+# Weak — narrates the match and the payload
+description: >-
+  Searches schema files by matching the query (case-insensitive substring)
+  against each file's code and title. Returns CSV with columns
+  path,type,code,title.
+parameters:
+  - name: query
+    description: >-
+      Text to match against code and title (case-insensitive substring).
+
+# Strong — the caller's job
+description: >-
+  Finds schema files when you know part of a code or title and need the
+  path. Use list_schema_files for the full catalogue, and get_schema_file
+  to read a path. An empty result is success — only the header row comes
+  back.
+parameters:
+  - name: query
+    description: >-
+      Words from the file's code or title, e.g. "inbox" or "BRA214".
+```
+
+A parameter hidden with `value`, `secret`, `entity`, `unitofwork`, or `input`
+is not shown to the caller. Its `description` is for authors. A short label
+is enough.
 
 ### Roles
 
@@ -272,6 +319,7 @@ Key behaviour: a parameter is **exposed to the LLM only when it has no `value`,
 `secret`, `entity`, `unitofwork` or `input`**. `header:` chooses where the
 value is sent; it does not hide the parameter. Set `value` to pin a param
 and hide it. `name` and `description` are required on every parameter.
+Exposed descriptions follow **Descriptions** above.
 
 #### Where a parameter is sent
 
