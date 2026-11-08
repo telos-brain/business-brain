@@ -1,7 +1,7 @@
 name: Telos Brain
 code: BRA
 prefix: BRA
-version: 51
+version: 63
 categories:
   - name: Concepts
     description: "The foundational theory of Telos Brain: what it is, how it works,
@@ -24,8 +24,10 @@ categories:
       defines a Brain's identity, behaviour, capabilities, and knowledge scope.
       Covers schema authoring (overview BRA201; compose BRA213; tools BRA214;
       tool audit and approval BRA218; skills format BRA215; blueprints
-      BRA216; workflows BRA217), field
-      definitions, structure patterns, versioning, environment variables and
+      BRA216; workflows BRA217; playbooks BRA219; designing a playbook
+      BRA221; turning a playbook into schema BRA220), field definitions,
+      structure patterns,
+      versioning, environment variables and
       secret/API-key handling, LLM providers and model codes for workflows
       (including Telos-hosted `telosbrain/xai/grok-4.6` at 2× xAI list on
       brain credit, and local Ollama / llama.cpp runners), managing LLM costs
@@ -54,24 +56,31 @@ categories:
       - ./brain-schema/BRA216-blueprints.md
       - ./brain-schema/BRA217-workflows.md
       - ./brain-schema/BRA218-tool-audit.md
+      - ./brain-schema/BRA219-playbooks.md
+      - ./brain-schema/BRA220-playbook-to-schema.md
+      - ./brain-schema/BRA221-designing-a-playbook.md
   - name: Management API
     description: Using the Telos Brain Management API — the deploy and admin
       plane consumed by the CLI, admin console, and agent-initiated onboarding.
       Covers authentication (Clerk organisation JWT and tbk_ organisation API
       keys), shared conventions (status codes, error shape, instance slugs),
-      public organisation signup, organisation settings, and HTTP contracts for
-      provisioning and configuring brains. Distinct from Brain Schema (200s),
+      public organisation signup, organisation settings, the daily cost-series
+      read for one Brain, and HTTP contracts for provisioning and configuring
+      brains. Distinct from Brain Schema (200s),
       which covers authoring the files the CLI uploads, and from Run (400s),
       which covers the Execution API used to run workflows.
     index: 300
     skills:
       - ./management-api/BRA301-management-api-authentication-conventions.md
+      - ./management-api/BRA302-management-api-cost-series.md
   - name: Run
     description: Using the Telos Brain API and MCP to run and interact with a Brain
       — authentication, endpoints, request and response patterns, MCP
       configuration and usage, error handling, run variables / input-tools,
       file and image-URL transcription, brain users and their encrypted
-      variables, how the learning centre turns inbox signals into trusted
+      variables, running an OpenID Connect provider that Telos Brain calls as
+      a confidential client for a brain's MCP sign-in, how the
+      learning centre turns inbox signals into trusted
       weight and specific tasks, and practical patterns for querying and
       driving a Brain in operation.
     index: 400
@@ -92,6 +101,7 @@ categories:
       - ./run/BRA414-learning-centre.md
       - ./run/BRA415-activate-tools-system-tool.md
       - ./run/BRA416-execution-api-users.md
+      - ./run/BRA417-openid-connect-provider.md
 description: "Telos Brain is a self-learning AI Brain, deployed as
   infrastructure from a brain schema and accessed via API.  It works as a
   standalone AI Agent+Brain, or alongside Agent frameworks.  "

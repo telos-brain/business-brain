@@ -1,11 +1,12 @@
 ---
 name: Brain Schema Tools
 code: BRA214
-version: 14
+version: 17
 description: How to author tool groups and tool YAML — caller-facing
-  descriptions, api, mcp, system, workflow, and native tools, optional roles,
-  optional audit and approval, plus parameters (headers vs query vs body vs
-  path, secrets, entity / unit-of-work / input bindings, URL path tokens, and
+  descriptions, api, mcp, system, workflow, and native tools, optional
+  execution-mode (sync or async) on a workflow tool, optional roles, optional
+  audit and approval, plus parameters (headers vs query vs body vs path,
+  secrets, entity / unit-of-work / user / input bindings, URL path tokens, and
   outbound types). Load this when creating or editing a tool.
 ---
 
@@ -185,6 +186,7 @@ learning-eval authoring that uses it is in BRA207. Image URL transcription
 ```yaml
 workflow:
   code: WF-ASK-QUESTION                # REQUIRED (the target workflow's code)
+  # execution-mode: async              # optional — sync | async (see below)
 
 parameters:
   - name: question                     # AI-facing name → {{input.question}}
@@ -205,8 +207,41 @@ run's brain, client, and job. When the target workflow sets `entity` or
 `unit-of-work` (**BRA217** §3a), the tool call's argument for that parameter
 `name` supplies the value. A resolved parameter is used only when the caller
 did not send that key. A value that does not match leaves the caller's client
-and job in place. The child's final reply is this tool's result. The target
-workflow is normally `type: TOOL`. Nesting is capped (depth 5).
+and job in place. Whether this tool's result is the child's reply depends on
+`execution-mode` below. The target workflow is normally `type: TOOL`. Nesting
+is capped (depth 5).
+
+### `execution-mode`
+
+Optional, on a `workflow:` tool only. `sync` or `async`. Omit the key to keep
+the caller default. Any other value fails deploy. Extract omits the key when
+it is unset.
+
+| Caller | Omitted | `sync` | `async` |
+| --- | --- | --- | --- |
+| MCP `tools/call` | Returns immediately | Waits, and the result is the child's reply | Returns immediately |
+| A parent workflow, including `input-tools` | Waits, and the result is the child's reply | Waits, and the result is the child's reply | Returns immediately |
+
+`run_workflow` has no tool file, so this key does not apply. It always waits.
+
+A call that returns immediately puts `get_mcp_tool_result` instructions in the
+tool result. Pass `run_id` as the GUID from that message. Call it again while
+the text says the run is still going. The finished answer is the child's final
+reply. An MCP host may abort a `tools/call` that stays open too long, so
+`sync` on a tool exposed through MCP is an override that can hit that limit.
+
+On MCP `tools/call`, that `run_id` is the shell created for the call.
+`tools/list` already includes `get_mcp_tool_result`. The shell stays open
+until the child finishes, and the poll then returns the child's reply.
+
+On a parent workflow, that `run_id` is the child. `get_mcp_tool_result` is
+added for the rest of that run, so the workflow does not declare it. The
+parent may finish while the child is still running. The kick-off text is the
+parent's tool result and is not replaced when the child finishes.
+
+`requires-approval` still pauses before the child starts (**BRA218**). After
+approval, this setting applies. Public `/run/sync` and `/run/async` are a
+different choice and are unchanged (**BRA403**).
 
 **Example — target workflow Instructions using the param:**
 
@@ -346,9 +381,10 @@ call is special. A tool-level `header:` / payload key overrides the
 connector default with the same name. An `oauth-captures` `header:` owns
 that header — a `request-defaults` entry for the same name is ignored. A
 missing header secret or capture value fails the tool before the HTTP call
-(**BRA209**). A request-default with neither `secret` nor `value` is a model
-parameter on every `api` and `mcp` tool that uses the connector, placed the
-same way as a tool parameter.
+(**BRA209**). A request-default can bind `secret`, `value`, `entity`,
+`unitofwork`, `user`, or `input` the same way as a tool parameter. With
+none of those it is a model parameter on every `api` and `mcp` tool that
+uses the connector, placed the same way as a tool parameter.
 
 Putting a name in `.env` does nothing by itself. The value is used only when
 a tool `secret:`, a connector `request-defaults` `secret:`, or a capture
@@ -442,7 +478,7 @@ mark that it belongs in the URL. Do not set both `path:` and `header:` on the
 same parameter.
 
 This works for ordinary parameters and for `secret:`, `entity:`,
-`unitofwork:`, and `input:` parameters — put `{name}` or `{param}` in
+`unitofwork:`, `user:`, and `input:` parameters — put `{name}` or `{param}` in
 `api.path` and the resolved value is placed there.
 
 `required` is **false when omitted**. Set `required: true` for parameters the
@@ -618,7 +654,40 @@ parameters:
   as an Execution API `variables` entry or as a workflow-tool / `run_workflow`
   parameter when the binding is required.
 - Resolution order when several bindings are set on one parameter: `secret` →
-  `entity` → `unitofwork` → `input` → hardcoded `value` → model argument.
+  `entity` → `unitofwork` → `user` → `input` → hardcoded `value` → model argument.
+
+#### Binding a parameter to an acting user's variable
+
+A parameter can pull its value from the **acting brain user** (BRA512).
+Declare a `user:` field naming that user's variable. `secret:` on the same
+tool is still a brain environment variable.
+
+```yaml
+parameters:
+  - name: authorization
+    description: Bearer token for the JBOP API. Hidden from the model.
+    header: Authorization
+    secret: JBOP_API_KEY
+    value: Bearer {secret}
+  - name: jollyApiKey
+    description: Acting user's Jolly API key. Hidden from the model.
+    param: jollyApiKey
+    user: jollyApiKey
+```
+
+- `user: id` injects the acting user's id. Any other name is that user's
+  encrypted variable, decrypted at dispatch. The plaintext is not stored on
+  the run and is not logged.
+- The parameter is **hidden from the LLM**. `header:` still chooses placement.
+- The acting user is the Execute API `userId` when the caller sent one, or the
+  brain user linked to the MCP member. A run with no acting user has nothing
+  to inject.
+- **If there is no acting user, or that user has no value for the key**,
+  behaviour depends on `required`. An optional binding (`required` omitted or
+  `false`) is **omitted** and the call continues. A required binding
+  (`required: true`) **fails the call**.
+- `user:` is also forwarded into a workflow tool or `run_workflow` child as
+  an input value. `secret:` is not.
 
 #### End-to-end example: an authenticated API tool that uses a variable
 
