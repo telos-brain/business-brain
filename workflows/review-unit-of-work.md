@@ -6,7 +6,7 @@ description: >-
   categories and creates a PROCESSED inbox entry with one review_blueprint
   task per fact. Skips noise and processes. Does not grade agent quality
   (see WF-EVAL-RUN).
-version: 4
+version: 5
 type: TRIGGERED
 trigger: unitofwork:complete:low
 system-prompt-code: WF-SYSTEM-PROMPT
@@ -35,7 +35,7 @@ reply with a single line: `No blueprint learnings.`
 
 ## Blueprint categories
 
-Categories for **this run's** blueprint only. Company, CRM, and Job are all
+Categories for **this run's** blueprint only. The Business blueprint is
 brain-scoped. Match facts only to these.
 A fact that belongs on a blueprint you cannot see is left out — do not
 force it into a category below:
@@ -95,5 +95,5 @@ force it into a category below:
       - `workflow_code` — `WF-REVIEW-BLUEPRINT`
       - `instructions` — exactly this format (em dash):
         `review blueprint: {category name} — {short concept description}`
-        Example: `review blueprint: State — blocked on the client's sign-off`
+        Example: `review blueprint: Areas — Northwind rollout, blocked on sign-off`
 5. Reply with one or two lines: how many tasks you created. No preamble.

@@ -5,7 +5,7 @@ description: >-
   Applies one blueprint memory write from a review_blueprint inbox task —
   searches for a close match, then either merges into an existing entry or
   creates a new one. Never both.
-version: 9
+version: 10
 
 # Tasks are created by WF-REVIEW-UOW / WF-TRIAGE via add_inbox_task with
 # workflow_code WF-REVIEW-BLUEPRINT. An inbox: trigger with :low enables
@@ -32,8 +32,6 @@ tools:
 
 available-skills:
   - BPM101
-  - BPM102
-  - BPM103
 ---
 
 # Instructions
@@ -85,9 +83,7 @@ or write. The category one-liner is not enough. Apply the skill.
 
 | Blueprint | Categories | Skill |
 | --- | --- | --- |
-| Company | Team, Vision and values, Strategy, Systems, Products and services | `BPM101` |
-| CRM | Companies, People | `BPM102` |
-| Job | Brief, Decisions, State | `BPM103` |
+| Business | People, Areas, Journal, Strategy, Customers | `BPM101` |
 
 If the category is not in that table, stop with no writes.
 
@@ -117,18 +113,17 @@ Do **not** write a memory entry when the concept is:
 - A weekly task list or scheduling that will be stale immediately
 - A process, method, or "how we do this" — that belongs in a skill, and this
   workflow does not create skills
-- A CRM or project fact filed into a company-wide category that is only
-  about the team, the vision, the strategy, the systems, or the catalogue
-- A client's vision, values, or strategy filed onto the Company blueprint
+- A person filed as a customer, or a customer organisation filed as a person
+- A project, campaign, or current problem filed as Strategy
+- A log of work that happened, filed as Journal — the system already records actions
 - A guess not supported by the task and the entry body
 
-**One entry per named thing.** When the category is people, team, systems,
-or products and services (or its description says one entry per person,
-system, or offering):
+**One entry per named thing.** When the category is People, Customers, or
+Areas (or its description says one entry per person, customer, or area):
 
-- The title **is** the name (the person, the product, the offering)
+- The title **is** the name (the person, the customer, the area)
 - Search for that name first, not for a fragment of the meeting
-- Update the existing entry when it is the same person, system, or offering
+- Update the existing entry when it is the same person, customer, or area
 - Do not create a second entry because this meeting mentioned a new detail
 
 ## Date headings
@@ -148,7 +143,7 @@ Use a date heading when:
 
 Do not use a date heading when:
 
-- The entry is a standing description that should simply be corrected: who a person is, what a product or system is, a role. Replace that text in place
+- The entry is a standing description that should simply be corrected: who a person is, what an area is, a role, a direction that has been replaced. Replace that text in place, and keep the summary at the top
 - The category says one entry, updated in place, and the old sentence has no value once the new one is true
 
 When you do date a section:
@@ -194,7 +189,10 @@ the task instructions remain authoritative for category and concept.
    - `category` = parsed category
    - `title` = short concept name (unique within the category)
    - `content` = markdown grounded in the concept description (and entry body
-     if helpful). Open with a date heading only when **Date headings** says to
+     if helpful). People, Customers, Areas, and Strategy open with a
+     `## Summary` paragraph, then the standing detail. Add a date heading
+     under that only when **Date headings** says to. A Journal entry opens
+     with the decision or learning and its date
 6. **Never** call both `update_blueprint_entry` and `add_blueprint_entry` in the
    same run. **Never** perform a second write after the first succeeds.
 7. Reply in one or two lines: created vs updated, category, and entry title.

@@ -1,11 +1,11 @@
 name: Business
 description: >-
-  A company brain for a calling AI agent. Briefings are filed into blueprint
-  memory. Triage keeps inbox intake to durable memory or repeatable practice.
-  Skills hold how
-  this company works. The schema is configured from the README before deploy.
-  The Sol MCP exposes briefing, Ask Sol, memory questions, skill lookup,
-  and Xero read and update.
+  A company brain for a calling AI agent. Business information is filed
+  into the Business blueprint. Triage keeps inbox intake to durable
+  memory or repeatable practice. Skills hold how this company works.
+  The schema is configured from the README before deploy. The Sol MCP
+  exposes track business information, Ask Sol, memory questions, skill
+  lookup, and Xero read and update.
 
 # Embedding model for semantic search (find_available_skills, blueprint search).
 # The API key comes from this brain's own .env (VOYAGE_API_KEY for voyage-*).
@@ -79,9 +79,7 @@ skills:
   - skills/blueprint-memory/skillbook.yml
 
 blueprints:
-  - blueprints/company/blueprint.yml
-  - blueprints/crm/blueprint.yml
-  - blueprints/jobs/blueprint.yml
+  - blueprints/business/blueprint.yml
 
 workflows:
   - workflows/system-prompt.md
@@ -89,7 +87,7 @@ workflows:
   - workflows/read-finances.md
   - workflows/update-finances.md
   - workflows/chat.md
-  - workflows/briefing.md
+  - workflows/track-business-information.md
   - workflows/sol-research.md
   - workflows/ask-for-advice.md
   - workflows/ask-question.md

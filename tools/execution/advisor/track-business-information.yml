@@ -1,0 +1,18 @@
+name: track_business_information
+version: 1
+description: >-
+  Files a chunk of business information into the Business blueprint.
+  Searches for an existing entry, then updates it or creates one. Use
+  when you have a person, a customer, an area, a direction, or a
+  decision that should be remembered. Pass the information — do not
+  pre-categorise. A procedure or small talk may be skipped.
+workflow:
+  code: WF-TRACK-BUSINESS-INFORMATION
+parameters:
+  - name: content
+    description: >-
+      The information to file. Include enough detail to write a useful
+      entry — who, the customer, the area, what was decided, and when,
+      when those are known. The workflow chooses the category.
+    type: string
+    required: true

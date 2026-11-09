@@ -1,9 +1,10 @@
 name: ask_question
 version: 4
 description: >-
-  Asks one question against company memory and returns only what answers it.
-  Use for a focused factual lookup (who owns something, a system, a past
-  decision, a product). Do not use this for open-ended advice — use ask_sol.
+  Asks one question against the Business blueprint and returns only what
+  answers it. Use for a focused factual lookup (a person, a customer, an
+  area, a past decision). Do not use this for how to do something — use
+  ask_sol.
 workflow:
   code: WF-ASK-QUESTION
 parameters:

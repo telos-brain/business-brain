@@ -1,7 +1,7 @@
 name: Company
 code: CMP
 prefix: CMP
-version: 2
+version: 3
 description: >-
   Starter placeholder: replace these categories during onboarding before
   extracting company practices. This book is for how THIS company does the
@@ -16,7 +16,8 @@ categories:
       proposals, pricing conversations, and closing. The practice, not a
       named prospect or a live deal. Distinct from Client care (after they
       are a customer) and from Money (how cash is handled once the work
-      exists). A specific client's commercial terms belong in memory.
+      exists). A specific customer's commercial terms belong in memory
+      under Customers.
     index: 100
     skills: []
   - name: Client care
@@ -24,8 +25,8 @@ categories:
       How this company looks after a customer relationship — onboarding,
       communication, retention, and handling tension. The practice, not one
       client's people or history. Distinct from Winning work (before they
-      buy) and from Delivery (doing the work). Who a client is belongs in
-      memory.
+      buy) and from Delivery (doing the work). Who a customer is belongs
+      in memory under Customers. The people belong under People.
     index: 200
     skills: []
   - name: Planning and scoping
@@ -34,15 +35,16 @@ categories:
       estimating, milestones, and what "done" means. The method, not this
       project's brief or this week's plan. Distinct from Delivery (executing
       the work) and from Choosing direction (what the business will and will
-      not take on). A job's brief belongs in memory.
+      not take on). A project's brief belongs in memory under Areas.
     index: 300
     skills: []
   - name: Delivery
     description: >-
       How this company does the core work — the repeatable method, standards
       of execution, handoffs, and what good looks like. Not a project's
-      status, not a client's configuration, not implementation details that
-      only apply once. Distinct from Quality and standards (the bar and the
+      status (that is memory, Areas), not a customer's configuration, and
+      not implementation details that only apply once.
+      Distinct from Quality and standards (the bar and the
       checks) and from Planning and scoping (defining the work before it
       starts).
     index: 400
@@ -58,9 +60,9 @@ categories:
   - name: Running the business
     description: >-
       How the operation runs day to day — capacity, rhythm, internal
-      process, and coordination. The process, not the inventory of SaaS
-      tools (that is memory, Systems) and not who holds which role (that is
-      memory, Team). Distinct from People practices (hiring and management)
+      process, and coordination. The process, not a system the business
+      runs (that is memory, Areas) and not who holds which role (that is
+      memory, People). Distinct from People practices (hiring and management)
       and from Money (cash).
     index: 600
     skills: []
@@ -68,15 +70,15 @@ categories:
     description: >-
       How this company hires, manages, develops, and holds people
       accountable. The practice, not the roster and not a person's role —
-      those belong in memory under Team. Distinct from Running the business
+      those belong in memory under People. Distinct from Running the business
       (the work system) and from Client care (people outside the company).
     index: 700
     skills: []
   - name: Money
     description: >-
       How money moves in this company — pricing method, invoicing, margins,
-      and commercial hygiene. The practice, not a client's agreed fee and not
-      a job's commercial terms — those belong in memory. Distinct from
+      and commercial hygiene. The practice, not a customer's agreed fee
+      (Customers) and not a project's commercial terms (Areas). Distinct from
       Winning work (the sales conversation) and from Delivery (the work that
       earns the invoice).
     index: 800
@@ -84,9 +86,9 @@ categories:
   - name: Choosing direction
     description: >-
       How this company chooses what to pursue, stop, or refuse — the
-      repeatable judgment, not the current strategy. Current priorities
-      belong in memory under Strategy. What the company is, its vision,
-      and its values belong under Vision and values. Distinct from
+      repeatable judgment, not the current strategy. Purpose, mission, and
+      long-term position belong in memory under Strategy. A live campaign
+      or project belongs under Areas. Distinct from
       Planning and scoping (a single piece of work) and from Winning work
       (a single sale).
     index: 900

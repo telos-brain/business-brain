@@ -6,7 +6,7 @@ description: >-
   weight 1 and cluster until weight 5, or go straight to tasks when the
   learning is already clear. Routes skill, workflow, brain, research, and
   blueprint work to the matching workflows.
-version: 27
+version: 28
 type: TRIGGERED
 trigger: inbox:*
 trigger-mode: automatic
@@ -89,20 +89,20 @@ clearly matches a category, create no blueprint tasks. A meeting with no
 memory is normal. A handful of facts is a lot. Twenty means you are
 transcribing.
 
-- **Team:** one task per person who works in this business, and only when the
-  source shows that. Role and standing relationships. Not this week. The
-  concept leads with the person's name. A client or other outside person is
-  not Team.
-- **Vision and values:** only what the source states as this company's vision,
-  what it does, or a value it holds.
-- **Strategy:** this company's direction only.
-- **Systems:** one task per system the business actually uses. Skip a system
-  that was only mentioned.
-- **Products and services:** one task per offering. Not the delivery process.
-- **CRM:** a company or person this business deals with, under that CRM
-  category. Do not copy them into Company.
-- **Job:** one piece of work, under Brief, Decisions, or State. Do not copy a
-  job onto CRM, or a CRM standing onto the job.
+- **People:** one task per person this business has a relationship with.
+  The concept leads with the person's name. Role and what matters in the
+  relationship. Not this week, and not small talk.
+- **Customers:** one task per customer. Not the people at that customer —
+  those are People.
+- **Areas:** one task per area being tracked — finance, a project, a kind
+  of supplier, a problem, a system in use, an offering, or a campaign.
+  Not a procedure. Not a customer. Not long-term direction.
+- **Strategy:** this business's purpose, mission, positioning, target
+  customer, or path to market. Not a campaign, a project, or a current
+  problem.
+- **Journal:** one decision or learning a later reader would use, or where
+  something useful lives. Not a log of work. The system already records
+  actions. Not a repeatable method — that is a skill.
 
 Use a category only under the blueprint heading it appears under.
 
@@ -120,8 +120,8 @@ Use a category only under the blueprint heading it appears under.
 
 Examples:
 
-- `review blueprint: Team — Alex Morgan, operations lead, owns scheduling`
-- `review blueprint: Companies — Acme, client`
+- `review blueprint: People — Alex Morgan, operations lead, owns scheduling`
+- `review blueprint: Customers — Acme, what we do for them and the agreed terms`
 
 ## Actions
 

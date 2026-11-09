@@ -35,10 +35,12 @@ Say this in plain language when you propose, not as a lecture up front.
 
 | They would call it | Where it goes | What never goes there |
 |---|---|---|
-| How we do the work | Company skill book (`skills/company/skillbook.yml`) | A client's name, a project's configuration, a person's weekend |
-| Who we are, what we use, what we sell, where we're headed | Company blueprint | A process, a meeting transcript, small talk |
-| One company or person we deal with | CRM blueprint (brain-scoped). One entry per company or person | How the company does this kind of work in general |
-| One project or job | Job blueprint (brain-scoped). One entry per job | The standing CRM entry, or the company's method |
+| How we do the work | Company skill book (`skills/company/skillbook.yml`) | A customer's name, a project's configuration, a person's weekend |
+| A person we deal with | Business blueprint, People. One entry per person. Summary first | How they do the job, small talk, this week's task list |
+| A customer | Business blueprint, Customers. One entry per customer | The humans (People), the method of selling or delivery |
+| Finance, a project, a supplier type, a problem, a system, an offering, a campaign | Business blueprint, Areas | A procedure, a customer, long-term direction |
+| A decision or a learning worth using next time, or where something useful lives | Business blueprint, Journal | A log of work. The system already records actions |
+| Purpose, mission, positioning, target customer, path to market | Business blueprint, Strategy | A campaign, a project, or a current problem (those are Areas) |
 
 Noise is a third outcome. Golf, a sick day, banter, and this week's task list are not memory and not a skill. Triage is allowed to keep nothing from a meeting.
 
@@ -70,44 +72,28 @@ Then apply their correction. Write `skills/company/skillbook.yml` with `code: CM
 
 Leave the Advisory, Decision Making, and Business skill books alone. They are general craft that shipped with the brain. This company's methods go in the Company book.
 
-### Question 3 — clients and projects
+### Question 3 — customers and work
 
 Ask, once:
 
-> Do you have clients you would want the brain to remember one by one? And does a piece of work — a project, a job, an engagement — have a life of its own, separate from the client?
+> Do you have customers you would want the brain to remember one by one? And does a piece of work — a project, a job, an engagement — have a life of its own, separate from the customer?
 
-Defaults already in the schema: one entity, Client (`client`), and one unit of work, Job (`job`), scoped to that client. Accept the default when they are unsure and they clearly deal with people outside the company.
+Defaults already in the schema: one entity, Client (`client`), and one unit of work, Job (`job`), scoped to that client. Memory does not follow that split. Customers, people, and projects all live on the Business blueprint. Accept the entity and unit-of-work default when they are unsure and they clearly deal with people outside the company.
 
-- No outside roster (a product sold to a market, with no companies or people to remember one by one): remove the `client` entity from `brain-compose.yml` and remove `blueprints/crm/blueprint.yml` from the compose list. Do not add a Customers category on Company. Who the business deals with belongs on the CRM blueprint.
-- Clients, but no projects: remove the `job` unit of work and `blueprints/jobs/blueprint.yml`.
-- They use another word (engagements, matters, accounts): rename the entity or unit-of-work `code` to a lowercase hyphen-free word. Blueprint scope stays `brain`. Confirm the code with them only if the word is ambiguous.
+- No outside roster (a product sold to a market, with no customers to remember one by one): remove the `client` entity and the `job` unit of work from `brain-compose.yml`. Leave the Business blueprint. Customers stays as a category for the day they have one. Do not add another blueprint.
+- They use another word (engagements, matters, accounts): rename the entity or unit-of-work `code` to a lowercase hyphen-free word. The Business blueprint stays `scope: brain`. Confirm the code with them only if the word is ambiguous.
 
-When you explain memory, use this shape unless their correction demands a change. Do not add a process category. Do not add a catch-all "General" category. **BRA104**'s starter categories (Operations, Finance, General on both blueprints) are the wrong defaults for this brain — do not put them back.
+When you explain memory, use this shape unless their correction demands a change. Do not add a process category. Do not add a catch-all "General" category. Do not split memory back into Company, CRM, and Job blueprints. **BRA104**'s starter categories (Operations, Finance, General) are the wrong defaults for this brain — do not put them back.
 
-**Company** (`blueprints/company/blueprint.yml`) — one brain, shared:
-
-| Category | One entry is |
-|---|---|
-| Team | One person who works here. Role, responsibilities, standing relationships. Not this week's work. |
-| Vision and values | What this company is: vision, what it does, and how it operates. Stated, not inferred. Not a client's. |
-| Strategy | This company's direction and priorities. Not a client's strategy, and not vision or values. |
-| Systems | One system the business actually uses, including a spreadsheet or offline routine. Not a tool that was only mentioned. |
-| Products and services | One thing the business sells, specifically enough to know what it is. Not the delivery process. |
-
-**CRM** (`blueprints/crm/blueprint.yml`) — brain-scoped. Clients, partners, industry contacts, and prospects:
+**Business** (`blueprints/business/blueprint.yml`) — one brain, shared. When the same subject needs two entries, each names the other by its exact title.
 
 | Category | One entry is |
 |---|---|
-| Companies | One organisation, named specifically enough to find again. What it does, the kind of tie, and anything already agreed. |
-| People | One person. A first name needs the company named exactly. Role, organisation, and how they are involved. |
-
-**Job** (`blueprints/jobs/blueprint.yml`) — brain-scoped:
-
-| Category | One entry is |
-|---|---|
-| Brief | One piece of work, and what done looks like. Updated in place. |
-| Decisions | One decision that should not be relitigated. |
-| State | One piece of work: owner, status, what is blocking. Updated in place. |
+| People | One person this business has a relationship with. Summary first, then role, organisation, and what matters. Date a fact that is tied to a time. |
+| Customers | One customer. Summary first, then what we do for them and what is already agreed. The people are People. |
+| Areas | One area being tracked: finance, a project, a kind of supplier, a problem, a system, an offering, or a campaign. |
+| Journal | One decision or learning a later reader would use, or where something useful lives. Not a log of work. |
+| Strategy | Purpose, mission, positioning, target customer, path to market. A campaign or a project is an Area. |
 
 Tell them, in one short paragraph, what you will remember and what you will throw away. Invite a correction. If they say the defaults are fine, keep them.
 
@@ -127,14 +113,14 @@ Once deployed and connected over MCP, the calling agent can:
 
 | Situation | Tool |
 |---|---|
-| A meeting, notes, or context that might be worth keeping | `briefing` — files memory under a blueprint category |
+| A person, customer, area, direction, or decision that might be worth keeping | `track_business_information` — searches the Business blueprint, then updates or creates |
 | Current or external information that might be worth keeping | `research` — same inbox path |
 | A new problem that needs framing before a solution | `create_frame_of_reference` |
-| A plan or piece of thinking that needs a quality check | `ask_sol` |
+| How to do something, or a question that needs the procedure and what the business already knows | `ask_sol` — skill first, then blueprint entries |
 | One factual question against stored memory | `ask_question` |
 | A transferable practice to apply | `find_available_skills` then `get_skill` |
 
-`briefing` writes memory directly. It reads the blueprint categories for this run first, then updates or creates an entry only when something fits. A practice is skipped (it belongs in a skill). Small talk is skipped. Inbox triage is the path for Granola, email, and uploads: it may extract a repeatable practice, write a durable fact, or keep nothing.
+`track_business_information` writes memory directly. It reads the Business blueprint categories first, then updates or creates an entry only when something fits. A practice is skipped (it belongs in a skill). Small talk is skipped. A log of work is skipped — the system already records actions. Inbox triage is the path for Granola, email, and uploads: it may extract a repeatable practice, write a durable fact, or keep nothing.
 
 Skill extraction from ordinary meetings waits for approval until the inbox entry is heavy enough to auto-apply. That is deliberate. Memory that clears the bar is written. A skill that only makes sense with the client's name still in it is rejected.
 
@@ -159,6 +145,7 @@ To rename Sol only, edit these files and redeploy. Search the `brain/` folder fo
 | `workflows/system-prompt.md` | Persona: "You are Sol…" |
 | `workflows/ask-for-advice.md` | Workflow title **Ask Sol** |
 | `tools/execution/advisor/ask-sol.yml` | Tool name `ask_sol` and description. If you rename the tool, also update the `tools:` list on `solMCP.md` and `chat.md`. |
+| `tools/execution/advisor/track-business-information.yml` | Tool name `track_business_information`. If you rename the tool, also update the `tools:` list on `solMCP.md` and `chat.md`. |
 | `workflows/sol-research.md` | Opening line |
 
 ---
@@ -252,7 +239,7 @@ After a successful cloud deploy:
 4. Copy the **MCP URL** shown on that workflow. That is the URL the calling agent uses.
 5. In Claude Cowork, Grokbot, Cursor, or the host they use, add an MCP server with that URL and complete authorisation (OAuth on the hosted MCP, or the organisation API key if the client asks for a bearer token).
 
-After connecting, the calling agent should see `briefing`, `research`, `create_frame_of_reference`, `ask_sol`, `ask_question`, `find_available_skills`, `get_skill`, `read_finances`, and `update_finances`.
+After connecting, the calling agent should see `track_business_information`, `research`, `create_frame_of_reference`, `ask_sol`, `ask_question`, `find_available_skills`, `get_skill`, `read_finances`, and `update_finances`.
 
 If tools do not appear, have the user toggle the MCP server off and on in the client so the tool list refreshes.
 
@@ -260,9 +247,9 @@ If tools do not appear, have the user toggle the MCP server off and on in the cl
 
 Granola, email, and uploaded documents land in the inbox as direct intake. Triage is the only path that turns them into skills or memory.
 
-- A fact about this business, with no outside company or person in it, updates the **company** blueprint only, and only when it fits Team, Vision and values, Strategy, Systems, or Products and services.
-- A specific company or person is written on the CRM blueprint — under Companies or People. It is not copied onto the company record. If this run cannot see the CRM categories, those facts are left out.
-- A job is written on the Job blueprint — Brief, Decisions, or State — one entry per piece of work. If this run cannot see the Job categories, leave the job fact out.
+- A person is People. A customer is Customers. A project, a system, an offering, a campaign, or a problem being tracked is an Area. Purpose, mission, and long-term position are Strategy. A decision or a learning a later reader would use is Journal.
+- Do not copy the same essay into two categories. Name the other entry by its exact title.
+- A procedure is a skill. A log of what was done is not Journal.
 
 That separation is the point. One stream of meetings must not become one pile of notes.
 
@@ -272,15 +259,15 @@ That separation is the point. One stream of meetings must not become one pile of
 
 **Onboarding is already done.** It happened in this README, before deploy. Categories decide what later meetings can become. Changing them means editing the schema and redeploying.
 
-**Brief what should be remembered.** Call `briefing` with the note. It chooses the blueprint category. Do not pre-sort it. Meetings that arrive through Granola or email still go through inbox triage, which is allowed to keep nothing.
+**File what should be remembered.** Call `track_business_information` with the note. It chooses the category. Do not pre-sort it. Meetings that arrive through Granola or email still go through inbox triage, which is allowed to keep nothing.
 
-**Give the company its craft when it shows up.** Practices land in the Company skill book after they clear the bar: repeatable, teachable, and still true with the client and the project removed. Situation-specific facts stay in memory.
+**Give the company its craft when it shows up.** Practices land in the Company skill book after they clear the bar: repeatable, teachable, and still true with the customer and the project removed. Situation-specific facts stay in memory.
 
-**Use Sol when reviewing work and decisions.**
+**Use Sol for how the work is done.**
 
 1. Frame a new problem with `create_frame_of_reference` before locking a solution.
-2. Check a proposed approach with `ask_sol`.
-3. Prefer Sol's reply over inventing your own critique.
+2. Ask how to do something with `ask_sol`. It loads the skill first, follows a tool the skill names, then uses blueprint entries where they change the answer.
+3. Prefer that reply over inventing the procedure or the fact.
 
 Keep your own messages short. Put the substance in the tool arguments.
 

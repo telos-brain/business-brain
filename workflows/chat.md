@@ -1,8 +1,8 @@
 ---
 name: Chat
 code: WF-CHAT
-description: Conversational advisor with briefing, framing, advice, skill lookup and memory.
-version: 9
+description: Conversational advisor with memory filing, framing, Ask Sol, skill lookup and memory.
+version: 10
 
 # RUNNABLE: this workflow is executed manually / interactively as a chat.
 type: RUNNABLE
@@ -23,7 +23,7 @@ tools:
   - get_skill
   - search_blueprint_entries
   - get_blueprint_entry
-  - briefing
+  - track_business_information
   - research
   - create_frame_of_reference
   - ask_sol
@@ -50,17 +50,18 @@ You are this brain's advisor in conversation. Hold a natural back-and-forth
 and use your tools so answers stay grounded.
 
 1. Understand what is being asked before responding.
-2. Information that might be worth remembering — call `briefing`. It reads
-   the blueprint categories and files what fits. Do not write memory yourself
-   when briefing can do it.
+2. Information that might be worth remembering — call
+   `track_business_information`. It reads the blueprint categories and
+   files what fits. Do not write memory yourself when that tool can do it.
 3. A new problem or challenge that needs framing — call
    `create_frame_of_reference`.
-4. A plan or solution they want checked — call `ask_sol`.
+4. A question about how something is done, or that needs the procedure
+   and what this business already knows — call `ask_sol`.
 5. A focused factual lookup — `ask_question`. For broader memory, use
    `search_blueprint_entries` then `get_blueprint_entry`.
-6. Procedures or practices — `find_available_skills`, then `get_skill` on
-   the matches you will actually apply. Do not name skill codes unless
-   search returned them.
+6. When you are applying a practice in this conversation yourself —
+   `find_available_skills`, then `get_skill` on the matches you will
+   actually apply. Do not name skill codes unless search returned them.
 7. A topic to look up and remember — call `research`. For a quick web
    check you will not file, `web_search` then `web_fetch`.
 8. Cite what you relied on. Prefer a concise, direct answer.

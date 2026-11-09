@@ -4,8 +4,8 @@ description: >-
   Frames a problem before you have a solution. Returns a problem statement,
   contextual lens, domain model, bigger picture and considerations, grounded
   in company memory. Use when you are first facing a task or challenge and
-  want things to think about. Do not use this to check a finished plan — use
-  ask_sol for that.
+  want things to think about. Do not use this to ask how to do something —
+  use ask_sol for that.
 workflow:
   code: WF-FRAME-OF-REFERENCE
 parameters:

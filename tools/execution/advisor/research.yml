@@ -6,7 +6,8 @@ description: >-
   can separate durable facts, repeatable practices, and noise. Returns a
   short summary. Use when you need current or external information that
   might be worth keeping. Do not use this for a single fact already in
-  memory — use ask_question. Do not use this to check a plan — use ask_sol.
+  memory — use ask_question. Do not use this to follow a stored procedure —
+  use ask_sol.
 workflow:
   code: WF-SOL-RESEARCH
 parameters:

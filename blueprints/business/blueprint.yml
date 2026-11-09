@@ -1,0 +1,66 @@
+name: Business
+version: 1
+description: >-
+  Memory for this business. People, customers, areas being tracked,
+  long-term direction, and the decisions and learnings worth keeping.
+  A procedure belongs in a skill. When two entries are about the same
+  subject, each names the other by its exact title.
+scope: brain
+categories:
+  - name: People
+    description: >-
+      One entry per person this business has a relationship with. The
+      title is their name. Open with a short summary of who they are and
+      why they matter here, then the detail: role, organisation, and what
+      matters in the relationship. When a fact is tied to a date, or the
+      earlier wording should stay, put that date on it. Search the name
+      before you create, and update the same person. Name a customer,
+      area, or other person by that entry's exact title. Do not record
+      how to do their job — that is a skill. Do not record small talk or
+      a weekly task list. A customer organisation is Customers. Distinct
+      from Journal (a decision or a learning).
+  - name: Areas
+    description: >-
+      One entry per area of the business being tracked. The title is the
+      area. An area is finance, a project, a kind of supplier, a problem
+      being solved, a system in use, an offering, or a campaign. Open
+      with a short summary of what it is and why it is being tracked,
+      then the detail. Date a fact when it is tied to a time, or when the
+      earlier wording should stay. Name a person, customer, or other
+      entry by its exact title. Do not record a procedure — that is a
+      skill. Do not record a customer — that is Customers. Do not record
+      long-term direction — that is Strategy. Distinct from Journal (a
+      decision or a learning).
+  - name: Journal
+    description: >-
+      Decisions and learnings a later reader would use: what was decided,
+      what was learned, or where something useful lives so it does not
+      have to be searched for again. One entry per decision or learning.
+      Title names it. Open with the point, and include the date. Name a
+      related entry by its exact title. Write only what would help next
+      time. Do not log work as it happens — the system already records
+      actions. A repeatable method is a skill. Long-term direction is
+      Strategy. A project, campaign, or problem being tracked is an Area.
+  - name: Strategy
+    description: >-
+      Long-term direction for this business: its purpose, its mission,
+      how it is positioned, the target customer, and the path to market.
+      Keep few entries and update them in place. Open with a short
+      summary of the direction, then what should still hold over a long
+      horizon. A campaign, a project, or a current problem is an Area. A
+      tactical decision or a learning from the work is Journal. Do not
+      record the method for setting direction — that is a skill. Name
+      this entry by its exact title from any other entry that depends
+      on it.
+  - name: Customers
+    description: >-
+      One entry per customer. The title is the customer. Open with a
+      short summary of who they are to this business, then the standing:
+      what we do for them, what is already agreed, and the constraints
+      that will still matter. Date a fact when it is tied to a time, or
+      when the earlier wording should stay. People at that customer
+      belong under People — name them by their exact title, and name
+      this customer from their entries. A project for this customer is
+      an Area. Do not record how we sell or deliver — that is a skill.
+      Do not record long-term direction — that is Strategy. Distinct
+      from People (the humans).

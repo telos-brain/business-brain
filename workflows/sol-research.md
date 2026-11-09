@@ -3,9 +3,9 @@ name: Research
 code: WF-SOL-RESEARCH
 description: >-
   Researches a topic using memory, skills and the web. Sends what is worth
-  keeping to the inbox as one briefing so triage can separate memory, skill,
+  keeping to the inbox as one entry so triage can separate memory, skill,
   and noise. Returns a short summary. Does not write memory or skills itself.
-version: 5
+version: 6
 
 # TOOL: invoked via tools/execution/advisor/research.yml as {{input.query}}.
 type: TOOL
@@ -52,8 +52,9 @@ Distil. Do not file a transcript of the pages you read.
 
 Keep a finding only when it is one of:
 
-- A durable fact about this company, a company or person it deals with, a
-  job, a system, or the market that will still matter later
+- A durable fact that fits the Business blueprint: a person, a customer,
+  an area being tracked, long-term direction, or a decision or learning a
+  later reader would use
 - A repeatable practice an expert would teach, with the case stripped off
 
 Drop small talk, generic background, and anything already covered by a
