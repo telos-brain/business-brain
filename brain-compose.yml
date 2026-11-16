@@ -97,6 +97,7 @@ workflows:
   - workflows/review-blueprint.md
   - workflows/research.md
   - workflows/eval.md
+  - workflows/wf-audit-review.md
   - workflows/wf-sim.md
   - workflows/wf-compact.md
   - workflows/wf-inbox-plan.md
