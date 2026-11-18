@@ -2,7 +2,7 @@
 name: Template Tag Taxonomy
 code: BRA204
 description: Canonical reference for double-curly-bracket template tags used in workflow Instructions, tool response-markdown / error-markdown, and tool audit title / body. Covers the input scope from Execution API variables, workflow-tool / run_workflow parameters, and input-tools mappings, and the arguments scope for the call being audited.
-version: 24
+version: 26
 ---
 
 # Template Tag Taxonomy
@@ -192,7 +192,7 @@ Notes:
 | --- | --- |
 | **Type** | Scalar bag |
 | **Sort** | N/A |
-| **Requires** | `WorkflowRunId` (subject run) on the template render context; otherwise the scope is empty |
+| **Requires** | A subject run. Without one the scope is empty |
 
 | Field | Description |
 | --- | --- |
@@ -200,22 +200,21 @@ Notes:
 | `run.workflowName` | Subject workflow **title** (falls back to code; not the eval workflow) |
 | `run.entityName` | Entity name the subject run executed against (nullable) |
 | `run.unitOfWorkName` | Unit-of-work **title** the subject run executed against (nullable) |
-| `run.telemetry` | OTEL GenAI telemetry for the subject run as indented JSON (same shape as `GET /runs/{id}/telemetry`, compacted for eval prompts). Includes `workflowName`, `entityName`, and `unitOfWorkName` alongside the ids. |
+| `run.telemetry` | The subject run as indented JSON. This is the `run` object inside the file from **Export telemetry** on the run page: full messages, full thinking, full tool results. It is not shortened. |
 
 Notes:
 
-- Used by `workflowrun:complete` eval workflows. The subject run id is passed as
-  `SubjectRunId` on the eval's `WorkflowRunRequest` — it is **not** the eval
-  run's own id.
+- Used by `workflowrun:complete` eval workflows. The `run` scope is the
+  subject run. It is **not** the eval run.
 - When the subject run is missing, the `run` scope is empty (both tags blank).
-- **`run.reference` is not a shortened Guid.** Telemetry's `runId` field is the
-  first 8 hex characters of the UUID and must **not** be passed to
-  `set_run_grading` — always use `{{run.reference}}`.
-- Compacted for eval prompts: GUID values inside telemetry JSON are shortened to
-  their first 8 hex characters, and `gen_ai.message.content` / `error.message`
-  longer than 500 characters are truncated with an explicit marker
-  (`...[truncated, full content length: N]`). The Execution API
-  `GET /runs/{id}/telemetry` response stays full fidelity.
+- **`run.reference` is not the run id.** `id` inside `{{run.telemetry}}` is the
+  run's UUID. Pass `{{run.reference}}` to `set_run_grading`.
+- The export file also carries `exportedAt` and `brainInstance` around that
+  `run` object. The eval receives the `run` object itself, with the same
+  fields the file's `run` has, including each message's `content` and
+  `thinking` in full.
+- `GET /runs/{id}/telemetry` is a separate OpenTelemetry projection
+  (**BRA403**). The eval does not use it.
 - Authoring guide for manual / automatic run evals: **BRA207**. Grading tool:
   **BRA406**.
 
@@ -315,18 +314,32 @@ Local: {{now.localDayOfWeek}} {{now.localDate}} {{now.localTime}}
 
 | | |
 | --- | --- |
-| **Type** | Open-ended flat key/value bag |
-| **Sort** | N/A |
+| **Type** | Open-ended object. Nested objects and arrays are walkable |
+| **Sort** | Array order is the order in the JSON |
 | **Source** | Caller-supplied tool/API response (e.g. tool `response-markdown`) |
 
 | Field | Description |
 | --- | --- |
-| `result.{anyKey}` | Top-level key from the JSON response body |
+| `result.{field}` | A field. Dots walk nested objects: `{{result.contact.name}}` |
+| `result.items` / `result.count` | When a baked `query` returns an array: the elements, and how many there are |
+| `result.value` | When a baked `query` returns a scalar (string, number, boolean, or null) |
 | `result.error` | On `error-markdown` only: raw tool error text, unless the JSON body already has an `error` key |
 
 Notes:
 
-- The result scope is **flat**. Nested JSON objects/arrays are stringified.
+- A JSON object is a bag of its properties. Nested objects stay walkable, and
+  arrays can be looped: `{{#result.items}}...{{/result.items}}`. Inside that
+  loop, `{{result.field}}` is the current element. A scalar element is
+  `{{result.value}}`. Nested loops work the same way.
+- Printing a nested object or array on its own (`{{result.meta}}`) still
+  prints its JSON text. Existing flat tags such as `{{result.status}}` are
+  unchanged.
+- A missing field, an empty array, and a null are silent blanks.
+- A baked `query` that returns an array is exposed as `result.items` and
+  `result.count`, not as the array's own keys. A scalar result is
+  `result.value`. This applies only when the baked query is the result that
+  was rendered. A caller query (`query-mode`) returns JSON and does not run
+  `response-markdown`.
 - If the tool body is not valid JSON, the scope is `{ result: "<raw content>" }`
   — use `{{result.result}}` to print the whole body.
 - On the **error-markdown** path, `{{result.error}}` is also synthesised from the
@@ -334,6 +347,8 @@ Notes:
   `{{result.error}}` in `error-markdown`; `{{result.result}}` still works for
   non-JSON error bodies.
 - Field names are unknown at parse time; consult the tool's response payload.
+- Rendering still happens before the 200,000 character cap. A rendered result
+  over that cap is truncated with the usual suffix.
 
 **Example — tool response-markdown:**
 
@@ -344,6 +359,17 @@ response-markdown: |
 error-markdown: |
   Failed: {{result.error}}
 ```
+
+**Example — nested fields and a row loop:**
+
+```yaml
+response-markdown: |
+  {{result.contact.name}}
+  {{#result.items}}{{result.id}},{{result.name}}
+  {{/result.items}}
+```
+
+A missing `{{result.note}}` prints nothing.
 
 ---
 
@@ -363,7 +389,7 @@ The `input` scope is a **single flat bag**. Values come from two sources that
 are merged at render time (tool / `run_workflow` parameters overlay API
 variables when the same key appears in both):
 
-| Source | How it is supplied | Persisted on `WorkflowRun`? |
+| Source | How it is supplied | Stored on the run? |
 | --- | --- | --- |
 | Execution API `variables` | Optional string→string map on `POST …/run/sync` and `…/run/async` (BRA403) | Yes |
 | Workflow-tool / `run_workflow` parameters | Resolved args when this workflow is invoked as a child | No (request only; overlays variables) |
@@ -722,7 +748,7 @@ Notes:
 | `run` | — | `reference` (AI-facing run code for `set_run_grading`), `telemetry` (OTEL GenAI JSON for subject run) |
 | `skillBooks` | root → `.categories` → `.skills` | `skillBook.*`, `category.*`, `skill.*` |
 | `now` | — | `utcDate`, `utcTime`, `utcDayOfWeek`, `localDate`, `localTime`, `localDayOfWeek` |
-| `result` | — | `{anyKey}` (flat) |
+| `result` | `.items`, and any array field | `{field}` (dots walk objects); `items`/`count` for a baked-query array; `value` for a baked-query scalar |
 | `input` | — | `{key}` (flat; Execution API `variables` + workflow-tool / `run_workflow` params) |
 | `blueprint` | `.categories` → `.entries`; `.entries` | `blueprint.code/name/description`; `category.name/description`; `entry.title/version/category` |
 | `blueprints` | root → `.categories` → `.entries`; `.entries` | `blueprint.code/name/description`; `category.name/description`; `entry.title/version/category` |

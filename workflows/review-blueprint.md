@@ -5,7 +5,7 @@ description: >-
   Applies one blueprint memory write from a review_blueprint inbox task —
   searches for a close match, then either merges into an existing entry or
   creates a new one. Never both.
-version: 10
+version: 11
 
 # Tasks are created by WF-REVIEW-UOW / WF-TRIAGE via add_inbox_task with
 # workflow_code WF-REVIEW-BLUEPRINT. An inbox: trigger with :low enables
@@ -17,10 +17,11 @@ trigger: inbox:MEMORY_UPDATE:low
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4096, 8192
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 15
-thinking: effort
 max-runs-per-hour: 500
 
 tools:

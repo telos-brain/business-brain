@@ -4,17 +4,18 @@ code: WF-READ-FINANCES
 description: >-
   Reads Xero for the connected organisations and answers a request with
   data from Xero read tools. Does not change the books.
-version: 3
+version: 4
 
 # TOOL: invoked via tools/execution/finances/read-finances.yml as {{input.request}}.
 type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4000, 8000, 12000
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 40
-thinking: adaptive
 session-timeout: 30
 
 # xero_get_connections is injected. Other Xero reads stay in

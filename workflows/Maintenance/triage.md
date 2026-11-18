@@ -6,16 +6,16 @@ description: >-
   weight 1 and cluster until weight 5, or go straight to tasks when the
   learning is already clear. Routes skill, workflow, brain, research, and
   blueprint work to the matching workflows.
-version: 28
+version: 29
 type: TRIGGERED
 trigger: inbox:*
 trigger-mode: automatic
 system-prompt-code: WF-BRAIN-SYSTEM
-model: anthropic/claude-haiku-5-5
-output-tokens: 2048, 4096, 8192
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 20
-thinking: effort
 max-runs-per-hour: 200
 tools:
   - add_inbox_task

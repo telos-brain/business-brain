@@ -1,7 +1,7 @@
 ---
 name: Environment Variables, Secrets & API Keys
 code: BRA202
-version: 33
+version: 36
 description: "How a brain's .env variables are uploaded, encrypted and stored; the
   well-known \"system\" keys the platform recognises (LLM provider keys, local
   runner URLs, the brain API key); how to inject a stored secret into an api
@@ -90,6 +90,8 @@ convention** and used automatically:
 | `LOCAL_LLM_N_AUTO_COMPACTION` | uploaded | Optional local-only prompt-token threshold for runner N when the workflow does not set `auto-compaction`. Cloud models and OpenRouter hops ignore it. See **BRA106** §8. |
 | `DEFAULT_LLM_MODEL`     | uploaded     | Optional default LLM list (`provider/model`, or several separated by commas). Same role as Settings **Default LLM model** and compose `llm-model`. Used when a workflow omits `model:`. A workflow `model:` is the whole run and does not continue into this list. Blank/omitted and no workflow `model:` means the run fails (leftover cloud keys are not a silent default). Compose `llm-model` wins when both are present. See **BRA210**. |
 | `TIMEZONE`              | uploaded     | Optional IANA timezone id (e.g. `Pacific/Auckland`) used by `{{now.local*}}` template tags. When unset or unrecognised, local time falls back to UTC. |
+| `BRAIN_API_URL`         | seeded       | This brain's own API base URL. Set automatically when the brain is created from a template (**BRA205**). Use it as the host for api tools that call the same brain's Execution API. |
+| `BRAIN_API_KEY`         | seeded       | An Execution API key for this brain. Set automatically when the brain is created from a template (**BRA205**). Inject it as `Authorization: Bearer` with `secret: BRAIN_API_KEY`. Never returned by any read endpoint. |
 | `TELOS_BRAIN_ORG_API_KEY` | **local**  | Organisation deploy credential the CLI authenticates with. Never uploaded to the brain. Legacy: `TELOS_ORG_API_KEY`. |
 | `TELOS_BRAIN_API_URL`   | **local**    | Management API base URL (deploy destination) for the CLI. Never uploaded to the brain. Legacy: `TELOS_API_URL`. |
 | `TELOS_BRAIN_TOKEN`     | **local**    | Optional Clerk bearer token for the CLI. Never uploaded to the brain. Legacy: `TELOS_TOKEN`. |
@@ -99,16 +101,16 @@ convention** and used automatically:
 The model resolver maps a workflow's `model` prefix onto a **standard** variable
 name of the form `<PROVIDER>_API_KEY` (upper-case). So:
 
-- `anthropic/claude-sonnet-4-5` → looks up **`ANTHROPIC_API_KEY`**
+- `anthropic/claude-sonnet-5-5` → looks up **`ANTHROPIC_API_KEY`**
 - `openai/gpt-…` → looks up **`OPENAI_API_KEY`**
 - `xai/grok-4.5` → looks up **`XAI_API_KEY`**
-- `telosbrain/xai/grok-4.6` → **no brain variable**. Uses the platform
-  `Grok:ApiKey`. Billed to organisation brain credit at 2× the official
-  xAI grok-4.6 API rate (**BRA210**, **BRA212**). Unavailable locally —
-  use `xai/grok-4.6` with `XAI_API_KEY` instead.
-- `openrouter/anthropic/claude-sonnet-4.6` → looks up **`OPENROUTER_API_KEY`**
-  (wire model is `anthropic/claude-sonnet-4.6`)
-- `openrouter/auto` → looks up **`OPENROUTER_API_KEY`** (wire model is
+- `telosbrain/…` → **no brain variable**. Telos holds the provider key.
+  Billed to organisation brain credit at 2× the official list rate
+  (**BRA210**, **BRA212**). Unavailable locally — use `xai/grok-4.6` with
+  `XAI_API_KEY`, or `anthropic/claude-haiku-5-5` with `ANTHROPIC_API_KEY`.
+- `openrouter/anthropic/claude-sonnet-5.5` → looks up **`OPENROUTER_API_KEY`**
+  (model id `anthropic/claude-sonnet-5.5`)
+- `openrouter/auto` → looks up **`OPENROUTER_API_KEY`** (model id
   `openrouter/auto` — Auto Router). A bare `openrouter` is **not** this; it is
   treated as an Anthropic model name.
 - `azure/gpt-4o-prod` → looks up **`AZURE_OPENAI_API_KEY`** and

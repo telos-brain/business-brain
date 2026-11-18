@@ -5,11 +5,13 @@ description: >-
   Interactive planner for one inbox entry. Judges the entry with the Learning
   Centre skill, proposes a plan, and creates or updates tasks only after the
   operator accepts. Does not write schema.
-version: 4
+version: 5
 type: RUNNABLE
 system-prompt-code: WF-SYSTEM-PROMPT
 session-timeout: 60
-output-tokens: 2048, 4096
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 20
 tools:

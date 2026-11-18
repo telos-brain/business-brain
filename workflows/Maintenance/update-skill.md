@@ -5,7 +5,7 @@ description: >-
   Autonomously extracts transferable skill knowledge from an inbox entry and
   creates or updates skills (and rarely categories) via schema tools. Source
   material comes from {{inboxEntry.body}}; skill book structure is injected.
-version: 12
+version: 13
 
 # Tasks are usually created by WF-TRIAGE (add_inbox_task). :high:5 gates
 # both stages (BRA404): Stage 1 creates a task only when learning-mode >=
@@ -19,10 +19,11 @@ trigger: inbox:SKILL_UPDATE:high:5
 
 system-prompt-code: WF-BRAIN-SYSTEM
 
-output-tokens: 4096, 8192, 16384
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 40
-thinking: adaptive
 auto-compaction: 100000
 max-runs-per-hour: 200
 

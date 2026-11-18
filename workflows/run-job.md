@@ -6,7 +6,7 @@ description: >-
   context and data are injected below. Frames the job once, does the next
   obvious step, journals any work onto the job, and can schedule the next
   pass or pause.
-version: 1
+version: 2
 
 # RUNNABLE: started against a unit of work (unitOfWorkId on the run).
 # Without one, the blocks below are empty and this workflow stops.
@@ -14,10 +14,11 @@ type: RUNNABLE
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4096, 8192
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 30
-thinking: adaptive
 max-runs-per-hour: 100
 
 tools:

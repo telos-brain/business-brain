@@ -2,15 +2,16 @@
 name: Chat
 code: WF-CHAT
 description: Conversational advisor with memory filing, framing, Ask Sol, skill lookup and memory.
-version: 10
+version: 11
 
 # RUNNABLE: this workflow is executed manually / interactively as a chat.
 type: RUNNABLE
 
-output-tokens: 2048, 4096, 16384
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 50
-thinking: adaptive
 
 # Reuse the shared persona/tone/constraints as the system prompt.
 system-prompt-code: WF-SYSTEM-PROMPT

@@ -5,7 +5,7 @@ description: >-
   Researches a topic from an inbox entry using web search, web fetch, skills,
   and memory. Compiles findings into a new PROCESSED inbox entry (no RESEARCH
   routing — prevents recursion).
-version: 4
+version: 5
 
 # Tasks are created by WF-TRIAGE (or Admin routing) with workflow_code
 # WF-RESEARCH. trigger-mode manual keeps stage-1 tasks in AWAITING_APPROVAL
@@ -16,10 +16,11 @@ trigger-mode: manual
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4096, 8192
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 30
-thinking: effort
 session-timeout: 60
 max-runs-per-hour: 100
 

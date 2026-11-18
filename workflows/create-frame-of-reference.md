@@ -5,7 +5,7 @@ description: >-
   Builds a grounded frame of reference for a given context using the brain
   glossary and blueprint memory — problem statement, frame, domain model,
   bigger picture, and considerations.
-version: 1
+version: 2
 
 # TOOL: callable as a pre-step by other workflows (e.g. via run_workflow or the
 # create_frame_of_reference workflow-tool). Parameters arrive as {{input.*}}.
@@ -13,7 +13,9 @@ type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 2048, 4096
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 12
 session-timeout: 15

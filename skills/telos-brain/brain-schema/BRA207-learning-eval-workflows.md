@@ -1,7 +1,7 @@
 ---
 name: Learning Eval Workflows
 code: BRA207
-version: 11
+version: 15
 description: How to author type EVAL (workflow-run) and TRIGGERED
   (unit-of-work) learning-eval workflows that grade a completed unit of work
   or workflow run, inject telemetry via template tags, persist a 0–100 score
@@ -46,7 +46,7 @@ code: WF-EVAL-RUN
 type: EVAL
 version: 1
 description: Grades a completed workflow run, records the score, and creates inbox learnings.
-model: anthropic/claude-sonnet-4-6
+model: anthropic/claude-sonnet-5-5
 system-prompt-code: <your-system-prompt-workflow-code>
 
 # Optional — omit for Run eval only. A learning-mode qualifier enables auto:
@@ -161,12 +161,12 @@ When the run can see more than one blueprint, pass `blueprint` to
 
 #### `set_run_grading` (BRA406)
 
-Persists the quality score on the **subject** WorkflowRun. Declare under
+Persists the quality score on the **subject** run. Declare under
 `tools/inbox/set-run-grading.yml`.
 
 | Parameter | Notes |
 | --- | --- |
-| `run_reference` | Required — use **`{{run.reference}}`**, not a shortened Guid from telemetry |
+| `run_reference` | Required — use **`{{run.reference}}`**, not the `id` UUID inside the telemetry |
 | `grading` | Required — integer 0–100 |
 | `inbox_entry_reference` | Optional — links the grade tag to an InboxEntry |
 
@@ -279,14 +279,14 @@ workflow code **`WF-EVAL`** by convention. Prefer a separate code
 | Tag | Scope | When it resolves |
 | --- | --- | --- |
 | `{{run.reference}}` | `run` | Subject run's 8-character AI-facing reference (for `set_run_grading`) |
-| `{{run.telemetry}}` | `run` | Compacted OTEL GenAI JSON for the subject Completed run |
+| `{{run.telemetry}}` | `run` | The subject run, same `run` object as Export telemetry. Full messages and thinking |
 | `{{#unitOfWork.context}}` / `{{#unitOfWork.data}}` | `unitOfWork` | Eval run request carries `UnitOfWorkId` |
 
 Unresolvable tags render blank (BRA204 silent-blank contract). Always put the
 telemetry blocks in the Instructions, not only in the short trigger message.
 
-**Important:** `runId` inside `{{run.telemetry}}` is a **shortened Guid**, not
-the 8-character run reference. Always use `{{run.reference}}` for `set_run_grading`.
+**Important:** `id` inside `{{run.telemetry}}` is the run's UUID, not the
+8-character run reference. Always use `{{run.reference}}` for `set_run_grading`.
 
 ---
 
@@ -314,7 +314,7 @@ Avoid:
 
 - Dumping the same learning twice
 - Inventing failures not present in the logs
-- Passing a shortened Guid as `run_reference`
+- Passing the telemetry `id` as `run_reference`
 - Auto-applying schema or code changes from the eval (humans apply via inbox)
 
 ---
@@ -323,6 +323,7 @@ Avoid:
 
 | Resource | Role |
 | --- | --- |
+| **BRA222** | What to change once a learning is trusted (tool, prompt, budget, or a person) |
 | **BRA217** | Workflow frontmatter (`type`, `trigger`, `trigger-mode`, tools) |
 | **BRA204** | `run.reference`, `run.telemetry`, `unitOfWork.*` tag taxonomy |
 | **BRA403** | OTEL run telemetry shape; session close → eligible for eval |

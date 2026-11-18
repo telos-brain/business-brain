@@ -5,17 +5,18 @@ description: >-
   Changes Xero data for the connected organisations. Reads current
   records, then uses Xero read and write tools to do what the request
   asks. The calling tool requires CFO approval before this run starts.
-version: 3
+version: 4
 
 # TOOL: invoked via tools/execution/finances/update-finances.yml as {{input.request}}.
 type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4000, 8000, 12000
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 50
-thinking: adaptive
 session-timeout: 30
 
 # xero_get_connections is injected. Other Xero reads and writes stay in

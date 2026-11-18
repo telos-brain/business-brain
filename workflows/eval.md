@@ -1,7 +1,7 @@
 ---
 name: Learning Eval (Run)
 code: WF-EVAL-RUN
-version: 14
+version: 15
 type: EVAL
 description: >-
   Manual workflow-run learning eval (BRA207 / BRA406). Reads the subject
@@ -13,7 +13,9 @@ description: >-
 system-prompt-code: WF-SYSTEM-PROMPT
 trigger: workflowrun:complete
 trigger-mode: manual
-output-tokens: 8192, 20000, 20000
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 25
 max-runs-per-hour: 500

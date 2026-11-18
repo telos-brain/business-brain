@@ -1,7 +1,7 @@
 ---
 name: Simulate Tool Response
 code: WF-SIM
-version: 1
+version: 2
 type: SIMULATION
 description: Synthesises a plausible tool response from historical sample call/response pairs for simulation runs.
 
@@ -16,7 +16,9 @@ input-tools:
       parameters: "{{input.parameters}}"
       count: "{{input.count}}"
 
-output-tokens: 4096
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 3
 ---

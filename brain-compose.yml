@@ -16,10 +16,13 @@ embedding-model: voyage-3-lite
 # Apply workflows also require inbox weight 5 (`inbox:…:high:5`).
 learning-mode: high
 
-# Default LLM for every workflow that omits `model`. Inbox triage sets its
-# own model (anthropic/claude-haiku-5-5). This default uses ANTHROPIC_API_KEY.
+# Brain default when a workflow omits model:. Telos Cloud:
+# telosbrain/anthropic/claude-haiku-5-5 uses the platform Anthropic key,
+# so no brain LLM env var. Billed to organisation brain credit at 2× the
+# official Claude Haiku 5.5 list rate. Local Docker: telosbrain is
+# unavailable — change this before `brain deploy --env local`.
 # Compose wins over DEFAULT_LLM_MODEL and Settings at deploy.
-llm-model: anthropic/claude-sonnet-5-5
+llm-model: telosbrain/anthropic/claude-haiku-5-5
 
 # Checkpoints: weekly schedule plus a snapshot before each deploy.
 checkpoint-strategy: Daily,BeforeDeploy

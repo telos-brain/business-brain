@@ -6,7 +6,7 @@ description: >-
   exposed as workflow tools), wiring, and other structural schema fixes outside
   skill-craft and simple workflow/tool edits. High learning mode and inbox
   weight 5 or higher.
-version: 8
+version: 9
 
 # :high:5 gates Stage 1 (task create) and Stage 2 (auto-run on the parent
 # entry's current Weight). Below weight 5, triage-created tasks park at
@@ -18,10 +18,11 @@ trigger: inbox:SYSTEM_CHANGE:high:5
 
 system-prompt-code: WF-BRAIN-SYSTEM
 
-output-tokens: 4096, 8192, 16384
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 50
-thinking: adaptive
 auto-compaction: 100000
 max-runs-per-hour: 100
 

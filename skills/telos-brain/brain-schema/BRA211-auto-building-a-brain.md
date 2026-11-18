@@ -1,7 +1,7 @@
 ---
 name: Auto-Building a Brain
 code: BRA211
-version: 2
+version: 3
 description: End-to-end process for auto-building a brain schema from an
   existing application — one entity per tenant, one brain user per user,
   skill-book categories, workflows, tools, connector defaults, Execute API
@@ -203,7 +203,10 @@ This step is large. Use the schema as the plan:
 2. List the **tools** in each group.
 3. Write the tool YAML (name, description, parameters, response templates).
 4. Implement the matching API endpoints **one by one**, as a thin layer over
-   existing functionality.
+   existing functionality. If the tool YAML sets `query` or `query-mode`,
+   the endpoint returns the full JSON document and stops there (**BRA214**).
+   Do not add a query argument, do not run JMESPath in the endpoint, and do
+   not treat a blank expression as the whole document. The brain does that.
 5. Add a unit test per endpoint, hooked into the app’s existing test
    framework.
 

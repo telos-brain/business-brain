@@ -6,17 +6,18 @@ description: >-
   the skill that holds the procedure and follows it, including any tool
   that skill names. Then uses Business blueprint entries where they
   change the answer. Returns the answer, not a coaching list.
-version: 11
+version: 12
 
 # TOOL: invoked via tools/execution/advisor/ask-sol.yml as {{input.request}}.
 type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 2048, 4096
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 24
-thinking: adaptive
 session-timeout: 60
 max-runs-per-hour: 200
 

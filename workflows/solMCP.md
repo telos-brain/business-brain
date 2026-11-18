@@ -6,12 +6,15 @@ description: >-
   questions, skill lookup, and Xero read and update so a calling agent
   can run this company brain. The schema is configured from the README
   before deploy.
-version: 6
+version: 7
 
 # MCP: published as an MCP server. Injected tools become the MCP tool list.
 # Instructions become the MCP prompt / resource for the calling agent.
 type: MCP
 
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 max-runs-per-hour: 200
 
 tools:

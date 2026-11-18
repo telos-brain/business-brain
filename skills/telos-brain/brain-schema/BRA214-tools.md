@@ -1,13 +1,15 @@
 ---
 name: Brain Schema Tools
 code: BRA214
-version: 17
+version: 19
 description: How to author tool groups and tool YAML — caller-facing
   descriptions, api, mcp, system, workflow, and native tools, optional
   execution-mode (sync or async) on a workflow tool, optional roles, optional
   audit and approval, plus parameters (headers vs query vs body vs path,
   secrets, entity / unit-of-work / user / input bindings, URL path tokens, and
-  outbound types). Load this when creating or editing a tool.
+  outbound types). Covers baked JMESPath `query` and caller `query-mode`.
+  The API returns the full JSON and does not take the expression. Load this
+  when creating or editing a tool.
 ---
 
 # Brain Schema Tools
@@ -262,7 +264,7 @@ native:
 
 A native tool is enabled directly on the model and executed by the provider. Unlike every other type it makes no outbound call and takes **no `parameters`**. Add it to a workflow's `tools` list by `name`. Supported keys: `web_search`, `web_fetch`.
 
-Claude receives them as server tools. A Grok run (`xai/…` or `telosbrain/…`) that lists `web_search` or `web_fetch` sends one server-side `web_search` tool on `POST /v1/responses`. xAI has no separate fetch tool, so `web_fetch` uses that same tool, which searches and browses pages. Grok runs that do not list either tool stay on Chat Completions and do not send it. Live Search (`search_parameters`) is not sent. OpenAI Chat Completions receives `web_search_options` only when the model is a search model. Other OpenAI models, and OpenRouter, Azure, and local runners, leave the tools off the request. They are not sent as functions.
+Claude, including `telosbrain/anthropic/…`, receives them as server tools. A Grok run (`xai/…` or `telosbrain/xai/…`) that lists `web_search` or `web_fetch` sends one server-side `web_search` tool on `POST /v1/responses`. xAI has no separate fetch tool, so `web_fetch` uses that same tool, which searches and browses pages. Grok runs that do not list either tool stay on Chat Completions and do not send it. Live Search (`search_parameters`) is not sent. OpenAI Chat Completions receives `web_search_options` only when the model is a search model. Other OpenAI models, and OpenRouter, Azure, and local runners, leave the tools off the request. They are not sent as functions.
 
 ## 3. Worked example: `web_search` and `web_fetch`
 
@@ -761,5 +763,114 @@ Authorization: Bearer sk_live_xxx
 
 To authenticate via a query parameter instead (a GET endpoint keyed by
 `?api_key=…`), drop `header:` and set `method: GET` — see BRA202 §3.3.
+
+---
+
+## JSON result queries
+
+The brain runs JMESPath. The API returns the full JSON document. The API does not take the expression, does not evaluate it, and does not treat a blank expression as "return the whole document".
+
+`native`, `system`, and `workflow` tools cannot set `query` or `query-mode`. Deploy rejects those keys. They do not apply to `get_mcp_tool_result`.
+
+Use one of these. Deploy rejects `query` and `query-mode` together.
+
+| What you want | What you write | What a call with no expression returns |
+| --- | --- | --- |
+| The caller picks a different slice each time | `query-mode: jmespath` | The learned schema and how to query. Not the document. |
+| Every call returns the same slice | `query:` with a fixed expression | That slice. The caller cannot pass an expression. |
+| The caller sees the API body | Neither key | The body, unchanged. |
+
+Which rows the API loads stays a real parameter. JMESPath runs on the JSON after the API responds. A salon filter such as `salon_references` still selects the rows. An expression such as `salons[?name=='Test Salon A'].name` does not.
+
+### Caller-chosen slice (`query-mode`)
+
+```yaml
+name: get_salon_snapshot
+description: >-
+  Returns the snapshot JSON. Pass query to slice it. Omit query on the
+  first call to learn the shape, then call again with an expression.
+query-mode: jmespath
+query-param: query
+api:
+  method: POST
+  path: /api/brain/tools/get_salon_snapshot/
+parameters:
+  - name: from_date
+    description: First period end, YYYY-MM-DD.
+    type: date
+    required: true
+  - name: salon_references
+    description: Comma-separated SalonReferences. Omit for every salon.
+    required: false
+```
+
+`query-param` is the argument name the caller sees. It defaults to `jmes_query`. It must match `^[A-Za-z_][A-Za-z0-9_]{0,63}$` and must not match any declared parameter, including hidden bindings. The only `query-mode` value is `jmespath`.
+
+Do these four things:
+
+1. Leave the expression off `parameters:`. The brain adds it to the model schema and removes it before the HTTP call. A `parameters:` entry with the same name is a deploy error.
+2. The API returns the full document. It has no `query` argument and no JMESPath library.
+3. Say so in the tool `description`. Omit the argument to learn the shape. Pass an expression to get that slice as JSON. Do not say that a blank query returns the document.
+4. Keep selection parameters. `salon_references` chooses which salons are loaded. `query` then slices the JSON.
+
+A call that omits the argument, or sends only whitespace, is schema-first:
+
+- A stored schema is returned and the API is not called, even when required parameters are missing.
+- With no stored schema, the API is called (required parameters still apply) and the schema is returned.
+- The word `schema` is a normal expression. It is not reserved.
+
+An expression calls the API, runs on the full body, and returns only that JSON. `response-markdown` does not run. An invalid expression is an error from the brain. The error includes the expression, the top-level keys, and the schema. The API does not validate the expression.
+
+Every successful JSON response is merged into the stored schema. A non-JSON body skips the query and schema learning and returns the raw body. A schema-first call with no stored schema and a non-JSON body returns: `This tool's response is not JSON, so no schema can be built.`
+
+The schema has no values. Types are joined with `|`. A `?` on a key means it is not always present. Arrays show one merged element shape. The reply includes `schema`, `schemaNote`, and `howToQuery`.
+
+### Fixed slice (`query`)
+
+```yaml
+query: |
+  salons[].{reference: reference, name: name}
+```
+
+This expression runs on every response. It is not a sample, not a test value, and not a caller argument. Do not write a caller's salon name into it.
+
+Quote the expression. JMESPath uses `[?`, `|`, backticks, and single quotes, which break an unquoted YAML scalar. A block scalar (`|`) or a single-quoted scalar is safe. A single-quoted scalar cannot contain an apostrophe; double the apostrophe or use a block scalar.
+
+An invalid expression fails deploy. It is compiled then, not on the first call.
+
+`query` together with `selective-context` is rejected. Both choose fields, and selective-context paths refer to the original document. `query-param` without `query-mode` is rejected.
+
+A baked result can feed `response-markdown`. Object fields are `result.<field>`. An array is `result.items` and `result.count`. A scalar is `result.value`. A missing field is blank. See BRA204 §3.5.
+
+### What went wrong on get_salon_snapshot
+
+The tool YAML was already `query-mode: jmespath` with `query-param: query`. That is the whole implementation. The caller passes `query` as `salons[].name`. The brain strips it and slices the JSON.
+
+The API then grew its own `query` parameter: a blank value returned the whole document, and an invalid expression was an API error. An example `query: salons[?name=='Test Salon A'].name` was treated as the tool's query. Through the brain that parameter never arrives, a blank call returns the schema rather than the snapshot, and a baked expression naming one salon would run on every call and is rejected beside `query-mode`.
+
+### Limits
+
+Defaults, overridable under `ToolQuery` in configuration: expression 2000 characters, evaluation 2 seconds, output 100,000 characters. Over the output limit the call returns an error and does not return truncated JSON. Suggest a slice (`[:50]`) or fewer fields. A result of JSON null is the literal `null`.
+
+### Cheat sheet
+
+```yaml
+# The caller writes the expression. It is not a parameter.
+# The first call, with no query, returns the schema.
+query-mode: jmespath
+query-param: query
+
+# Every call returns this slice. The caller cannot pass an expression.
+query: |
+  salons[].name
+
+# Baked slice, then a table.
+query: salons
+response-markdown: |
+  {{#result.items}}{{result.reference}},{{result.name}}
+  {{/result.items}}
+```
+
+`get_schema_file` returns this skill. There is no separate JSON Schema for tool YAML; this file is the contract.
 
 ---

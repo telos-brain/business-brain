@@ -4,10 +4,12 @@ code: WF-BUILD-PLAYBOOK
 description: >-
   Reads the open playbook YAML and authors the workflows, tools and skills
   that documentation describes. An authoring pass, not a compiler.
-version: 3
+version: 4
 type: PLAYBOOK
 system-prompt-code: WF-SYSTEM-PROMPT
-output-tokens: 2048, 4096
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 40
 tools:

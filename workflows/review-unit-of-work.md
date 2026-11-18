@@ -6,15 +6,16 @@ description: >-
   categories and creates a PROCESSED inbox entry with one review_blueprint
   task per fact. Skips noise and processes. Does not grade agent quality
   (see WF-EVAL-RUN).
-version: 5
+version: 6
 type: TRIGGERED
 trigger: unitofwork:complete:low
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4096, 8192
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 30
-thinking: effort
 max-runs-per-hour: 500
 
 tools:

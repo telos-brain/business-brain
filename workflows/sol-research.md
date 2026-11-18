@@ -5,17 +5,18 @@ description: >-
   Researches a topic using memory, skills and the web. Sends what is worth
   keeping to the inbox as one entry so triage can separate memory, skill,
   and noise. Returns a short summary. Does not write memory or skills itself.
-version: 6
+version: 7
 
 # TOOL: invoked via tools/execution/advisor/research.yml as {{input.query}}.
 type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 4096, 8192
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 28
-thinking: adaptive
 session-timeout: 60
 max-runs-per-hour: 100
 

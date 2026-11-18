@@ -180,7 +180,7 @@ Cloud deploy talks to `https://go.telosbrain.com` by default (`TELOS_BRAIN_API_U
 
 ### 2. LLM
 
-This brain defaults to Claude Sonnet 5.5 (`llm-model: anthropic/claude-sonnet-5-5` in `brain-compose.yml`). Inbox triage uses Claude Haiku 5.5. Runs need `ANTHROPIC_API_KEY`.
+This brain defaults to Telos-hosted Claude Haiku 5.5 (`llm-model: telosbrain/anthropic/claude-haiku-5-5` in `brain-compose.yml`). On Telos Cloud that model uses the platform Anthropic key, so no LLM provider key is required. Token cost is billed to organisation brain credit at double the official Claude Haiku 5.5 list rate.
 
 | Provider | Where to get a key | `.env` variable | Then set in `brain-compose.yml` |
 |---|---|---|---|
@@ -287,7 +287,7 @@ brain start
 
 `brain start` writes `.env.local` (if missing), starts SQL Server and the Brain server in Docker, and opens the admin UI at **http://127.0.0.1:60061** (no sign-in). It uses a well-known local organisation key that **must not** be used in production.
 
-Put `ANTHROPIC_API_KEY` in `.env.local`. The default model is already `anthropic/claude-sonnet-5-5`. Then:
+`telosbrain/anthropic/claude-haiku-5-5` is unavailable on a local stack. Put a provider key in `.env.local` and change `llm-model` before deploying (for example `anthropic/claude-haiku-5-5` with `ANTHROPIC_API_KEY`). Then:
 
 ```bash
 brain deploy --env local --instance <company-name>

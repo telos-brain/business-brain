@@ -6,7 +6,7 @@ description: >-
   blueprint. Reads the categories first, searches for an existing entry,
   then updates or creates. Use to store a person, a customer, an area,
   a direction, or a decision worth keeping.
-version: 6
+version: 7
 
 # TOOL: invoked via tools/execution/advisor/track-business-information.yml
 # as {{input.content}}.
@@ -14,7 +14,9 @@ type: TOOL
 
 system-prompt-code: WF-SYSTEM-PROMPT
 
-output-tokens: 2048, 4096
+output-tokens: 5000, 10000, 20000
+thinking: adaptive
+thinking-effort: high
 caching: automatic
 max-turns: 16
 max-runs-per-hour: 200
